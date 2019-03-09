@@ -12,9 +12,28 @@ namespace Kundt
 {
     public partial class frmStarter : Form
     {
+        Timer Clock = new Timer();
+
         public frmStarter()
         {
             InitializeComponent();
+
+            
+            Clock.Interval = 1500; 
+            Clock.Tick += new EventHandler(JumpToMain);
+            Clock.Start();
+
+            
+        }
+
+        private void JumpToMain(object sender, EventArgs e)
+        {
+            Form main = new frmMain();
+            main.Show();
+            this.Hide();
+
+            Clock.Stop();
+            
         }
     }
 }
