@@ -79,13 +79,13 @@
             // arquivoTextoToolStripMenuItem
             // 
             this.arquivoTextoToolStripMenuItem.Name = "arquivoTextoToolStripMenuItem";
-            this.arquivoTextoToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.arquivoTextoToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.arquivoTextoToolStripMenuItem.Text = "Text File";
             // 
             // excelToolStripMenuItem
             // 
             this.excelToolStripMenuItem.Name = "excelToolStripMenuItem";
-            this.excelToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.excelToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.excelToolStripMenuItem.Text = "Excel";
             // 
             // sairToolStripMenuItem
@@ -111,7 +111,7 @@
             this.impedanceToolStripMenuItem,
             this.reflectionToolStripMenuItem});
             this.graficosToolStripMenuItem.Name = "graficosToolStripMenuItem";
-            this.graficosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.graficosToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.graficosToolStripMenuItem.Text = "Graphics";
             // 
             // absorToolStripMenuItem
@@ -119,7 +119,7 @@
             this.absorToolStripMenuItem.Checked = true;
             this.absorToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.absorToolStripMenuItem.Name = "absorToolStripMenuItem";
-            this.absorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.absorToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.absorToolStripMenuItem.Text = "Absorption";
             // 
             // impedanceToolStripMenuItem
@@ -127,7 +127,7 @@
             this.impedanceToolStripMenuItem.Checked = true;
             this.impedanceToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.impedanceToolStripMenuItem.Name = "impedanceToolStripMenuItem";
-            this.impedanceToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.impedanceToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.impedanceToolStripMenuItem.Text = "Impedance";
             // 
             // reflectionToolStripMenuItem
@@ -135,13 +135,13 @@
             this.reflectionToolStripMenuItem.Checked = true;
             this.reflectionToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.reflectionToolStripMenuItem.Name = "reflectionToolStripMenuItem";
-            this.reflectionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.reflectionToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.reflectionToolStripMenuItem.Text = "Reflection";
             // 
             // statusLineToolStripMenuItem
             // 
             this.statusLineToolStripMenuItem.Name = "statusLineToolStripMenuItem";
-            this.statusLineToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.statusLineToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.statusLineToolStripMenuItem.Text = "Status Line";
             // 
             // tabMain
