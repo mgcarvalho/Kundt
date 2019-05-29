@@ -89,15 +89,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Loader\Loader.csproj">
-      <Project>{372016b0-8bca-43a6-8d68-a860199bb2f9}</Project>
-      <Name>Loader</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Solver\Solver.csproj">
-      <Project>{3e633cae-9b21-4933-bc75-72ad0c88e5d0}</Project>
-      <Name>Solver</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
