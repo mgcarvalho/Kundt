@@ -2,7 +2,7 @@
 {
     public class FRF
     {
-        public float Frequency { get; set; }
-        public float Amplification { get; set; }
+        public double Frequency { get; set; }
+        public double Amplification { get; set; }
     }
 }

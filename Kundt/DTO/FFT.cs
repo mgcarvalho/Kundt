@@ -2,8 +2,8 @@
 {
     public class FFT
     {
-        public float Frequency { get; set; }
-        public float Amplitude { get; set; }
+        public double Frequency { get; set; }
+        public double Amplitude { get; set; }
 
     }
 }

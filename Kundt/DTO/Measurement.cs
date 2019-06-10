@@ -17,9 +17,9 @@ namespace DTO
 
         public DateTime Date { get; set; }
 
-        public float Temperature { get; set; }
+        public double Temperature { get; set; }
 
-        public float AtmosphericPressure { get; set; }
+        public double AtmosphericPressure { get; set; }
 
         public List<DataMeasurement> Measurements { get; set; }
 

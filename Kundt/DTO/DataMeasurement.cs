@@ -16,9 +16,12 @@ namespace DTO
         public FRF M1 { get; set; }
         public FRF M2 { get; set; }
 
+        public FRF M1Calculate { get; set; }
+        public FRF M2Calculate { get; set; }
+
+
         public FFT M3 { get; set; }
         public FFT M4 { get; set; }
-
 
     }
 }

@@ -2,7 +2,7 @@
 {
     public class Mic
     {
-        public float Time { get; set; }
-        public float Pressure { get; set; }
+        public double Time { get; set; }
+        public double Pressure { get; set; }
     }
 }
