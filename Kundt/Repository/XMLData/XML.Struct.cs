@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using System.IO;
 using System.Text;
+using System.Reflection;
+using System.Linq;
 
 namespace Repository.XMLData
 {
     public class XMLStruct
     {
 
+        const string  prefix = "Repository.XMLData.";
+
         public Dictionary<string,string> GetStructureFiles()
         {
-            Dictionary<string, string> result = new Dictionary<string, string>();
-            string pathXMLFiles = FullPathXMLFiles();          
-            foreach (XElement files in XElement.Load(pathXMLFiles).Elements("File"))
+            Dictionary<string, string> result = new Dictionary<string, string>();       
+            foreach (XElement files in XElement.Load(GetEmbeddedXMLFile("StructFiles.xml")).Elements("File"))
             {
-                result.Add(files.Attribute("name").Value, files.Attribute("Local").Value);
+                result.Add(files.Attribute("Name").Value, files.Attribute("Desc").Value);
             }
             return result;
 
@@ -24,7 +27,7 @@ namespace Repository.XMLData
         public Dictionary<string, int> GetDataIndex()
         {
             Dictionary<string, int> result = new Dictionary<string, int>();
-            string pathXMLFiles = FullPathXMLFiles();
+            //string pathXMLFiles = FullPathXMLFiles();
             //....
             //line start
             //line end
@@ -38,37 +41,20 @@ namespace Repository.XMLData
 
         }
 
-        private string FullPathXMLFiles(bool forceCreate = true)
+
+        private Stream GetEmbeddedXMLFile(string file)
         {
-            string result;
-            result = AppDomain.CurrentDomain.BaseDirectory +  @"\XML\StructureFiles.xml";
-
-            if (!Directory.Exists(result) && forceCreate)
+            string foundFile = prefix + file;
+            var verify = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            if (!verify.Any(x => x== foundFile))
             {
-                Directory.CreateDirectory(result);
-                CreateStructDefaultFile();
+                throw new FileNotFoundException($"Embedded File <{file}> not found. Error XML call.");
             }
-
-            result = result + @"\StructureFiles.xml";
-            if (!File.Exists(result))
-            {
-                if (forceCreate)
-                {
-                    CreateStructDefaultFile();
-                }
-                else
-                {
-                    throw new FileNotFoundException("Structure File not found. Error XML call.");
-                }
-            }
-
-            return @result;
+            Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(foundFile);
+            return stream;
         }
 
-        private void CreateStructDefaultFile()
-        {
-            //TODO:
-        }
+       
         // GetResourceTextFile("myXmlDoc.xml")
 
         /*

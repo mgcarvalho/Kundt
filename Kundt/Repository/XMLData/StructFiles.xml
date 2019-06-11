@@ -1,7 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Files>
-  <File>
-    <Name>Deafult Structure</Name>
-    <Local>Sctructures.xml</Local>
-  </File>
+  <File Name="Default" Desc="Default structure to load analise file"></File>
 </Files>
