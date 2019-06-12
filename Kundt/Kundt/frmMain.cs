@@ -17,9 +17,9 @@ namespace Kundt
             InitializeComponent();
         }
 
-        private void SairToolStripMenuItem_Click(object sender, EventArgs e)
+        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.Close();
+            //this.Close();
             Application.Exit();
         }
     }

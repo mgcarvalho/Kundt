@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Repository.XMLData
 {
-    public class XMLStruct
+    public class XMLStruct : IXMLStruct
     {
 
         const string  prefix = "Repository.XMLData.";

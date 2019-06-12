@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kundt", "Kundt\Kundt.csproj", "{DD7B7B19-9196-40C6-AD97-CA24809D96AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{603D5B37-C376-476B-99C8-535CD2D10869}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KundtManager", "Services\KundtManager.csproj", "{603D5B37-C376-476B-99C8-535CD2D10869}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{E1C0F6ED-67AA-4811-A8EF-89EF94BB0FBB}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "UnitTest\UnitTest.csproj", "{66A37229-EAD6-4D8C-AECD-46247549EE31}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Solver", "Solver\Solver.csproj", "{884DA4DC-F28A-44A1-8100-3750C07E6DB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTest", "IntegrationTest\IntegrationTest.csproj", "{9AEC80C1-6544-41C3-9663-7CA45934ECE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{884DA4DC-F28A-44A1-8100-3750C07E6DB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{884DA4DC-F28A-44A1-8100-3750C07E6DB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{884DA4DC-F28A-44A1-8100-3750C07E6DB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AEC80C1-6544-41C3-9663-7CA45934ECE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AEC80C1-6544-41C3-9663-7CA45934ECE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AEC80C1-6544-41C3-9663-7CA45934ECE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AEC80C1-6544-41C3-9663-7CA45934ECE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +76,7 @@ Global
 		{F1A86B54-01A2-433A-BE9F-028E33A81277} = {5FB59485-4F4E-4D3F-88ED-1B5310802F0E}
 		{66A37229-EAD6-4D8C-AECD-46247549EE31} = {BBA16F5B-F4C4-4DB0-ADA7-157F645C7844}
 		{884DA4DC-F28A-44A1-8100-3750C07E6DB8} = {3B16C1ED-42C2-4419-9182-57ADBBC65F26}
+		{9AEC80C1-6544-41C3-9663-7CA45934ECE4} = {BBA16F5B-F4C4-4DB0-ADA7-157F645C7844}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2BC23F95-68CF-4A02-B95B-41F5DE81B553}

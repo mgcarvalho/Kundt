@@ -28,166 +28,72 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.arquivosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.carregarAnaliseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.arquivoTextoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.excelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exibirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.graficosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.absorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.impedanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reflectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabMain = new System.Windows.Forms.TabControl();
-            this.tabAbs = new System.Windows.Forms.TabPage();
-            this.tabImp = new System.Windows.Forms.TabPage();
-            this.menuStrip1.SuspendLayout();
-            this.tabMain.SuspendLayout();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // tabControl1
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.arquivosToolStripMenuItem,
-            this.exibirToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1340, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(3, 102);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1169, 501);
+            this.tabControl1.TabIndex = 0;
             // 
-            // arquivosToolStripMenuItem
+            // tabPage1
             // 
-            this.arquivosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.carregarAnaliseToolStripMenuItem,
-            this.sairToolStripMenuItem});
-            this.arquivosToolStripMenuItem.Name = "arquivosToolStripMenuItem";
-            this.arquivosToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
-            this.arquivosToolStripMenuItem.Text = "Files";
+            this.tabPage1.Location = new System.Drawing.Point(4, 29);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Size = new System.Drawing.Size(1161, 468);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // carregarAnaliseToolStripMenuItem
+            // tabPage2
             // 
-            this.carregarAnaliseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.arquivoTextoToolStripMenuItem,
-            this.excelToolStripMenuItem});
-            this.carregarAnaliseToolStripMenuItem.Name = "carregarAnaliseToolStripMenuItem";
-            this.carregarAnaliseToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.carregarAnaliseToolStripMenuItem.Text = "Load Analisys";
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Size = new System.Drawing.Size(1161, 472);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // arquivoTextoToolStripMenuItem
+            // statusStrip1
             // 
-            this.arquivoTextoToolStripMenuItem.Name = "arquivoTextoToolStripMenuItem";
-            this.arquivoTextoToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-            this.arquivoTextoToolStripMenuItem.Text = "Text File";
-            // 
-            // excelToolStripMenuItem
-            // 
-            this.excelToolStripMenuItem.Name = "excelToolStripMenuItem";
-            this.excelToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-            this.excelToolStripMenuItem.Text = "Excel";
-            // 
-            // sairToolStripMenuItem
-            // 
-            this.sairToolStripMenuItem.Name = "sairToolStripMenuItem";
-            this.sairToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.sairToolStripMenuItem.Text = "Close";
-            this.sairToolStripMenuItem.Click += new System.EventHandler(this.SairToolStripMenuItem_Click);
-            // 
-            // exibirToolStripMenuItem
-            // 
-            this.exibirToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.graficosToolStripMenuItem,
-            this.statusLineToolStripMenuItem});
-            this.exibirToolStripMenuItem.Name = "exibirToolStripMenuItem";
-            this.exibirToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.exibirToolStripMenuItem.Text = "Show";
-            // 
-            // graficosToolStripMenuItem
-            // 
-            this.graficosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.absorToolStripMenuItem,
-            this.impedanceToolStripMenuItem,
-            this.reflectionToolStripMenuItem});
-            this.graficosToolStripMenuItem.Name = "graficosToolStripMenuItem";
-            this.graficosToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
-            this.graficosToolStripMenuItem.Text = "Graphics";
-            // 
-            // absorToolStripMenuItem
-            // 
-            this.absorToolStripMenuItem.Checked = true;
-            this.absorToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.absorToolStripMenuItem.Name = "absorToolStripMenuItem";
-            this.absorToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
-            this.absorToolStripMenuItem.Text = "Absorption";
-            // 
-            // impedanceToolStripMenuItem
-            // 
-            this.impedanceToolStripMenuItem.Checked = true;
-            this.impedanceToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.impedanceToolStripMenuItem.Name = "impedanceToolStripMenuItem";
-            this.impedanceToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
-            this.impedanceToolStripMenuItem.Text = "Impedance";
-            // 
-            // reflectionToolStripMenuItem
-            // 
-            this.reflectionToolStripMenuItem.Checked = true;
-            this.reflectionToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.reflectionToolStripMenuItem.Name = "reflectionToolStripMenuItem";
-            this.reflectionToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
-            this.reflectionToolStripMenuItem.Text = "Reflection";
-            // 
-            // statusLineToolStripMenuItem
-            // 
-            this.statusLineToolStripMenuItem.Name = "statusLineToolStripMenuItem";
-            this.statusLineToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
-            this.statusLineToolStripMenuItem.Text = "Status Line";
-            // 
-            // tabMain
-            // 
-            this.tabMain.Controls.Add(this.tabAbs);
-            this.tabMain.Controls.Add(this.tabImp);
-            this.tabMain.Location = new System.Drawing.Point(0, 27);
-            this.tabMain.Name = "tabMain";
-            this.tabMain.SelectedIndex = 0;
-            this.tabMain.Size = new System.Drawing.Size(646, 357);
-            this.tabMain.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
-            this.tabMain.TabIndex = 1;
-            // 
-            // tabAbs
-            // 
-            this.tabAbs.Location = new System.Drawing.Point(4, 22);
-            this.tabAbs.Name = "tabAbs";
-            this.tabAbs.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAbs.Size = new System.Drawing.Size(638, 331);
-            this.tabAbs.TabIndex = 0;
-            this.tabAbs.Text = "Absorption";
-            this.tabAbs.UseVisualStyleBackColor = true;
-            // 
-            // tabImp
-            // 
-            this.tabImp.Location = new System.Drawing.Point(4, 22);
-            this.tabImp.Name = "tabImp";
-            this.tabImp.Padding = new System.Windows.Forms.Padding(3);
-            this.tabImp.Size = new System.Drawing.Size(638, 331);
-            this.tabImp.TabIndex = 1;
-            this.tabImp.Text = "Impedance";
-            this.tabImp.UseVisualStyleBackColor = true;
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 718);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1170, 22);
+            this.statusStrip1.SizingGrip = false;
+            this.statusStrip1.TabIndex = 1;
+            this.statusStrip1.Text = "statusStrip1";
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1340, 611);
-            this.Controls.Add(this.tabMain);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
+            this.ClientSize = new System.Drawing.Size(1170, 740);
+            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.tabControl1);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.MaximizeBox = false;
             this.Name = "frmMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Kundt Analisys";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.tabMain.ResumeLayout(false);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,20 +101,9 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem arquivosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem carregarAnaliseToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem arquivoTextoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem excelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sairToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exibirToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem graficosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem absorToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem impedanceToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem reflectionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem statusLineToolStripMenuItem;
-        private System.Windows.Forms.TabControl tabMain;
-        private System.Windows.Forms.TabPage tabAbs;
-        private System.Windows.Forms.TabPage tabImp;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }
