@@ -137,9 +137,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Repository\Repository.csproj">
-      <Project>{e1c0f6ed-67aa-4811-a8ef-89ef94bb0fbb}</Project>
-      <Name>Repository</Name>
+    <ProjectReference Include="..\Services\KundtManager.csproj">
+      <Project>{603d5b37-c376-476b-99c8-535cd2d10869}</Project>
+      <Name>KundtManager</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

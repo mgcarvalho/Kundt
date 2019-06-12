@@ -1,14 +1,18 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Repository.XMLData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿
 
 namespace Kundt
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+
+    //using Repository.XMLData;
+
     static class Program
     {
         //Dependency Injection
@@ -18,7 +22,7 @@ namespace Kundt
         static void ConfigureServices()
         {
             var services = new ServiceCollection();
-            services.AddSingleton<IXMLStruct, XMLStruct>();
+            //services.AddSingleton<IXMLStruct, XMLStruct>();
             ServiceProvider = services.BuildServiceProvider();
         }
         //End
