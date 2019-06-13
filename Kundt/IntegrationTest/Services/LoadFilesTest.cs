@@ -20,8 +20,7 @@
         public void GetSavedStructs_Ok()
         {
             //Arrange
-            IXMLStruct xmlData = new XMLStruct();
-            LoadStructs ls = new LoadStructs(xmlData);
+            LoadStructs ls = new LoadStructs();
 
             //Act
 

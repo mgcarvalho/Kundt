@@ -17,9 +17,9 @@ namespace KundtManager
     {
         private readonly IXMLStruct _xmlData;
 
-        public LoadStructs(IXMLStruct xmlData)
+        public LoadStructs()
         {
-            //IXMLStruct xmlData = new XMLStruct();
+            IXMLStruct xmlData = new XMLStruct();
             _xmlData = xmlData ?? throw new ArgumentNullException(nameof(xmlData));
         }
 

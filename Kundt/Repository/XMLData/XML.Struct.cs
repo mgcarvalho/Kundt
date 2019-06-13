@@ -1,6 +1,4 @@
-﻿
-
-namespace Repository.XMLData
+﻿namespace Repository.XMLData
 {
     using System;
     using System.Collections.Generic;
@@ -46,10 +44,10 @@ namespace Repository.XMLData
                         {
                             while (reader.Read())
                             {
-                                //if (reader.IsStartElement())
-                                //{
-                                result.Add(CreateStruct(reader));
-                                //}
+                                if (reader.NodeType!=XmlNodeType.EndElement && Enum.TryParse(reader.Name, out StructType _type))
+                                {
+                                    result.Add(CreateStruct(reader, _type));
+                                }
                             }
                         }
                     }
@@ -102,135 +100,59 @@ namespace Repository.XMLData
             return stream;
         }
 
-
-
-        private StructFile CreateStruct(XmlReader reader)
+        private StructFile CreateStruct(XmlReader reader, StructType type) => new StructFile()
         {
-            StructFile result = new StructFile();
-            switch (reader.Name)
-            {
-                case "Name":
-                    result = new StructFile()
-                    {
-                        Type = StructType.Name,
-                        Describe = reader["describe"],
-                        Field = reader["field"],
-                        IndexPosition = -1,
-                        LineEnd = -1,
-                        LineStart = -1,
-                        Unit = "-",
-                        Value = reader["value"]
-                    };
-                    break;
-                case "Temperature":
-                    result = new StructFile()
-                    {
-                        Type = StructType.Temperature,
-                        Describe = reader["describe"],
-                        Field = reader["field"],
-                        IndexPosition = -1,
-                        LineEnd = -1,
-                        LineStart = -1,
-                        Unit = reader["name"],
-                        Value = reader["value"]
-                    };
-                    break;
-                case "AtmosphericPressure":
-                    result = new StructFile()
-                    {
-                        Type = StructType.ATP,
-                        Describe = reader["describe"],
-                        Field = reader["field"],
-                        IndexPosition = -1,
-                        LineEnd = -1,
-                        LineStart = -1,
-                        Unit = reader["name"],
-                        Value = reader["value"]
-                    };                    
-                    break;
-                case "Data":
-                    result = new StructFile()
-                    {
-                        Type = StructType.DataLine,
-                        Describe = reader["describe"],
-                        Field = "-",
-                        IndexPosition = int.Parse(reader["structLine"]),
-                        LineEnd = int.Parse(reader["startData"]),
-                        LineStart = int.Parse(reader["stopData"]),
-                        Unit = reader["name"],
-                        Value = reader["value"]
-                    };
-                    break;
-                case "MIC1Time":
-                    break;
-                case "MIC1Pressure":
-                    break;
-                case "MIC2Time":
-                    break;
-                case "MIC2Pressure":
-                    break;
-                case "FRF1Frequency":
-                    break;
-                case "FRF1Amplification":
-                    break;
-                case "FRF2Frequency":
-                    break;
-                case "FRF2Amplification":
-                    break;
-                case "FFT1Frequency":
-                    break;
-                case "FFT1Amplitude":
-                    break;
-                case "FFT2Frequency":
-                    break;
-                case "FFT2Amplitude":
-                    break;
-            }
-            return result;
-        }
+            Type = type,
+            Value = reader["value"],
+            Field = reader["field"],
+            Unit = reader["unit"]
+        };
+
 
 
         /*
-          
-            
-    <Data structLine="2" startData="12" stopData="-"></Data>
-    <MIC1Time          value="MIC 1 Time"                describe="[A]"  field="C1:  Time[s]"                 unit="s" ></MIC1Time>
-    <MIC1Pressure      value="MIC 1 Pressure"            describe="[A]"  field="C1:  [Pa]"                    unit="Pa"></MIC1Pressure>
-    <MIC2Time          value="MIC 2 Time"                describe="[A]"  field="C2:  Time[s]"                 unit="s"></MIC2Time>
-    <MIC2Pressure      value="MIC 2 Pressure"            describe="[A]"  field="C2:  [Pa]"                    unit="Pa"></MIC2Pressure>
-    <FRF1Frequency     value="FRF(C1, C2) Frequency"     describe="[A]"  field="M1: FRF(C1,C2) Frequency[Hz]" unit="Hz"></FRF1Frequency>
-    <FRF1Amplification value="FRF(C1, C2) Amplification" describe="[A]"  field="M1: FRF(C1,C2) [](A)"         unit="-"></FRF1Amplification>
-    <FRF2Frequency     value="FRF(C2,C1) Frequency"      describe="[A]"  field="M2: FRF(C2,C1) Frequency[Hz]" unit="Hz"></FRF2Frequency>
-    <FRF2Amplification value="FRF(C2,C1) Amplification"  describe="[A]"  field="M2: FRF(C2,C1) [](A)"         unit="-"></FRF2Amplification>
-    <FFT1Frequency     value="FFT(C1) Frequency"         describe="[A]"  field="M3: FFT(C1) Frequency[Hz]"    unit="Hz"></FFT1Frequency>
-    <FFT1Amplitude     value="FFT(C1) (A)"               describe="[A]"  field="M3: FFT(C1) [Pa](A)"          unit="-"></FFT1Amplitude>
-    <FFT2Frequency     value="FFT(C2) Frequency"         describe="[A]"  field="M4: FFT(C2) Frequency[Hz]"    unit="Hz"></FFT2Frequency>
-    <FFT2Amplitude     value="FFT(C2) (A)"               describe="[A]"  field="M4: FFT(C2) [Pa](A)"          unit="-"></FFT2Amplitude>
- 
-         * */
+            <Name                value="Default"                   field="Default struct"               unit="-" ></Name>
+            <Temperature         value="MANUAL"                    field="Temperature"                  unit="C" ></Temperature>
+            <AtmosphericPressure value="MANUAL"                    field="Atmospheric Pressure"         unit="KPa" ></AtmosphericPressure>
+            <DataIndex           value="2"                         field="File Struct Line"             unit="-"></DataIndex>
+            <DataStart           value="12"                        field="Start Line Data"              unit="-"></DataStart>
+            <DataEnd             value="0"                         field="End Line Data (0 for all)"    unit="-"></DataEnd>
+            <MIC1Time            value="MIC 1 Time"                field="C1:  Time[s]"                 unit="s" ></MIC1Time>
+            <MIC1Pressure        value="MIC 1 Pressure"            field="C1:  [Pa]"                    unit="Pa"></MIC1Pressure>
+            <MIC2Time            value="MIC 2 Time"                field="C2:  Time[s]"                 unit="s"></MIC2Time>
+            <MIC2Pressure        value="MIC 2 Pressure"            field="C2:  [Pa]"                    unit="Pa"></MIC2Pressure>
+            <FRF1Frequency       value="FRF(C1, C2) Frequency"     field="M1: FRF(C1,C2) Frequency[Hz]" unit="Hz"></FRF1Frequency>
+            <FRF1Amplification   value="FRF(C1, C2) Amplification" field="M1: FRF(C1,C2) [](A)"         unit="-"></FRF1Amplification>
+            <FRF2Frequency       value="FRF(C2,C1) Frequency"      field="M2: FRF(C2,C1) Frequency[Hz]" unit="Hz"></FRF2Frequency>
+            <FRF2Amplification   value="FRF(C2,C1) Amplification"  field="M2: FRF(C2,C1) [](A)"         unit="-"></FRF2Amplification>
+            <FFT1Frequency       value="FFT(C1) Frequency"         field="M3: FFT(C1) Frequency[Hz]"    unit="Hz"></FFT1Frequency>
+            <FFT1Amplitude       value="FFT(C1) (A)"               field="M3: FFT(C1) [Pa](A)"          unit="Pa"></FFT1Amplitude>
+            <FFT2Frequency       value="FFT(C2) Frequency"         field="M4: FFT(C2) Frequency[Hz]"    unit="Hz"></FFT2Frequency>
+            <FFT2Amplitude       value="FFT(C2) (A)"               field="M4: FFT(C2) [Pa](A)"          unit="Pa"></FFT2Amplitude>
+        */
 
 
 
         // GetResourceTextFile("myXmlDoc.xml")
 
         /*
-		 
-		 public string GetResourceTextFile(string filename)
-			{
-				string result = string.Empty;
 
-				using (Stream stream = this.GetType().Assembly.
-						   GetManifestResourceStream("assembly.folder."+filename))
-				{
-					using (StreamReader sr = new StreamReader(stream))
-					{
-						result = sr.ReadToEnd();
-					}
-				}
-				return result;
-			}
-		 
-		 
-		 */
+         public string GetResourceTextFile(string filename)
+            {
+                string result = string.Empty;
+
+                using (Stream stream = this.GetType().Assembly.
+                           GetManifestResourceStream("assembly.folder."+filename))
+                {
+                    using (StreamReader sr = new StreamReader(stream))
+                    {
+                        result = sr.ReadToEnd();
+                    }
+                }
+                return result;
+            }
+
+
+         */
     }
 }

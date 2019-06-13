@@ -32,7 +32,7 @@
             var test = xmlStruct.GetStruct("Default");
 
             //Assert
-            Assert.AreEqual(1, test.Count);
+            Assert.AreEqual(18, test.Count);
         }
         
     }

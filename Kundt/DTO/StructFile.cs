@@ -12,17 +12,9 @@ namespace DTO
 
         public string Value { get; set; }
 
-        public string Describe { get; set; }
-
         public string Field { get; set; }
 
-        public int LineStart { get; set; }
-
         public string Unit { get; set; }
-
-        public int LineEnd { get; set; }
-
-        public int IndexPosition { get; set; }
 
     }
 
@@ -31,8 +23,10 @@ namespace DTO
     {
         Name,
         Temperature,
-        ATP,
-        DataLine,
+        AtmosphericPressure,
+        DataIndex,
+        DataStart,
+        DataEnd,
         MIC1Time,
         MIC1Pressure,
         MIC2Time,

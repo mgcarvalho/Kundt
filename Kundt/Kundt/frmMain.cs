@@ -1,6 +1,4 @@
-﻿
-
-namespace Kundt
+﻿namespace Kundt
 {
 
     using System;
@@ -41,7 +39,7 @@ namespace Kundt
         {
             string findStruct = cmbStruct.SelectedValue.ToString();
             var lS = new LoadStructs();
-            var foundStruct = lS.;
+            var foundStruct = lS;
         }
     }
 }
