@@ -2,10 +2,12 @@
 {
     using System.Collections.Generic;
 
+    using DTO;
+
     public interface IXMLStruct
     {
         Dictionary<string, string> GetStructureFiles();
 
-        Dictionary<string, int> GetDataIndex();
+        List<StructFile> GetStruct(string structName);
     }
 }

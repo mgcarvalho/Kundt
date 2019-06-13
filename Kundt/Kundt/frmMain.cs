@@ -36,5 +36,12 @@ namespace Kundt
             cmbStruct.DisplayMember = "Value";
             cmbStruct.ValueMember = "Key";
         }
+
+        private void btnLoadStruct_Click(object sender, EventArgs e)
+        {
+            string findStruct = cmbStruct.SelectedValue.ToString();
+            var lS = new LoadStructs();
+            var foundStruct = lS.;
+        }
     }
 }

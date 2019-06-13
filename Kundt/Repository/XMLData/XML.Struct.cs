@@ -1,21 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Xml.Linq;
-using System.IO;
-using System.Text;
-using System.Reflection;
-using System.Linq;
+﻿
 
 namespace Repository.XMLData
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Xml.Linq;
+    using System.IO;
+    using System.Text;
+    using System.Reflection;
+    using System.Linq;
+    using System.Xml;
+
+    using DTO;
+
     public class XMLStruct : IXMLStruct
     {
 
-        const string  prefix = "Repository.XMLData.";
+        const string prefix = "Repository.XMLData.";
 
-        public Dictionary<string,string> GetStructureFiles()
+        public Dictionary<string, string> GetStructureFiles()
         {
-            Dictionary<string, string> result = new Dictionary<string, string>();       
+            Dictionary<string, string> result = new Dictionary<string, string>();
             foreach (XElement files in XElement.Load(GetEmbeddedXMLFile("StructFiles.xml")).Elements("File"))
             {
                 result.Add(files.Attribute("Name").Value, files.Attribute("Desc").Value);
@@ -24,19 +29,62 @@ namespace Repository.XMLData
 
         }
 
-        public Dictionary<string, int> GetDataIndex()
+        public List<StructFile> GetStruct(string structName)
         {
-            Dictionary<string, int> result = new Dictionary<string, int>();
-            //string pathXMLFiles = FullPathXMLFiles();
-            //....
-            //line start
-            //line end
-            //StructLine
-            //....
-            //foreach (XElement files in XElement.Load(pathXMLFiles).Elements("File"))
-            //{
-            //    result.Add(files.Attribute("name").Value, files.Attribute("Local").Value);
-            //}
+            var result = new List<StructFile>();
+            bool find = false;
+
+            foreach (XElement structNode in XElement.Load(GetEmbeddedXMLFile("Structures.xml")).Elements("Struct"))
+            {
+                //Find for Name node element in XML
+                try
+                {
+                    if (structNode.HasElements && structNode.Attribute("value").Value.Equals(structName))
+                    {
+                        find = true;
+                        using (XmlReader reader = structNode.CreateReader())
+                        {
+                            while (reader.Read())
+                            {
+                                //if (reader.IsStartElement())
+                                //{
+                                result.Add(CreateStruct(reader));
+                                //}
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    throw new FileNotFoundException($"Structure <{structName}> not configurated. Error call XML Structures.");
+                }
+
+            }
+
+            if (!find) { throw new FileNotFoundException($"Structure <{structName}> not found. Error call XML Structures."); }
+
+            /*
+
+              <Struct value ="Default">
+                
+                
+                <AtmosphericPressure value="MANUAL"  describe="Atmospheric Pressure"  field="-" line="-1" IndexPosition="-1"></AtmosphericPressure>
+                <Data structLine="2" startData="12" stopData="-"></Data>
+                <MIC1Time          value="MIC 1 Time"                describe="[A]"  field="C1:  Time[s]"                 unit="s" ></MIC1Time>
+                <MIC1Pressure      value="MIC 1 Pressure"            describe="[A]"  field="C1:  [Pa]"                    unit="Pa"></MIC1Pressure>
+                <MIC2Time          value="MIC 2 Time"                describe="[A]"  field="C2:  Time[s]"                 unit="s"></MIC2Time>
+                <MIC2Pressure      value="MIC 2 Pressure"            describe="[A]"  field="C2:  [Pa]"                    unit="Pa"></MIC2Pressure>
+                <FRF1Frequency     value="FRF(C1, C2) Frequency"     describe="[A]"  field="M1: FRF(C1,C2) Frequency[Hz]" unit="Hz"></FRF1Frequency>
+                <FRF1Amplification value="FRF(C1, C2) Amplification" describe="[A]"  field="M1: FRF(C1,C2) [](A)"         unit="-"></FRF1Amplification>
+                <FRF2Frequency     value="FRF(C2,C1) Frequency"      describe="[A]"  field="M2: FRF(C2,C1) Frequency[Hz]" unit="Hz"></FRF2Frequency>
+                <FRF2Amplification value="FRF(C2,C1) Amplification"  describe="[A]"  field="M2: FRF(C2,C1) [](A)"         unit="-"></FRF2Amplification>
+                <FFT1Frequency     value="FFT(C1) Frequency"         describe="[A]"  field="M3: FFT(C1) Frequency[Hz]"    unit="Hz"></FFT1Frequency>
+                <FFT1Amplitude     value="FFT(C1) (A)"               describe="[A]"  field="M3: FFT(C1) [Pa](A)"          unit="-"></FFT1Amplitude>
+                <FFT2Frequency     value="FFT(C2) Frequency"         describe="[A]"  field="M4: FFT(C2) Frequency[Hz]"    unit="Hz"></FFT2Frequency>
+                <FFT2Amplitude     value="FFT(C2) (A)"               describe="[A]"  field="M4: FFT(C2) [Pa](A)"          unit="-"></FFT2Amplitude>
+              </Struct>
+
+             */
             return result;
 
         }
@@ -46,7 +94,7 @@ namespace Repository.XMLData
         {
             string foundFile = prefix + file;
             var verify = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceNames();
-            if (!verify.Any(x => x== foundFile))
+            if (!verify.Any(x => x == foundFile))
             {
                 throw new FileNotFoundException($"Embedded File <{file}> not found. Error XML call.");
             }
@@ -54,7 +102,115 @@ namespace Repository.XMLData
             return stream;
         }
 
-       
+
+
+        private StructFile CreateStruct(XmlReader reader)
+        {
+            StructFile result = new StructFile();
+            switch (reader.Name)
+            {
+                case "Name":
+                    result = new StructFile()
+                    {
+                        Type = StructType.Name,
+                        Describe = reader["describe"],
+                        Field = reader["field"],
+                        IndexPosition = -1,
+                        LineEnd = -1,
+                        LineStart = -1,
+                        Unit = "-",
+                        Value = reader["value"]
+                    };
+                    break;
+                case "Temperature":
+                    result = new StructFile()
+                    {
+                        Type = StructType.Temperature,
+                        Describe = reader["describe"],
+                        Field = reader["field"],
+                        IndexPosition = -1,
+                        LineEnd = -1,
+                        LineStart = -1,
+                        Unit = reader["name"],
+                        Value = reader["value"]
+                    };
+                    break;
+                case "AtmosphericPressure":
+                    result = new StructFile()
+                    {
+                        Type = StructType.ATP,
+                        Describe = reader["describe"],
+                        Field = reader["field"],
+                        IndexPosition = -1,
+                        LineEnd = -1,
+                        LineStart = -1,
+                        Unit = reader["name"],
+                        Value = reader["value"]
+                    };                    
+                    break;
+                case "Data":
+                    result = new StructFile()
+                    {
+                        Type = StructType.DataLine,
+                        Describe = reader["describe"],
+                        Field = "-",
+                        IndexPosition = int.Parse(reader["structLine"]),
+                        LineEnd = int.Parse(reader["startData"]),
+                        LineStart = int.Parse(reader["stopData"]),
+                        Unit = reader["name"],
+                        Value = reader["value"]
+                    };
+                    break;
+                case "MIC1Time":
+                    break;
+                case "MIC1Pressure":
+                    break;
+                case "MIC2Time":
+                    break;
+                case "MIC2Pressure":
+                    break;
+                case "FRF1Frequency":
+                    break;
+                case "FRF1Amplification":
+                    break;
+                case "FRF2Frequency":
+                    break;
+                case "FRF2Amplification":
+                    break;
+                case "FFT1Frequency":
+                    break;
+                case "FFT1Amplitude":
+                    break;
+                case "FFT2Frequency":
+                    break;
+                case "FFT2Amplitude":
+                    break;
+            }
+            return result;
+        }
+
+
+        /*
+          
+            
+    <Data structLine="2" startData="12" stopData="-"></Data>
+    <MIC1Time          value="MIC 1 Time"                describe="[A]"  field="C1:  Time[s]"                 unit="s" ></MIC1Time>
+    <MIC1Pressure      value="MIC 1 Pressure"            describe="[A]"  field="C1:  [Pa]"                    unit="Pa"></MIC1Pressure>
+    <MIC2Time          value="MIC 2 Time"                describe="[A]"  field="C2:  Time[s]"                 unit="s"></MIC2Time>
+    <MIC2Pressure      value="MIC 2 Pressure"            describe="[A]"  field="C2:  [Pa]"                    unit="Pa"></MIC2Pressure>
+    <FRF1Frequency     value="FRF(C1, C2) Frequency"     describe="[A]"  field="M1: FRF(C1,C2) Frequency[Hz]" unit="Hz"></FRF1Frequency>
+    <FRF1Amplification value="FRF(C1, C2) Amplification" describe="[A]"  field="M1: FRF(C1,C2) [](A)"         unit="-"></FRF1Amplification>
+    <FRF2Frequency     value="FRF(C2,C1) Frequency"      describe="[A]"  field="M2: FRF(C2,C1) Frequency[Hz]" unit="Hz"></FRF2Frequency>
+    <FRF2Amplification value="FRF(C2,C1) Amplification"  describe="[A]"  field="M2: FRF(C2,C1) [](A)"         unit="-"></FRF2Amplification>
+    <FFT1Frequency     value="FFT(C1) Frequency"         describe="[A]"  field="M3: FFT(C1) Frequency[Hz]"    unit="Hz"></FFT1Frequency>
+    <FFT1Amplitude     value="FFT(C1) (A)"               describe="[A]"  field="M3: FFT(C1) [Pa](A)"          unit="-"></FFT1Amplitude>
+    <FFT2Frequency     value="FFT(C2) Frequency"         describe="[A]"  field="M4: FFT(C2) Frequency[Hz]"    unit="Hz"></FFT2Frequency>
+    <FFT2Amplitude     value="FFT(C2) (A)"               describe="[A]"  field="M4: FFT(C2) [Pa](A)"          unit="-"></FFT2Amplitude>
+ 
+         * */
+
+
+
         // GetResourceTextFile("myXmlDoc.xml")
 
         /*

@@ -21,6 +21,20 @@
             //Assert
             Assert.AreEqual(1, test.Count);
         }
+
+        [TestMethod]
+        public void LoadFileGetStruct_Ok()
+        {
+            //Arrange
+            XMLStruct xmlStruct = new XMLStruct();
+
+            //Act
+            var test = xmlStruct.GetStruct("Default");
+
+            //Assert
+            Assert.AreEqual(1, test.Count);
+        }
+        
     }
 }
 
