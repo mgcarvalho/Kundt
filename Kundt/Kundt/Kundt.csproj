@@ -137,6 +137,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DTO\DTO.csproj">
+      <Project>{f1a86b54-01a2-433a-be9f-028e33a81277}</Project>
+      <Name>DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Services\KundtManager.csproj">
       <Project>{603d5b37-c376-476b-99c8-535cd2d10869}</Project>
       <Name>KundtManager</Name>

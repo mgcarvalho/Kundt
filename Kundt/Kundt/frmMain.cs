@@ -11,11 +11,15 @@
     using System.Threading.Tasks;
     using System.Windows.Forms;
 
+    using DTO;
     using KundtManager;
+
 
 
     public partial class frmMain : Form
     {
+        public string SelectStruct { get; set; }
+
         public frmMain()
         {
             InitializeComponent();
@@ -37,9 +41,15 @@
 
         private void btnLoadStruct_Click(object sender, EventArgs e)
         {
-            string findStruct = cmbStruct.SelectedValue.ToString();
+            SelectStruct = cmbStruct.SelectedValue.ToString();
+            BindingData();
+        }
+
+
+        private void BindingData()
+        {
             var lS = new LoadStructs();
-            var foundStruct = lS;
+            dgvStructures.DataSource = new BindingSource(lS.GetStructs(SelectStruct), null);
         }
     }
 }

@@ -30,6 +30,7 @@
         {
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabLoad = new System.Windows.Forms.TabPage();
+            this.dgvStructures = new System.Windows.Forms.DataGridView();
             this.btnLoadStruct = new System.Windows.Forms.Button();
             this.cmbStruct = new System.Windows.Forms.ComboBox();
             this.lblStruct = new System.Windows.Forms.Label();
@@ -37,6 +38,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tabMain.SuspendLayout();
             this.tabLoad.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStructures)).BeginInit();
             this.SuspendLayout();
             // 
             // tabMain
@@ -52,6 +54,7 @@
             // 
             // tabLoad
             // 
+            this.tabLoad.Controls.Add(this.dgvStructures);
             this.tabLoad.Controls.Add(this.btnLoadStruct);
             this.tabLoad.Controls.Add(this.cmbStruct);
             this.tabLoad.Controls.Add(this.lblStruct);
@@ -62,6 +65,15 @@
             this.tabLoad.TabIndex = 0;
             this.tabLoad.Text = "Load Data";
             this.tabLoad.UseVisualStyleBackColor = true;
+            // 
+            // dgvStructures
+            // 
+            this.dgvStructures.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStructures.Location = new System.Drawing.Point(24, 100);
+            this.dgvStructures.Name = "dgvStructures";
+            this.dgvStructures.RowTemplate.Height = 24;
+            this.dgvStructures.Size = new System.Drawing.Size(730, 150);
+            this.dgvStructures.TabIndex = 3;
             // 
             // btnLoadStruct
             // 
@@ -130,6 +142,7 @@
             this.tabMain.ResumeLayout(false);
             this.tabLoad.ResumeLayout(false);
             this.tabLoad.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStructures)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -144,5 +157,6 @@
         private System.Windows.Forms.ComboBox cmbStruct;
         private System.Windows.Forms.Label lblStruct;
         private System.Windows.Forms.Button btnLoadStruct;
+        private System.Windows.Forms.DataGridView dgvStructures;
     }
 }
