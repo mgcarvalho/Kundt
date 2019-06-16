@@ -58,6 +58,10 @@
       <Project>{e1c0f6ed-67aa-4811-a8ef-89ef94bb0fbb}</Project>
       <Name>Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Solver\Solver.csproj">
+      <Project>{884da4dc-f28a-44a1-8100-3750c07e6db8}</Project>
+      <Name>Solver</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
