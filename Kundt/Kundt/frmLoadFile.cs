@@ -19,23 +19,34 @@ namespace Kundt
             InitializeComponent();
         }
 
-
         private void PrepareInput()
         {
-            //Nome Structure
-            //CASE Name
-            //Data HORA
+            lblStructName.Text = StructName["NAME"];
+            txtCASE.Text = string.Empty;
+            dtpDATA.Text = string.Empty;
+            txtTEMP.Text = string.Empty;
+            txtATP.Text = string.Empty;
+            txtFILE1.Text = string.Empty;
+            txtFILE2.Text = string.Empty;
+        }
 
-            //Temperatura (MANUAL or FILE or DEFAULT)
-            //ATP (MANUAL or FILE or CALCULATE)
+        private string FileName()
+        {
+            string result = string.Empty;
+            ofdFiles.ShowDialog();
+            result = ofdFiles.FileName;
 
-            //FILE 1
-            //File 2
+            return result;
         }
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            StructName.Add("FILE1", "TEST OK");
+            StructName.Add("CASE", txtCASE.Text);
+            StructName.Add("DATA", dtpDATA.Text);
+            StructName.Add("TEMP", txtTEMP.Text);
+            StructName.Add("ATP", txtATP.Text);
+            StructName.Add("FILE1", txtFILE1.Text);
+            StructName.Add("FILE2", txtFILE2.Text);
             this.Close();
         }
 
@@ -43,6 +54,28 @@ namespace Kundt
         {
             StructName = null;
             this.Close();
+        }
+
+        private void frmLoadFile_Load(object sender, EventArgs e)
+        {
+            PrepareInput();
+        }
+
+        private void btnFile1_Click(object sender, EventArgs e)
+        {
+            txtFILE1.Text = FileName();
+        }
+
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            txtFILE2.Text = FileName();
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            PrepareInput();
         }
     }
 }

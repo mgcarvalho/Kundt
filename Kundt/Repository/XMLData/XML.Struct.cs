@@ -10,6 +10,7 @@
     using System.Xml;
 
     using DTO;
+    using KundtExceptions;
 
     public class XMLStruct : IXMLStruct
     {
@@ -54,12 +55,12 @@
                 }
                 catch
                 {
-                    throw new FileNotFoundException($"Structure <{structName}> not configurated. Error call XML Structures.");
+                    throw new LoadExceptions($"Structure <{structName}> not configurated. Error call XML Structures.");
                 }
 
             }
 
-            if (!find) { throw new FileNotFoundException($"Structure <{structName}> not found. Error call XML Structures."); }
+            if (!find) { throw new LoadExceptions($"Structure <{structName}> not found. Error call XML Structures."); }
 
             /*
 
@@ -94,7 +95,7 @@
             var verify = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceNames();
             if (!verify.Any(x => x == foundFile))
             {
-                throw new FileNotFoundException($"Embedded File <{file}> not found. Error XML call.");
+                throw new LoadExceptions($"Embedded File <{file}> not found. Error XML call.");
             }
             Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(foundFile);
             return stream;

@@ -35,27 +35,27 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabLoad = new System.Windows.Forms.TabPage();
+            this.btnAnalyze = new System.Windows.Forms.Button();
+            this.btnAddFile = new System.Windows.Forms.Button();
+            this.btnClearStruct = new System.Windows.Forms.Button();
+            this.gpbFilesLoad = new System.Windows.Forms.GroupBox();
+            this.trvFilesLoad = new System.Windows.Forms.TreeView();
             this.dgvStructures = new System.Windows.Forms.DataGridView();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Field = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnLoadStruct = new System.Windows.Forms.Button();
             this.cmbStruct = new System.Windows.Forms.ComboBox();
             this.lblStruct = new System.Windows.Forms.Label();
             this.tabAnalyze = new System.Windows.Forms.TabPage();
             this.stsInfo = new System.Windows.Forms.StatusStrip();
-            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Field = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gpbFilesLoad = new System.Windows.Forms.GroupBox();
-            this.trvFilesLoad = new System.Windows.Forms.TreeView();
-            this.btnClearStruct = new System.Windows.Forms.Button();
-            this.btnAddFile = new System.Windows.Forms.Button();
-            this.btnAnalyze = new System.Windows.Forms.Button();
             this.toolStripStatusLabelInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabMain.SuspendLayout();
             this.tabLoad.SuspendLayout();
+            this.gpbFilesLoad.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStructures)).BeginInit();
             this.stsInfo.SuspendLayout();
-            this.gpbFilesLoad.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabMain
@@ -87,6 +87,55 @@
             this.tabLoad.Text = "Load Data";
             this.tabLoad.UseVisualStyleBackColor = true;
             // 
+            // btnAnalyze
+            // 
+            this.btnAnalyze.BackColor = System.Drawing.Color.Transparent;
+            this.btnAnalyze.Enabled = false;
+            this.btnAnalyze.Location = new System.Drawing.Point(652, 435);
+            this.btnAnalyze.Name = "btnAnalyze";
+            this.btnAnalyze.Size = new System.Drawing.Size(102, 26);
+            this.btnAnalyze.TabIndex = 7;
+            this.btnAnalyze.Text = "Analyze Files";
+            this.btnAnalyze.UseVisualStyleBackColor = false;
+            // 
+            // btnAddFile
+            // 
+            this.btnAddFile.Enabled = false;
+            this.btnAddFile.Location = new System.Drawing.Point(544, 435);
+            this.btnAddFile.Name = "btnAddFile";
+            this.btnAddFile.Size = new System.Drawing.Size(102, 26);
+            this.btnAddFile.TabIndex = 6;
+            this.btnAddFile.Text = "Add Files";
+            this.btnAddFile.UseVisualStyleBackColor = true;
+            this.btnAddFile.Click += new System.EventHandler(this.btnAddFile_Click);
+            // 
+            // btnClearStruct
+            // 
+            this.btnClearStruct.Location = new System.Drawing.Point(652, 32);
+            this.btnClearStruct.Name = "btnClearStruct";
+            this.btnClearStruct.Size = new System.Drawing.Size(102, 26);
+            this.btnClearStruct.TabIndex = 5;
+            this.btnClearStruct.Text = "Clear Struct";
+            this.btnClearStruct.UseVisualStyleBackColor = true;
+            this.btnClearStruct.Click += new System.EventHandler(this.btnClearStruct_Click);
+            // 
+            // gpbFilesLoad
+            // 
+            this.gpbFilesLoad.Controls.Add(this.trvFilesLoad);
+            this.gpbFilesLoad.Location = new System.Drawing.Point(760, 3);
+            this.gpbFilesLoad.Name = "gpbFilesLoad";
+            this.gpbFilesLoad.Size = new System.Drawing.Size(399, 458);
+            this.gpbFilesLoad.TabIndex = 4;
+            this.gpbFilesLoad.TabStop = false;
+            this.gpbFilesLoad.Text = "Files";
+            // 
+            // trvFilesLoad
+            // 
+            this.trvFilesLoad.Location = new System.Drawing.Point(6, 22);
+            this.trvFilesLoad.Name = "trvFilesLoad";
+            this.trvFilesLoad.Size = new System.Drawing.Size(387, 430);
+            this.trvFilesLoad.TabIndex = 0;
+            // 
             // dgvStructures
             // 
             this.dgvStructures.AllowUserToAddRows = false;
@@ -106,9 +155,50 @@
             this.dgvStructures.Size = new System.Drawing.Size(730, 349);
             this.dgvStructures.TabIndex = 3;
             // 
+            // Type
+            // 
+            this.Type.DataPropertyName = "Type";
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.Type.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Type.HeaderText = "Type";
+            this.Type.Name = "Type";
+            this.Type.Width = 175;
+            // 
+            // Field
+            // 
+            this.Field.DataPropertyName = "Field";
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.Field.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Field.HeaderText = "Field";
+            this.Field.Name = "Field";
+            this.Field.Width = 220;
+            // 
+            // Value
+            // 
+            this.Value.DataPropertyName = "Value";
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.Value.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Value.HeaderText = "Value";
+            this.Value.Name = "Value";
+            this.Value.Width = 220;
+            // 
+            // Unit
+            // 
+            this.Unit.DataPropertyName = "Unit";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.Unit.DefaultCellStyle = dataGridViewCellStyle5;
+            this.Unit.HeaderText = "Unit";
+            this.Unit.Name = "Unit";
+            this.Unit.Width = 55;
+            // 
             // btnLoadStruct
             // 
-            this.btnLoadStruct.Location = new System.Drawing.Point(528, 32);
+            this.btnLoadStruct.Location = new System.Drawing.Point(544, 30);
             this.btnLoadStruct.Name = "btnLoadStruct";
             this.btnLoadStruct.Size = new System.Drawing.Size(102, 26);
             this.btnLoadStruct.TabIndex = 2;
@@ -155,96 +245,6 @@
             this.stsInfo.SizingGrip = false;
             this.stsInfo.TabIndex = 1;
             // 
-            // Type
-            // 
-            this.Type.DataPropertyName = "Type";
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.Type.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Type.HeaderText = "Type";
-            this.Type.Name = "Type";
-            this.Type.Width = 175;
-            // 
-            // Field
-            // 
-            this.Field.DataPropertyName = "Field";
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.Field.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Field.HeaderText = "Field";
-            this.Field.Name = "Field";
-            this.Field.Width = 220;
-            // 
-            // Value
-            // 
-            this.Value.DataPropertyName = "Value";
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.Value.DefaultCellStyle = dataGridViewCellStyle4;
-            this.Value.HeaderText = "Value";
-            this.Value.Name = "Value";
-            this.Value.Width = 220;
-            // 
-            // Unit
-            // 
-            this.Unit.DataPropertyName = "Unit";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.Unit.DefaultCellStyle = dataGridViewCellStyle5;
-            this.Unit.HeaderText = "Unit";
-            this.Unit.Name = "Unit";
-            this.Unit.Width = 55;
-            // 
-            // gpbFilesLoad
-            // 
-            this.gpbFilesLoad.Controls.Add(this.trvFilesLoad);
-            this.gpbFilesLoad.Location = new System.Drawing.Point(760, 3);
-            this.gpbFilesLoad.Name = "gpbFilesLoad";
-            this.gpbFilesLoad.Size = new System.Drawing.Size(399, 458);
-            this.gpbFilesLoad.TabIndex = 4;
-            this.gpbFilesLoad.TabStop = false;
-            this.gpbFilesLoad.Text = "Files";
-            // 
-            // trvFilesLoad
-            // 
-            this.trvFilesLoad.Location = new System.Drawing.Point(6, 22);
-            this.trvFilesLoad.Name = "trvFilesLoad";
-            this.trvFilesLoad.Size = new System.Drawing.Size(387, 430);
-            this.trvFilesLoad.TabIndex = 0;
-            // 
-            // btnClearStruct
-            // 
-            this.btnClearStruct.Location = new System.Drawing.Point(652, 31);
-            this.btnClearStruct.Name = "btnClearStruct";
-            this.btnClearStruct.Size = new System.Drawing.Size(102, 26);
-            this.btnClearStruct.TabIndex = 5;
-            this.btnClearStruct.Text = "Clear Struct";
-            this.btnClearStruct.UseVisualStyleBackColor = true;
-            this.btnClearStruct.Click += new System.EventHandler(this.btnClearStruct_Click);
-            // 
-            // btnAddFile
-            // 
-            this.btnAddFile.Enabled = false;
-            this.btnAddFile.Location = new System.Drawing.Point(528, 435);
-            this.btnAddFile.Name = "btnAddFile";
-            this.btnAddFile.Size = new System.Drawing.Size(102, 26);
-            this.btnAddFile.TabIndex = 6;
-            this.btnAddFile.Text = "Add Files";
-            this.btnAddFile.UseVisualStyleBackColor = true;
-            this.btnAddFile.Click += new System.EventHandler(this.btnAddFile_Click);
-            // 
-            // btnAnalyze
-            // 
-            this.btnAnalyze.BackColor = System.Drawing.Color.Transparent;
-            this.btnAnalyze.Enabled = false;
-            this.btnAnalyze.Location = new System.Drawing.Point(652, 435);
-            this.btnAnalyze.Name = "btnAnalyze";
-            this.btnAnalyze.Size = new System.Drawing.Size(102, 26);
-            this.btnAnalyze.TabIndex = 7;
-            this.btnAnalyze.Text = "Analyze Files";
-            this.btnAnalyze.UseVisualStyleBackColor = false;
-            // 
             // toolStripStatusLabelInfo
             // 
             this.toolStripStatusLabelInfo.Name = "toolStripStatusLabelInfo";
@@ -269,10 +269,10 @@
             this.tabMain.ResumeLayout(false);
             this.tabLoad.ResumeLayout(false);
             this.tabLoad.PerformLayout();
+            this.gpbFilesLoad.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvStructures)).EndInit();
             this.stsInfo.ResumeLayout(false);
             this.stsInfo.PerformLayout();
-            this.gpbFilesLoad.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

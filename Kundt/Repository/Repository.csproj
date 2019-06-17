@@ -54,6 +54,10 @@
       <Project>{5bb45aca-a963-401b-b89e-e8006903e0bd}</Project>
       <Name>Entity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KundtExceptions\KundtExceptions.csproj">
+      <Project>{f73fc297-f1aa-48dd-a461-69a0b7b090f7}</Project>
+      <Name>KundtExceptions</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="XMLData\Structures.xml">

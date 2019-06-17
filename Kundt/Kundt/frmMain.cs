@@ -13,6 +13,7 @@
     using System.Windows.Forms;
 
     using DTO;
+    using KundtExceptions;
     using KundtManager;
 
 
@@ -20,6 +21,7 @@
     public partial class frmMain : Form
     {
         public string SelectStruct { get; set; }
+        public string StructName { get; set; }
 
         public frmMain()
         {
@@ -44,6 +46,7 @@
         {
             Clear();
             SelectStruct = cmbStruct.SelectedValue.ToString();
+            StructName = cmbStruct.Text;
             BindingData();
         }
 
@@ -52,7 +55,7 @@
         {
             frmLoadFile frm = new frmLoadFile();
             frm.StructName = new Dictionary<string, string>();
-
+            frm.StructName.Add("NAME", StructName);
             frm.ShowDialog();
 
             if (frm.StructName == null)
@@ -64,6 +67,8 @@
 
                 btnAnalyze.Enabled = true;
                 btnAnalyze.BackColor = Color.YellowGreen;
+
+                
             }
             frm.Dispose();            
         }
@@ -85,9 +90,9 @@
                 btnAddFile.BackColor = Color.YellowGreen;
                 MensagenStatus("Structure loaded with success", levelMensage.info);
             }
-            catch (FileNotFoundException fn)
+            catch (LoadExceptions le)
             {
-                MensagenStatus(fn.Message, levelMensage.warning);
+                MensagenStatus(le.Message, levelMensage.warning);
             }
             catch (Exception ex)
             {
