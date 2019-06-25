@@ -77,5 +77,10 @@ namespace Kundt
         {
             PrepareInput();
         }
+
+        private void txtATP_LostFocus(object sender, EventArgs e)
+        {
+
+        }
     }
 }

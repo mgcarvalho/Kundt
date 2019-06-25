@@ -23,9 +23,12 @@
         public string SelectStruct { get; set; }
         public string StructName { get; set; }
 
+        public List<Dictionary<string, string>> ListAnalizer { get; set; }
+
         public frmMain()
         {
             InitializeComponent();
+            ListAnalizer = new List<Dictionary<string, string>>();
         }
 
         private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -64,13 +67,17 @@
             }
             else
             {
-
+                LoadTreeView(frm.StructName);
                 btnAnalyze.Enabled = true;
                 btnAnalyze.BackColor = Color.YellowGreen;
-
-                
+                if (ListAnalizer.Count > 0 && !btnRemoveNode.Enabled)
+                {
+                    btnRemoveNode.Enabled = true;
+                    btnRemoveNode.BackColor = Color.YellowGreen;
+                }
+                MensagenStatus("Group insered!", levelMensage.info);
             }
-            frm.Dispose();            
+            frm.Dispose();
         }
 
         private void btnClearStruct_Click(object sender, EventArgs e)
@@ -78,7 +85,33 @@
             Clear();
             MensagenStatus("Clear!", levelMensage.info);
         }
-        
+
+
+        private void btnRemoveNode_Click(object sender, EventArgs e)
+        {
+            //Verificar se está selecionado e achar
+            TreeNode node = trvFilesLoad.SelectedNode;
+            if (node != null)
+            {
+                while (node.Parent != null)
+                {
+                    node = node.Parent;
+                }
+                RemoveCase(node.Name);
+                MensagenStatus("Group removed!", levelMensage.info);
+                if (ListAnalizer.Count == 0)
+                {
+                    btnRemoveNode.Enabled = false;
+                    btnRemoveNode.BackColor = Color.Transparent;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Select a group at tree to remove it!");
+                MensagenStatus("Select a Group!", levelMensage.error);
+            }
+        }
+
         private void BindingData()
         {
             try
@@ -110,6 +143,12 @@
 
             btnAnalyze.Enabled = false;
             btnAnalyze.BackColor = Color.Transparent;
+
+            trvFilesLoad.Nodes.Clear();
+            ListAnalizer = new List<Dictionary<string, string>>();
+
+            btnRemoveNode.Enabled = false;
+            btnRemoveNode.BackColor = Color.Transparent;
         }
 
 
@@ -133,11 +172,47 @@
             }
         }
 
+        private void LoadTreeView(Dictionary<string, string> itemAnalizer)
+        {
+            if (trvFilesLoad.Nodes.ContainsKey(itemAnalizer["CASE"]))
+            {
+                RemoveCase(itemAnalizer["CASE"]);
+            }
+            ListAnalizer.Add(itemAnalizer);
+
+            trvFilesLoad.Nodes.Add(itemAnalizer["CASE"], itemAnalizer["CASE"]);
+
+            int rootIndex = trvFilesLoad.Nodes.IndexOfKey(itemAnalizer["CASE"]);
+            if (rootIndex >= 0)
+            {
+                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Data: {itemAnalizer["DATA"]}");
+                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Temperature: {itemAnalizer["TEMP"]} C");
+                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Atmospheric Pressure: {itemAnalizer["ATP"]} KPa");
+                trvFilesLoad.Nodes[rootIndex].Nodes.Add("Files");
+                trvFilesLoad.Nodes[rootIndex].Nodes[3].Nodes.Add($"File (1): {itemAnalizer["FILE1"]}");
+                trvFilesLoad.Nodes[rootIndex].Nodes[3].Nodes.Add($"File (2): {itemAnalizer["FILE2"]}");
+            }
+        }
+
+        private void RemoveCase(string CaseName)
+        {
+            trvFilesLoad.Nodes.RemoveByKey(CaseName);
+            foreach (var item in ListAnalizer)
+            {
+                if (item["CASE"].Equals(CaseName))
+                {
+                    ListAnalizer.Remove(item);
+                    return;
+                }
+            }
+        }
+
         enum levelMensage
         {
             info,
             warning,
             error
         }
+
     }
 }
