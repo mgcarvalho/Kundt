@@ -158,6 +158,10 @@
       <Project>{603d5b37-c376-476b-99c8-535cd2d10869}</Project>
       <Name>KundtManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Solver\Solver.csproj">
+      <Project>{884da4dc-f28a-44a1-8100-3750c07e6db8}</Project>
+      <Name>Solver</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

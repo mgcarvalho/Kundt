@@ -5,7 +5,7 @@ namespace Solver
 
     public static class KundtFunctions
     {
-        private const double DefaultAtmosphericPressure = 1.05F;
+        private const double DefaultAtmosphericPressure = 101.32F;
 
         public static double Amplitude(double c1, double c2)
         {
@@ -16,29 +16,29 @@ namespace Solver
             return rCalculate;
         }
 
-        public static double SoundVelocity(double temper)
+        public static double SoundVelocity(double temperature)
         {
             double rCalculate = 0;
-            rCalculate = 20.047 * (Math.Sqrt(273.15 + temper));
+            rCalculate = 20.047 * (Math.Sqrt(273.15 + temperature));
             return rCalculate;
         }
 
         //ok
-        public static double WaveNumber(double frequency, double temper)
+        public static double WaveNumber(double frequency, double temperature)
         {
             double rCalculate = 0;
-            double soundVelocity = SoundVelocity(temper);
+            double soundVelocity = SoundVelocity(temperature);
             if (soundVelocity == 0) { return 0; }
             rCalculate = (2 * Math.PI * frequency) / soundVelocity; 
             return rCalculate;
         }
 
         //ok
-        public static double AirDensity(double temper, double? pressure = null)
+        public static double AirDensity(double temperature, double? pressure = null)
         {
             double rCalculate = 0;
             double AtmosphericPressure = pressure ?? DefaultAtmosphericPressure;
-            rCalculate = 1.290 * (AtmosphericPressure / 101.325) * (273.15 / (273.15 + temper));
+            rCalculate = 1.290 * (AtmosphericPressure / 101.325) * (273.15 / (273.15 + temperature));
             return rCalculate;
         }
     }

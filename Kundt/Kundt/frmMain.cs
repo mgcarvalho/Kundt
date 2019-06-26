@@ -8,6 +8,7 @@
     using System.Drawing;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows.Forms;
@@ -15,6 +16,7 @@
     using DTO;
     using KundtExceptions;
     using KundtManager;
+    using Solver;
 
 
 
@@ -24,92 +26,13 @@
         public string StructName { get; set; }
 
         public List<Dictionary<string, string>> ListAnalizer { get; set; }
+        public Dictionary<string, string> ListFormulas { get; set; }
 
-        public frmMain()
+        enum levelMensage
         {
-            InitializeComponent();
-            ListAnalizer = new List<Dictionary<string, string>>();
-        }
-
-        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            //this.Close();
-            Application.Exit();
-        }
-
-        private void frmMain_Load(object sender, EventArgs e)
-        {
-            var lS = new LoadStructs();
-            cmbStruct.DataSource = new BindingSource(lS.GetSavedStructs(), null);
-            cmbStruct.DisplayMember = "Value";
-            cmbStruct.ValueMember = "Key";
-        }
-
-        private void btnLoadStruct_Click(object sender, EventArgs e)
-        {
-            Clear();
-            SelectStruct = cmbStruct.SelectedValue.ToString();
-            StructName = cmbStruct.Text;
-            BindingData();
-        }
-
-
-        private void btnAddFile_Click(object sender, EventArgs e)
-        {
-            frmLoadFile frm = new frmLoadFile();
-            frm.StructName = new Dictionary<string, string>();
-            frm.StructName.Add("NAME", StructName);
-            frm.ShowDialog();
-
-            if (frm.StructName == null)
-            {
-                MensagenStatus("Files not informated!", levelMensage.warning);
-            }
-            else
-            {
-                LoadTreeView(frm.StructName);
-                btnAnalyze.Enabled = true;
-                btnAnalyze.BackColor = Color.YellowGreen;
-                if (ListAnalizer.Count > 0 && !btnRemoveNode.Enabled)
-                {
-                    btnRemoveNode.Enabled = true;
-                    btnRemoveNode.BackColor = Color.YellowGreen;
-                }
-                MensagenStatus("Group insered!", levelMensage.info);
-            }
-            frm.Dispose();
-        }
-
-        private void btnClearStruct_Click(object sender, EventArgs e)
-        {
-            Clear();
-            MensagenStatus("Clear!", levelMensage.info);
-        }
-
-
-        private void btnRemoveNode_Click(object sender, EventArgs e)
-        {
-            //Verificar se está selecionado e achar
-            TreeNode node = trvFilesLoad.SelectedNode;
-            if (node != null)
-            {
-                while (node.Parent != null)
-                {
-                    node = node.Parent;
-                }
-                RemoveCase(node.Name);
-                MensagenStatus("Group removed!", levelMensage.info);
-                if (ListAnalizer.Count == 0)
-                {
-                    btnRemoveNode.Enabled = false;
-                    btnRemoveNode.BackColor = Color.Transparent;
-                }
-            }
-            else
-            {
-                MessageBox.Show("Select a group at tree to remove it!");
-                MensagenStatus("Select a Group!", levelMensage.error);
-            }
+            info,
+            warning,
+            error
         }
 
         private void BindingData()
@@ -149,8 +72,10 @@
 
             btnRemoveNode.Enabled = false;
             btnRemoveNode.BackColor = Color.Transparent;
-        }
 
+            btnRemoveAllNodes.Enabled = false;
+            btnRemoveAllNodes.BackColor = Color.Transparent;
+        }
 
         private void MensagenStatus(string mensage, levelMensage level)
         {
@@ -186,8 +111,8 @@
             if (rootIndex >= 0)
             {
                 trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Data: {itemAnalizer["DATA"]}");
-                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Temperature: {itemAnalizer["TEMP"]} C");
-                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Atmospheric Pressure: {itemAnalizer["ATP"]} KPa");
+                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Temperature: {itemAnalizer["TEMP"]}");
+                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Atmospheric Pressure: {itemAnalizer["ATP"]}");
                 trvFilesLoad.Nodes[rootIndex].Nodes.Add("Files");
                 trvFilesLoad.Nodes[rootIndex].Nodes[3].Nodes.Add($"File (1): {itemAnalizer["FILE1"]}");
                 trvFilesLoad.Nodes[rootIndex].Nodes[3].Nodes.Add($"File (2): {itemAnalizer["FILE2"]}");
@@ -207,12 +132,218 @@
             }
         }
 
-        enum levelMensage
+
+        private void LoadFormulas()
         {
-            info,
-            warning,
-            error
+            ListFormulas = new Dictionary<string, string>();
+            //object solverClass = Activator.CreateInstance(typeof(KundtFunctions));
+            Type tSolver = typeof(KundtFunctions);
+
+            MethodInfo[] methods = tSolver.GetMethods();
+
+            ListFormulas.Add("--","Select One");
+            foreach (var item in methods.Where(x => x.IsStatic))
+            {
+                ListFormulas.Add(item.Name, item.Name);
+                var tst = item.GetParameters();
+            }
+            cmbFormulas.DataSource = new BindingSource(ListFormulas, null);
+            cmbFormulas.DisplayMember = "Value";
+            cmbFormulas.ValueMember = "Key";
+
         }
 
+
+        public frmMain()
+        {
+            InitializeComponent();
+            LoadFormulas();
+            ListAnalizer = new List<Dictionary<string, string>>();
+        }
+
+        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //this.Close();
+            Application.Exit();
+        }
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+            var lS = new LoadStructs();
+            cmbStruct.DataSource = new BindingSource(lS.GetSavedStructs(), null);
+            cmbStruct.DisplayMember = "Value";
+            cmbStruct.ValueMember = "Key";
+        }
+
+        private void btnLoadStruct_Click(object sender, EventArgs e)
+        {
+            Clear();
+            SelectStruct = cmbStruct.SelectedValue.ToString();
+            StructName = cmbStruct.Text;
+            BindingData();
+        }
+
+        private void btnAddFile_Click(object sender, EventArgs e)
+        {
+            frmLoadFile frm = new frmLoadFile();
+            frm.StructName = new Dictionary<string, string>();
+            frm.StructName.Add("NAME", StructName);
+            frm.ShowDialog();
+
+            if (frm.StructName == null)
+            {
+                MensagenStatus("Files not informated!", levelMensage.warning);
+            }
+            else
+            {
+                LoadTreeView(frm.StructName);
+                btnAnalyze.Enabled = true;
+                btnAnalyze.BackColor = Color.YellowGreen;
+                if (ListAnalizer.Count > 0 && !btnRemoveNode.Enabled)
+                {
+                    btnRemoveNode.Enabled = true;
+                    btnRemoveNode.BackColor = Color.YellowGreen;
+
+                    btnRemoveAllNodes.Enabled = true;
+                    btnRemoveAllNodes.BackColor = Color.YellowGreen;
+                }
+                MensagenStatus("Group insered!", levelMensage.info);
+            }
+            frm.Dispose();
+        }
+
+        private void btnClearStruct_Click(object sender, EventArgs e)
+        {
+            Clear();
+            MensagenStatus("Clear!", levelMensage.info);
+        }
+
+        private void btnRemoveNode_Click(object sender, EventArgs e)
+        {
+            //Verificar se está selecionado e achar
+            TreeNode node = trvFilesLoad.SelectedNode;
+            if (node != null)
+            {
+                while (node.Parent != null)
+                {
+                    node = node.Parent;
+                }
+                RemoveCase(node.Name);
+                MensagenStatus("Group removed!", levelMensage.info);
+                if (ListAnalizer.Count == 0)
+                {
+                    btnRemoveNode.Enabled = false;
+                    btnRemoveNode.BackColor = Color.Transparent;
+
+                    btnRemoveAllNodes.Enabled = false;
+                    btnRemoveAllNodes.BackColor = Color.Transparent;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Select a group at tree to remove it!");
+                MensagenStatus("Select a Group!", levelMensage.error);
+            }
+        }
+
+        private void btnRemoveAllNodes_Click(object sender, EventArgs e)
+        {
+            trvFilesLoad.Nodes.Clear();
+            ListAnalizer = new List<Dictionary<string, string>>();
+
+            btnRemoveNode.Enabled = false;
+            btnRemoveNode.BackColor = Color.Transparent;
+
+            btnRemoveAllNodes.Enabled = false;
+            btnRemoveAllNodes.BackColor = Color.Transparent;
+        }
+
+        private void cmbFormulas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            //TODO: Gerar automaticamente
+            lblPar1.Text = string.Empty;
+            lblPar1.Visible = false;
+            txtPar1.Text = string.Empty;
+            txtPar1.Visible = false;
+            lblPar2.Text = string.Empty;
+            lblPar2.Visible = false;
+            txtPar2.Text = string.Empty;
+            txtPar2.Visible = false;
+            lblPar3.Text = string.Empty;
+            lblPar3.Visible = false;
+            txtPar3.Text = string.Empty;
+            txtPar3.Visible = false;
+
+            string MethodName = ((KeyValuePair<string, string>)cmbFormulas.SelectedItem).Value;
+
+            if (!MethodName.Equals("Select One") && !String.IsNullOrEmpty(MethodName))
+            {
+                Type tSolver = typeof(KundtFunctions);
+                MethodInfo methods = tSolver.GetMethods().Where(x => x.Name.Equals(MethodName)).FirstOrDefault();
+                int pos = 1;
+                foreach (var item in methods.GetParameters())
+                {
+                    switch (pos)
+                    {
+                        case 1:
+                            lblPar1.Text = item.Name;
+                            lblPar1.Visible = true;
+                            txtPar1.Text = string.Empty;
+                            txtPar1.Visible = true;
+                            break;
+                        case 2:
+                            lblPar2.Text = item.Name;
+                            lblPar2.Visible = true;
+                            txtPar2.Text = string.Empty;
+                            txtPar2.Visible = true;
+                            break;
+                        case 3:
+                            lblPar3.Text = item.Name;
+                            lblPar3.Visible = true;
+                            txtPar3.Text = string.Empty;
+                            txtPar3.Visible = true;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+
+        private void btnDoFormula_Click(object sender, EventArgs e)
+        {
+            string MethodName = ((KeyValuePair<string, string>)cmbFormulas.SelectedItem).Value;
+            Type tSolver = typeof(KundtFunctions);
+            MethodInfo methods = tSolver.GetMethods().Where(x => x.Name.Equals(MethodName)).FirstOrDefault();
+
+            if (methods != null)
+            {
+                ParameterInfo[] parameters = methods.GetParameters();
+                //object classInstance = Activator.CreateInstance(tSolver, null);
+
+                object[] parametersArray = new object[parameters.Count()];
+                for (int i = 0; i < parameters.Count(); i++)
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            parametersArray[i] = Convert.ToDouble(txtPar1.Text);
+                            break;
+                        case 1:
+                            parametersArray[i] = Convert.ToDouble(txtPar2.Text);
+                            break;
+                        case 2:
+                            parametersArray[i] = Convert.ToDouble(txtPar3.Text);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                txtResult.Text = tSolver.GetMethod(MethodName).Invoke(null, parametersArray).ToString() ;
+                
+            }
+        }
     }
 }
