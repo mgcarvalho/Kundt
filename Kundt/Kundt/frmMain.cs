@@ -135,13 +135,12 @@
 
         private void LoadFormulas()
         {
-            ListFormulas = new Dictionary<string, string>();
-            //object solverClass = Activator.CreateInstance(typeof(KundtFunctions));
+            ListFormulas = new Dictionary<string, string>();           
             Type tSolver = typeof(KundtFunctions);
 
             MethodInfo[] methods = tSolver.GetMethods();
 
-            ListFormulas.Add("--","Select One");
+            ListFormulas.Add("--", "Select One");
             foreach (var item in methods.Where(x => x.IsStatic))
             {
                 ListFormulas.Add(item.Name, item.Name);
@@ -307,6 +306,7 @@
                         default:
                             break;
                     }
+                    pos++;
                 }
             }
         }
@@ -321,28 +321,35 @@
             {
                 ParameterInfo[] parameters = methods.GetParameters();
                 //object classInstance = Activator.CreateInstance(tSolver, null);
-
-                object[] parametersArray = new object[parameters.Count()];
-                for (int i = 0; i < parameters.Count(); i++)
+                try
                 {
-                    switch (i)
+                    object[] parametersArray = new object[parameters.Count()];
+                    for (int i = 0; i < parameters.Count(); i++)
                     {
-                        case 0:
-                            parametersArray[i] = Convert.ToDouble(txtPar1.Text);
-                            break;
-                        case 1:
-                            parametersArray[i] = Convert.ToDouble(txtPar2.Text);
-                            break;
-                        case 2:
-                            parametersArray[i] = Convert.ToDouble(txtPar3.Text);
-                            break;
-                        default:
-                            break;
+                        switch (i)
+                        {
+                            case 0:
+                                parametersArray[i] = Convert.ToDouble(txtPar1.Text);
+                                break;
+                            case 1:
+                                parametersArray[i] = Convert.ToDouble(txtPar2.Text);
+                                break;
+                            case 2:
+                                parametersArray[i] = Convert.ToDouble(txtPar3.Text);
+                                break;
+                            default:
+                                break;
+                        }
                     }
-                }
 
-                txtResult.Text = tSolver.GetMethod(MethodName).Invoke(null, parametersArray).ToString() ;
-                
+
+                    txtResult.Text = tSolver.GetMethod(MethodName).Invoke(null, parametersArray).ToString();
+                    MensagenStatus($"Success on invoke {MethodName} with result {txtResult.Text}.", levelMensage.info);
+                }
+                catch (Exception ex)
+                {
+                    MensagenStatus($"Error on invoke {MethodName}. The parameters of method need to be a number. ERROR: {ex.Message}", levelMensage.error);
+                }
             }
         }
     }
