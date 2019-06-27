@@ -67,6 +67,7 @@
             this.txtPar1 = new System.Windows.Forms.TextBox();
             this.stsInfo = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnClose = new System.Windows.Forms.Button();
             this.tabMain.SuspendLayout();
             this.tabLoad.SuspendLayout();
             this.gpbFilesLoad.SuspendLayout();
@@ -82,7 +83,7 @@
             this.tabMain.Controls.Add(this.tabLoad);
             this.tabMain.Controls.Add(this.tabAnalyze);
             this.tabMain.Controls.Add(this.tabMath);
-            this.tabMain.Location = new System.Drawing.Point(0, 0);
+            this.tabMain.Location = new System.Drawing.Point(0, 47);
             this.tabMain.Margin = new System.Windows.Forms.Padding(4);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
@@ -101,10 +102,10 @@
             this.tabLoad.Controls.Add(this.btnLoadStruct);
             this.tabLoad.Controls.Add(this.cmbStruct);
             this.tabLoad.Controls.Add(this.lblStruct);
-            this.tabLoad.Location = new System.Drawing.Point(4, 26);
+            this.tabLoad.Location = new System.Drawing.Point(4, 29);
             this.tabLoad.Margin = new System.Windows.Forms.Padding(0);
             this.tabLoad.Name = "tabLoad";
-            this.tabLoad.Size = new System.Drawing.Size(1162, 471);
+            this.tabLoad.Size = new System.Drawing.Size(1162, 468);
             this.tabLoad.TabIndex = 0;
             this.tabLoad.Text = "Load Data";
             this.tabLoad.UseVisualStyleBackColor = true;
@@ -143,6 +144,7 @@
             this.btnAnalyze.TabIndex = 7;
             this.btnAnalyze.Text = "Analyze Files";
             this.btnAnalyze.UseVisualStyleBackColor = false;
+            this.btnAnalyze.Click += new System.EventHandler(this.btnAnalyze_Click);
             // 
             // btnAddFile
             // 
@@ -257,7 +259,7 @@
             this.cmbStruct.FormattingEnabled = true;
             this.cmbStruct.Location = new System.Drawing.Point(171, 32);
             this.cmbStruct.Name = "cmbStruct";
-            this.cmbStruct.Size = new System.Drawing.Size(365, 25);
+            this.cmbStruct.Size = new System.Drawing.Size(365, 28);
             this.cmbStruct.TabIndex = 1;
             // 
             // lblStruct
@@ -265,17 +267,17 @@
             this.lblStruct.AutoSize = true;
             this.lblStruct.Location = new System.Drawing.Point(20, 35);
             this.lblStruct.Name = "lblStruct";
-            this.lblStruct.Size = new System.Drawing.Size(144, 17);
+            this.lblStruct.Size = new System.Drawing.Size(179, 20);
             this.lblStruct.TabIndex = 0;
             this.lblStruct.Text = "Select structure:";
             // 
             // tabAnalyze
             // 
-            this.tabAnalyze.Location = new System.Drawing.Point(4, 26);
+            this.tabAnalyze.Location = new System.Drawing.Point(4, 29);
             this.tabAnalyze.Margin = new System.Windows.Forms.Padding(4);
             this.tabAnalyze.Name = "tabAnalyze";
             this.tabAnalyze.Padding = new System.Windows.Forms.Padding(4);
-            this.tabAnalyze.Size = new System.Drawing.Size(1162, 471);
+            this.tabAnalyze.Size = new System.Drawing.Size(1162, 468);
             this.tabAnalyze.TabIndex = 1;
             this.tabAnalyze.Text = "Data Analyze";
             this.tabAnalyze.UseVisualStyleBackColor = true;
@@ -284,9 +286,9 @@
             // 
             this.tabMath.Controls.Add(this.groupBox1);
             this.tabMath.Controls.Add(this.grpParameters);
-            this.tabMath.Location = new System.Drawing.Point(4, 26);
+            this.tabMath.Location = new System.Drawing.Point(4, 29);
             this.tabMath.Name = "tabMath";
-            this.tabMath.Size = new System.Drawing.Size(1162, 471);
+            this.tabMath.Size = new System.Drawing.Size(1162, 468);
             this.tabMath.TabIndex = 2;
             this.tabMath.Text = "Mathematical Formulas Test";
             this.tabMath.UseVisualStyleBackColor = true;
@@ -310,7 +312,7 @@
             this.label2.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(775, 42);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 16);
+            this.label2.Size = new System.Drawing.Size(79, 20);
             this.label2.TabIndex = 4;
             this.label2.Text = "Result:";
             // 
@@ -322,7 +324,7 @@
             this.txtResult.Location = new System.Drawing.Point(891, 40);
             this.txtResult.Margin = new System.Windows.Forms.Padding(4);
             this.txtResult.Name = "txtResult";
-            this.txtResult.Size = new System.Drawing.Size(237, 22);
+            this.txtResult.Size = new System.Drawing.Size(237, 26);
             this.txtResult.TabIndex = 1;
             this.txtResult.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -332,7 +334,7 @@
             this.cmbFormulas.FormattingEnabled = true;
             this.cmbFormulas.Location = new System.Drawing.Point(127, 37);
             this.cmbFormulas.Name = "cmbFormulas";
-            this.cmbFormulas.Size = new System.Drawing.Size(564, 24);
+            this.cmbFormulas.Size = new System.Drawing.Size(564, 26);
             this.cmbFormulas.TabIndex = 3;
             this.cmbFormulas.SelectedIndexChanged += new System.EventHandler(this.cmbFormulas_SelectedIndexChanged);
             // 
@@ -342,7 +344,7 @@
             this.label1.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(25, 41);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 16);
+            this.label1.Size = new System.Drawing.Size(89, 20);
             this.label1.TabIndex = 2;
             this.label1.Text = "Formula:";
             // 
@@ -378,7 +380,7 @@
             this.lblPar3.AutoSize = true;
             this.lblPar3.Location = new System.Drawing.Point(828, 43);
             this.lblPar3.Name = "lblPar3";
-            this.lblPar3.Size = new System.Drawing.Size(64, 17);
+            this.lblPar3.Size = new System.Drawing.Size(79, 20);
             this.lblPar3.TabIndex = 10;
             this.lblPar3.Text = "Result:";
             this.lblPar3.Visible = false;
@@ -389,7 +391,7 @@
             this.txtPar3.Location = new System.Drawing.Point(832, 67);
             this.txtPar3.Margin = new System.Windows.Forms.Padding(4);
             this.txtPar3.Name = "txtPar3";
-            this.txtPar3.Size = new System.Drawing.Size(291, 22);
+            this.txtPar3.Size = new System.Drawing.Size(291, 26);
             this.txtPar3.TabIndex = 9;
             this.txtPar3.Visible = false;
             // 
@@ -398,7 +400,7 @@
             this.lblPar2.AutoSize = true;
             this.lblPar2.Location = new System.Drawing.Point(427, 45);
             this.lblPar2.Name = "lblPar2";
-            this.lblPar2.Size = new System.Drawing.Size(64, 17);
+            this.lblPar2.Size = new System.Drawing.Size(79, 20);
             this.lblPar2.TabIndex = 8;
             this.lblPar2.Text = "Result:";
             this.lblPar2.Visible = false;
@@ -409,7 +411,7 @@
             this.txtPar2.Location = new System.Drawing.Point(431, 69);
             this.txtPar2.Margin = new System.Windows.Forms.Padding(4);
             this.txtPar2.Name = "txtPar2";
-            this.txtPar2.Size = new System.Drawing.Size(291, 22);
+            this.txtPar2.Size = new System.Drawing.Size(291, 26);
             this.txtPar2.TabIndex = 7;
             this.txtPar2.Visible = false;
             // 
@@ -418,7 +420,7 @@
             this.lblPar1.AutoSize = true;
             this.lblPar1.Location = new System.Drawing.Point(11, 43);
             this.lblPar1.Name = "lblPar1";
-            this.lblPar1.Size = new System.Drawing.Size(64, 17);
+            this.lblPar1.Size = new System.Drawing.Size(79, 20);
             this.lblPar1.TabIndex = 6;
             this.lblPar1.Text = "Result:";
             this.lblPar1.Visible = false;
@@ -429,7 +431,7 @@
             this.txtPar1.Location = new System.Drawing.Point(15, 67);
             this.txtPar1.Margin = new System.Windows.Forms.Padding(4);
             this.txtPar1.Name = "txtPar1";
-            this.txtPar1.Size = new System.Drawing.Size(291, 22);
+            this.txtPar1.Size = new System.Drawing.Size(291, 26);
             this.txtPar1.TabIndex = 5;
             this.txtPar1.Visible = false;
             // 
@@ -438,7 +440,7 @@
             this.stsInfo.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.stsInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelInfo});
-            this.stsInfo.Location = new System.Drawing.Point(0, 500);
+            this.stsInfo.Location = new System.Drawing.Point(0, 547);
             this.stsInfo.Name = "stsInfo";
             this.stsInfo.Size = new System.Drawing.Size(1169, 22);
             this.stsInfo.SizingGrip = false;
@@ -449,11 +451,23 @@
             this.toolStripStatusLabelInfo.Name = "toolStripStatusLabelInfo";
             this.toolStripStatusLabelInfo.Size = new System.Drawing.Size(0, 17);
             // 
+            // btnClose
+            // 
+            this.btnClose.Location = new System.Drawing.Point(1046, 12);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(0);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(111, 40);
+            this.btnClose.TabIndex = 2;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1169, 522);
+            this.ClientSize = new System.Drawing.Size(1169, 569);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.stsInfo);
             this.Controls.Add(this.tabMain);
             this.Font = new System.Drawing.Font("Courier New", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -464,7 +478,6 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Kundt Analisys";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.tabMain.ResumeLayout(false);
             this.tabLoad.ResumeLayout(false);
@@ -519,5 +532,6 @@
         private System.Windows.Forms.Label lblPar1;
         private System.Windows.Forms.TextBox txtPar1;
         private System.Windows.Forms.Button btnDoFormula;
+        private System.Windows.Forms.Button btnClose;
     }
 }

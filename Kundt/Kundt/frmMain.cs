@@ -23,12 +23,22 @@
     public partial class frmMain : Form
     {
         public string SelectStruct { get; set; }
+
         public string StructName { get; set; }
 
         public List<Dictionary<string, string>> ListAnalizer { get; set; }
+
         public Dictionary<string, string> ListFormulas { get; set; }
 
-        enum levelMensage
+        public frmMain()
+        {
+            InitializeComponent();
+            LoadFormulas();
+            ListAnalizer = new List<Dictionary<string, string>>();
+        }
+        
+        #region Privates
+        private enum LevelMensage
         {
             info,
             warning,
@@ -44,15 +54,15 @@
 
                 btnAddFile.Enabled = true;
                 btnAddFile.BackColor = Color.YellowGreen;
-                MensagenStatus("Structure loaded with success", levelMensage.info);
+                MensagenStatus("Structure loaded with success", LevelMensage.info);
             }
             catch (LoadExceptions le)
             {
-                MensagenStatus(le.Message, levelMensage.warning);
+                MensagenStatus(le.Message, LevelMensage.warning);
             }
             catch (Exception ex)
             {
-                MensagenStatus(ex.Message, levelMensage.error);
+                MensagenStatus(ex.Message, LevelMensage.error);
             }
         }
 
@@ -77,18 +87,18 @@
             btnRemoveAllNodes.BackColor = Color.Transparent;
         }
 
-        private void MensagenStatus(string mensage, levelMensage level)
+        private void MensagenStatus(string mensage, LevelMensage level)
         {
             toolStripStatusLabelInfo.Text = mensage;
             switch (level)
             {
-                case levelMensage.info:
+                case LevelMensage.info:
                     stsInfo.ForeColor = Color.Green;
                     break;
-                case levelMensage.warning:
+                case LevelMensage.warning:
                     stsInfo.ForeColor = Color.OrangeRed;
                     break;
-                case levelMensage.error:
+                case LevelMensage.error:
                     stsInfo.ForeColor = Color.Red;
                     break;
                 default:
@@ -151,18 +161,12 @@
             cmbFormulas.ValueMember = "Key";
 
         }
+        #endregion
+        
+        #region MAIN_FORM
 
-
-        public frmMain()
+        private void btnClose_Click(object sender, EventArgs e)
         {
-            InitializeComponent();
-            LoadFormulas();
-            ListAnalizer = new List<Dictionary<string, string>>();
-        }
-
-        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            //this.Close();
             Application.Exit();
         }
 
@@ -174,6 +178,9 @@
             cmbStruct.ValueMember = "Key";
         }
 
+        #endregion
+
+        #region LOAD_DATA
         private void btnLoadStruct_Click(object sender, EventArgs e)
         {
             Clear();
@@ -191,7 +198,7 @@
 
             if (frm.StructName == null)
             {
-                MensagenStatus("Files not informated!", levelMensage.warning);
+                MensagenStatus("Files not informated!", LevelMensage.warning);
             }
             else
             {
@@ -206,7 +213,7 @@
                     btnRemoveAllNodes.Enabled = true;
                     btnRemoveAllNodes.BackColor = Color.YellowGreen;
                 }
-                MensagenStatus("Group insered!", levelMensage.info);
+                MensagenStatus("Group insered!", LevelMensage.info);
             }
             frm.Dispose();
         }
@@ -214,7 +221,7 @@
         private void btnClearStruct_Click(object sender, EventArgs e)
         {
             Clear();
-            MensagenStatus("Clear!", levelMensage.info);
+            MensagenStatus("Clear!", LevelMensage.info);
         }
 
         private void btnRemoveNode_Click(object sender, EventArgs e)
@@ -228,7 +235,7 @@
                     node = node.Parent;
                 }
                 RemoveCase(node.Name);
-                MensagenStatus("Group removed!", levelMensage.info);
+                MensagenStatus("Group removed!", LevelMensage.info);
                 if (ListAnalizer.Count == 0)
                 {
                     btnRemoveNode.Enabled = false;
@@ -241,7 +248,7 @@
             else
             {
                 MessageBox.Show("Select a group at tree to remove it!");
-                MensagenStatus("Select a Group!", levelMensage.error);
+                MensagenStatus("Select a Group!", LevelMensage.error);
             }
         }
 
@@ -257,6 +264,14 @@
             btnRemoveAllNodes.BackColor = Color.Transparent;
         }
 
+        private void btnAnalyze_Click(object sender, EventArgs e)
+        {
+            tabMain.SelectedIndex = 1;
+        }
+
+        #endregion
+
+        #region FORMULA
         private void cmbFormulas_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -341,16 +356,18 @@
                                 break;
                         }
                     }
-
-
                     txtResult.Text = tSolver.GetMethod(MethodName).Invoke(null, parametersArray).ToString();
-                    MensagenStatus($"Success on invoke {MethodName} with result {txtResult.Text}.", levelMensage.info);
+                    MensagenStatus($"Success on invoke {MethodName} with result {txtResult.Text}.", LevelMensage.info);
                 }
                 catch (Exception ex)
                 {
-                    MensagenStatus($"Error on invoke {MethodName}. The parameters of method need to be a number. ERROR: {ex.Message}", levelMensage.error);
+                    MensagenStatus($"Error on invoke {MethodName}. The parameters of method need to be a number. ERROR: {ex.Message}", LevelMensage.error);
                 }
             }
         }
+        #endregion
+
+
+
     }
 }
