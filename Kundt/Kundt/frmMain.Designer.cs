@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabLoad = new System.Windows.Forms.TabPage();
             this.btnRemoveAllNodes = new System.Windows.Forms.Button();
@@ -68,14 +71,19 @@
             this.stsInfo = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnClose = new System.Windows.Forms.Button();
+            this.chtAnalyze = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.brnSave = new System.Windows.Forms.Button();
+            this.brnLoad = new System.Windows.Forms.Button();
             this.tabMain.SuspendLayout();
             this.tabLoad.SuspendLayout();
             this.gpbFilesLoad.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStructures)).BeginInit();
+            this.tabAnalyze.SuspendLayout();
             this.tabMath.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.grpParameters.SuspendLayout();
             this.stsInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chtAnalyze)).BeginInit();
             this.SuspendLayout();
             // 
             // tabMain
@@ -107,7 +115,7 @@
             this.tabLoad.Name = "tabLoad";
             this.tabLoad.Size = new System.Drawing.Size(1162, 468);
             this.tabLoad.TabIndex = 0;
-            this.tabLoad.Text = "Load Data";
+            this.tabLoad.Text = "Create";
             this.tabLoad.UseVisualStyleBackColor = true;
             // 
             // btnRemoveAllNodes
@@ -189,8 +197,8 @@
             this.dgvStructures.AllowUserToAddRows = false;
             this.dgvStructures.AllowUserToDeleteRows = false;
             this.dgvStructures.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dgvStructures.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dgvStructures.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle16;
             this.dgvStructures.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvStructures.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Type,
@@ -206,9 +214,9 @@
             // Type
             // 
             this.Type.DataPropertyName = "Type";
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.Type.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.Type.DefaultCellStyle = dataGridViewCellStyle17;
             this.Type.HeaderText = "Type";
             this.Type.Name = "Type";
             this.Type.Width = 175;
@@ -216,9 +224,9 @@
             // Field
             // 
             this.Field.DataPropertyName = "Field";
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.Field.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.Field.DefaultCellStyle = dataGridViewCellStyle18;
             this.Field.HeaderText = "Field";
             this.Field.Name = "Field";
             this.Field.Width = 220;
@@ -226,9 +234,9 @@
             // Value
             // 
             this.Value.DataPropertyName = "Value";
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.Value.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.Value.DefaultCellStyle = dataGridViewCellStyle19;
             this.Value.HeaderText = "Value";
             this.Value.Name = "Value";
             this.Value.Width = 220;
@@ -236,19 +244,19 @@
             // Unit
             // 
             this.Unit.DataPropertyName = "Unit";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.Unit.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.Unit.DefaultCellStyle = dataGridViewCellStyle20;
             this.Unit.HeaderText = "Unit";
             this.Unit.Name = "Unit";
             this.Unit.Width = 55;
             // 
             // btnLoadStruct
             // 
-            this.btnLoadStruct.Location = new System.Drawing.Point(544, 32);
+            this.btnLoadStruct.Location = new System.Drawing.Point(494, 32);
             this.btnLoadStruct.Name = "btnLoadStruct";
-            this.btnLoadStruct.Size = new System.Drawing.Size(102, 26);
+            this.btnLoadStruct.Size = new System.Drawing.Size(152, 26);
             this.btnLoadStruct.TabIndex = 2;
             this.btnLoadStruct.Text = "Load Struct";
             this.btnLoadStruct.UseVisualStyleBackColor = true;
@@ -259,7 +267,7 @@
             this.cmbStruct.FormattingEnabled = true;
             this.cmbStruct.Location = new System.Drawing.Point(171, 32);
             this.cmbStruct.Name = "cmbStruct";
-            this.cmbStruct.Size = new System.Drawing.Size(365, 28);
+            this.cmbStruct.Size = new System.Drawing.Size(317, 28);
             this.cmbStruct.TabIndex = 1;
             // 
             // lblStruct
@@ -273,13 +281,14 @@
             // 
             // tabAnalyze
             // 
+            this.tabAnalyze.Controls.Add(this.chtAnalyze);
             this.tabAnalyze.Location = new System.Drawing.Point(4, 29);
             this.tabAnalyze.Margin = new System.Windows.Forms.Padding(4);
             this.tabAnalyze.Name = "tabAnalyze";
             this.tabAnalyze.Padding = new System.Windows.Forms.Padding(4);
             this.tabAnalyze.Size = new System.Drawing.Size(1162, 468);
             this.tabAnalyze.TabIndex = 1;
-            this.tabAnalyze.Text = "Data Analyze";
+            this.tabAnalyze.Text = "Analyze";
             this.tabAnalyze.UseVisualStyleBackColor = true;
             // 
             // tabMath
@@ -453,7 +462,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(1046, 12);
+            this.btnClose.Location = new System.Drawing.Point(1053, 6);
             this.btnClose.Margin = new System.Windows.Forms.Padding(0);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(111, 40);
@@ -462,11 +471,51 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // chtAnalyze
+            // 
+            this.chtAnalyze.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            chartArea4.Name = "ChartArea1";
+            this.chtAnalyze.ChartAreas.Add(chartArea4);
+            legend4.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            legend4.Name = "Legend1";
+            this.chtAnalyze.Legends.Add(legend4);
+            this.chtAnalyze.Location = new System.Drawing.Point(15, 14);
+            this.chtAnalyze.Name = "chtAnalyze";
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chtAnalyze.Series.Add(series4);
+            this.chtAnalyze.Size = new System.Drawing.Size(1138, 380);
+            this.chtAnalyze.TabIndex = 0;
+            // 
+            // brnSave
+            // 
+            this.brnSave.Location = new System.Drawing.Point(888, 6);
+            this.brnSave.Margin = new System.Windows.Forms.Padding(0);
+            this.brnSave.Name = "brnSave";
+            this.brnSave.Size = new System.Drawing.Size(159, 40);
+            this.brnSave.TabIndex = 3;
+            this.brnSave.Text = "Save Analyze";
+            this.brnSave.UseVisualStyleBackColor = true;
+            // 
+            // brnLoad
+            // 
+            this.brnLoad.Location = new System.Drawing.Point(723, 6);
+            this.brnLoad.Margin = new System.Windows.Forms.Padding(0);
+            this.brnLoad.Name = "brnLoad";
+            this.brnLoad.Size = new System.Drawing.Size(159, 40);
+            this.brnLoad.TabIndex = 4;
+            this.brnLoad.Text = "Load Analyze";
+            this.brnLoad.UseVisualStyleBackColor = true;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1169, 569);
+            this.Controls.Add(this.brnLoad);
+            this.Controls.Add(this.brnSave);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.stsInfo);
             this.Controls.Add(this.tabMain);
@@ -484,6 +533,7 @@
             this.tabLoad.PerformLayout();
             this.gpbFilesLoad.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvStructures)).EndInit();
+            this.tabAnalyze.ResumeLayout(false);
             this.tabMath.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -491,6 +541,7 @@
             this.grpParameters.PerformLayout();
             this.stsInfo.ResumeLayout(false);
             this.stsInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chtAnalyze)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -533,5 +584,8 @@
         private System.Windows.Forms.TextBox txtPar1;
         private System.Windows.Forms.Button btnDoFormula;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chtAnalyze;
+        private System.Windows.Forms.Button brnSave;
+        private System.Windows.Forms.Button brnLoad;
     }
 }
