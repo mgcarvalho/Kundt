@@ -13,6 +13,7 @@ namespace Kundt
     public partial class frmLoadFile : Form
     {
         public Dictionary<string, string> StructName { get; set; }
+        public Dictionary<string, Color> Colors { get; internal set; }
 
         private string Temperature;
         private string ATP;
@@ -34,6 +35,9 @@ namespace Kundt
             txtATP.Text = ATP + " KPa";
             txtFILE1.Text = string.Empty;
             txtFILE2.Text = string.Empty;
+            cmbColors.DataSource = new BindingSource(Colors, null);
+            cmbColors.DisplayMember = "Value";
+            cmbColors.ValueMember = "Key";
         }
 
         private string FileName()
@@ -47,6 +51,12 @@ namespace Kundt
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtFILE1.Text) || string.IsNullOrEmpty(txtFILE1.Text))
+            {
+                MessageBox.Show("File 1 and File 2 are required!", "Warning", MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                return;
+            }
+
             if (ATP.Length == 0) { ATP = "101.32"; }
             if (Temperature.Length == 0) { Temperature = "22"; }
             StructName.Add("CASE", txtCASE.Text);
@@ -55,6 +65,7 @@ namespace Kundt
             StructName.Add("ATP", ATP);
             StructName.Add("FILE1", txtFILE1.Text);
             StructName.Add("FILE2", txtFILE2.Text);
+            StructName.Add("COLOR", cmbColors.Text);
             this.Close();
         }
 

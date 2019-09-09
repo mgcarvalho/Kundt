@@ -12,7 +12,8 @@
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows.Forms;
-
+    using System.Xml;
+    using System.Xml.Linq;
     using DTO;
     using KundtExceptions;
     using KundtManager;
@@ -30,19 +31,37 @@
 
         public Dictionary<string, string> ListFormulas { get; set; }
 
+        public Dictionary<string, Color> ListColors { get; set; }
+
         public frmMain()
         {
             InitializeComponent();
             LoadFormulas();
             ListAnalizer = new List<Dictionary<string, string>>();
+            ListColors = GetAllColors();
+
         }
         
         #region Privates
+
         private enum LevelMensage
         {
             info,
             warning,
             error
+        }
+
+        private Dictionary<string, Color> GetAllColors()
+        {
+            Dictionary<string, Color> result = new Dictionary<string, Color>
+            {
+                { "Blue", Color.Blue },
+                { "Red", Color.Red },
+                { "Green", Color.Green },
+                { "Orange", Color.Orange },
+                { "Purple", Color.Purple }
+            };
+            return result;
         }
 
         private void BindingData()
@@ -79,12 +98,15 @@
 
             trvFilesLoad.Nodes.Clear();
             ListAnalizer = new List<Dictionary<string, string>>();
+            ListColors = GetAllColors();
 
             btnRemoveNode.Enabled = false;
             btnRemoveNode.BackColor = Color.Transparent;
 
             btnRemoveAllNodes.Enabled = false;
             btnRemoveAllNodes.BackColor = Color.Transparent;
+
+            ListColors = GetAllColors();
         }
 
         private void MensagenStatus(string mensage, LevelMensage level)
@@ -121,12 +143,17 @@
             if (rootIndex >= 0)
             {
                 trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Data: {itemAnalizer["DATA"]}");
-                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Temperature: {itemAnalizer["TEMP"]}");
-                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Atmospheric Pressure: {itemAnalizer["ATP"]}");
+                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Temperature: {itemAnalizer["TEMP"]} ºC");
+                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Atmospheric Pressure: {itemAnalizer["ATP"]} KPa");
+                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Line Color: {itemAnalizer["COLOR"]}");
+                trvFilesLoad.Nodes[rootIndex].Nodes[3].Nodes.Add("      ");
+                trvFilesLoad.Nodes[rootIndex].Nodes[3].Nodes[0].BackColor = Color.FromName(itemAnalizer["COLOR"]);
                 trvFilesLoad.Nodes[rootIndex].Nodes.Add("Files");
-                trvFilesLoad.Nodes[rootIndex].Nodes[3].Nodes.Add($"File (1): {itemAnalizer["FILE1"]}");
-                trvFilesLoad.Nodes[rootIndex].Nodes[3].Nodes.Add($"File (2): {itemAnalizer["FILE2"]}");
+                trvFilesLoad.Nodes[rootIndex].Nodes[4].Nodes.Add($"File (1): {itemAnalizer["FILE1"]}");
+                trvFilesLoad.Nodes[rootIndex].Nodes[4].Nodes.Add($"File (2): {itemAnalizer["FILE2"]}");
             }
+            //Remove color used
+            ListColors.Remove(itemAnalizer["COLOR"]);
         }
 
         private void RemoveCase(string CaseName)
@@ -136,6 +163,7 @@
             {
                 if (item["CASE"].Equals(CaseName))
                 {
+                    ListColors.Add(item["COLOR"], Color.FromName(item["COLOR"]));
                     ListAnalizer.Remove(item);
                     return;
                 }
@@ -178,6 +206,10 @@
             cmbStruct.ValueMember = "Key";
         }
 
+        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
         #endregion
 
         #region LOAD_DATA
@@ -191,8 +223,18 @@
 
         private void btnAddFile_Click(object sender, EventArgs e)
         {
-            frmLoadFile frm = new frmLoadFile();
-            frm.StructName = new Dictionary<string, string>();
+            if (ListColors.Count == 0)
+            {
+                MessageBox.Show("This version has a limited amount of five files for analysis.","Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MensagenStatus("No more slots for files!", LevelMensage.warning);
+                return;
+            }
+
+            frmLoadFile frm = new frmLoadFile
+            {
+                StructName = new Dictionary<string, string>(),
+                Colors = ListColors
+            };
             frm.StructName.Add("NAME", StructName);
             frm.ShowDialog();
 
@@ -262,6 +304,8 @@
 
             btnRemoveAllNodes.Enabled = false;
             btnRemoveAllNodes.BackColor = Color.Transparent;
+
+            ListColors = GetAllColors();
         }
 
         private void btnAnalyze_Click(object sender, EventArgs e)
@@ -365,9 +409,87 @@
                 }
             }
         }
+
+
         #endregion
 
+        private void btnSaveAnalyze_Click(object sender, EventArgs e)
+        {
+            if (ListAnalizer.Count == 0)
+            {
+                MessageBox.Show("It`s need at least one file group to save!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            sfdSaveStruct.ShowDialog();
+            string FileName = sfdSaveStruct.FileName;
 
+            try
+            {
+                if (!string.IsNullOrEmpty(FileName))
+                {
+                    if (!FileName.EndsWith(".xml"))
+                    {
+                        FileName = FileName + ".xml";
+                    }
+                    using (XmlWriter writer = XmlWriter.Create(FileName))
+                    {
+
+
+                        writer.WriteStartElement("Struct");
+                        writer.WriteAttributeString("name", StructName);
+                        writer.WriteAttributeString("version", "1.0");
+                        writer.WriteAttributeString("target", "Kundt Tube Analyzer");
+                        
+                        writer.WriteStartElement("Files");
+
+                        foreach (var item in ListAnalizer)
+                        {
+                            writer.WriteStartElement("Group");
+                            writer.WriteAttributeString("name", item["CASE"]);
+
+                            writer.WriteStartElement("Data");
+                            writer.WriteAttributeString("value", item["DATA"]);
+                            writer.WriteEndElement();
+
+                            writer.WriteStartElement("Temperature");
+                            writer.WriteAttributeString("value", item["TEMP"]);
+                            writer.WriteEndElement();
+
+                            writer.WriteStartElement("Pressure");
+                            writer.WriteAttributeString("value", item["ATP"]);
+                            writer.WriteEndElement();
+
+                            writer.WriteStartElement("Color");
+                            writer.WriteAttributeString("value", item["COLOR"]);
+                            writer.WriteEndElement();
+
+                            writer.WriteStartElement("File1");
+                            writer.WriteAttributeString("value", item["FILE1"]);
+                            writer.WriteEndElement();
+
+                            writer.WriteStartElement("File2");
+                            writer.WriteAttributeString("value", item["FILE2"]);
+                            writer.WriteEndElement();
+
+                            writer.WriteEndElement();
+                        }
+                        writer.WriteEndElement();
+                        writer.WriteEndElement();
+                        writer.Flush();
+                    }
+                }
+            }
+            catch (IOException IOex)
+            {
+                MensagenStatus($"Error on create the file {FileName}. ERROR: {IOex.Message}", LevelMensage.error);
+            }
+            catch (Exception ex)
+            {
+                MensagenStatus($"Unexpected error: {ex.Message}", LevelMensage.error);
+            }
+            
+
+        }
 
     }
 }

@@ -48,6 +48,8 @@
             this.ofdFiles = new System.Windows.Forms.OpenFileDialog();
             this.txtTMP = new System.Windows.Forms.TextBox();
             this.txtATP = new System.Windows.Forms.TextBox();
+            this.cmbColors = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -57,7 +59,7 @@
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(136, 26);
-            this.btnCancel.TabIndex = 8;
+            this.btnCancel.TabIndex = 9;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -68,7 +70,7 @@
             this.btnOk.Margin = new System.Windows.Forms.Padding(4);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(136, 26);
-            this.btnOk.TabIndex = 6;
+            this.btnOk.TabIndex = 7;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -80,7 +82,7 @@
             this.lblTitle.Location = new System.Drawing.Point(17, 20);
             this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(592, 17);
+            this.lblTitle.Size = new System.Drawing.Size(518, 14);
             this.lblTitle.TabIndex = 10;
             this.lblTitle.Text = "Select the files that will be used for analizes corresponding structure: ";
             // 
@@ -92,7 +94,7 @@
             this.lblStructName.Location = new System.Drawing.Point(601, 20);
             this.lblStructName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblStructName.Name = "lblStructName";
-            this.lblStructName.Size = new System.Drawing.Size(0, 16);
+            this.lblStructName.Size = new System.Drawing.Size(0, 14);
             this.lblStructName.TabIndex = 11;
             // 
             // label1
@@ -102,7 +104,7 @@
             this.label1.Location = new System.Drawing.Point(17, 57);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(48, 17);
+            this.label1.Size = new System.Drawing.Size(42, 14);
             this.label1.TabIndex = 12;
             this.label1.Text = "Name:";
             // 
@@ -112,7 +114,7 @@
             this.txtCASE.Location = new System.Drawing.Point(99, 54);
             this.txtCASE.Margin = new System.Windows.Forms.Padding(4);
             this.txtCASE.Name = "txtCASE";
-            this.txtCASE.Size = new System.Drawing.Size(644, 22);
+            this.txtCASE.Size = new System.Drawing.Size(422, 19);
             this.txtCASE.TabIndex = 0;
             // 
             // label2
@@ -122,7 +124,7 @@
             this.label2.Location = new System.Drawing.Point(17, 89);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(48, 17);
+            this.label2.Size = new System.Drawing.Size(42, 14);
             this.label2.TabIndex = 14;
             this.label2.Text = "Date:";
             // 
@@ -133,17 +135,17 @@
             this.dtpDATA.Location = new System.Drawing.Point(99, 86);
             this.dtpDATA.Margin = new System.Windows.Forms.Padding(4);
             this.dtpDATA.Name = "dtpDATA";
-            this.dtpDATA.Size = new System.Drawing.Size(138, 22);
-            this.dtpDATA.TabIndex = 1;
+            this.dtpDATA.Size = new System.Drawing.Size(138, 19);
+            this.dtpDATA.TabIndex = 2;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Courier New", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(261, 89);
+            this.label3.Location = new System.Drawing.Point(275, 89);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(104, 17);
+            this.label3.Size = new System.Drawing.Size(91, 14);
             this.label3.TabIndex = 17;
             this.label3.Text = "Temperature:";
             // 
@@ -151,10 +153,10 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Courier New", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(475, 89);
+            this.label4.Location = new System.Drawing.Point(502, 89);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(176, 17);
+            this.label4.Size = new System.Drawing.Size(154, 14);
             this.label4.TabIndex = 19;
             this.label4.Text = "Atmospheric Pressure:";
             // 
@@ -165,7 +167,7 @@
             this.txtFILE1.Location = new System.Drawing.Point(99, 118);
             this.txtFILE1.Margin = new System.Windows.Forms.Padding(4);
             this.txtFILE1.Name = "txtFILE1";
-            this.txtFILE1.Size = new System.Drawing.Size(603, 22);
+            this.txtFILE1.Size = new System.Drawing.Size(603, 19);
             this.txtFILE1.TabIndex = 22;
             // 
             // label5
@@ -175,7 +177,7 @@
             this.label5.Location = new System.Drawing.Point(17, 120);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(80, 17);
+            this.label5.Size = new System.Drawing.Size(70, 14);
             this.label5.TabIndex = 21;
             this.label5.Text = "File (1):";
             // 
@@ -186,7 +188,7 @@
             this.txtFILE2.Location = new System.Drawing.Point(99, 150);
             this.txtFILE2.Margin = new System.Windows.Forms.Padding(4);
             this.txtFILE2.Name = "txtFILE2";
-            this.txtFILE2.Size = new System.Drawing.Size(603, 22);
+            this.txtFILE2.Size = new System.Drawing.Size(603, 19);
             this.txtFILE2.TabIndex = 24;
             // 
             // label6
@@ -196,7 +198,7 @@
             this.label6.Location = new System.Drawing.Point(17, 152);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(80, 17);
+            this.label6.Size = new System.Drawing.Size(70, 14);
             this.label6.TabIndex = 23;
             this.label6.Text = "File (2):";
             // 
@@ -206,7 +208,7 @@
             this.btnClear.Margin = new System.Windows.Forms.Padding(4);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(136, 26);
-            this.btnClear.TabIndex = 7;
+            this.btnClear.TabIndex = 8;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
@@ -217,7 +219,7 @@
             this.btnFile1.Margin = new System.Windows.Forms.Padding(4);
             this.btnFile1.Name = "btnFile1";
             this.btnFile1.Size = new System.Drawing.Size(42, 23);
-            this.btnFile1.TabIndex = 4;
+            this.btnFile1.TabIndex = 5;
             this.btnFile1.Text = "...";
             this.btnFile1.UseVisualStyleBackColor = true;
             this.btnFile1.Click += new System.EventHandler(this.btnFile1_Click);
@@ -228,7 +230,7 @@
             this.btnFile2.Margin = new System.Windows.Forms.Padding(4);
             this.btnFile2.Name = "btnFile2";
             this.btnFile2.Size = new System.Drawing.Size(42, 21);
-            this.btnFile2.TabIndex = 5;
+            this.btnFile2.TabIndex = 6;
             this.btnFile2.Text = "...";
             this.btnFile2.UseVisualStyleBackColor = true;
             this.btnFile2.Click += new System.EventHandler(this.btnFile2_Click);
@@ -242,8 +244,8 @@
             this.txtTMP.Location = new System.Drawing.Point(372, 87);
             this.txtTMP.Name = "txtTMP";
             this.txtTMP.ShortcutsEnabled = false;
-            this.txtTMP.Size = new System.Drawing.Size(82, 22);
-            this.txtTMP.TabIndex = 2;
+            this.txtTMP.Size = new System.Drawing.Size(82, 19);
+            this.txtTMP.TabIndex = 3;
             this.txtTMP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtTMP.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTMP_KeyDown);
             this.txtTMP.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTMP_KeyPress);
@@ -254,19 +256,39 @@
             this.txtATP.Location = new System.Drawing.Point(658, 88);
             this.txtATP.Name = "txtATP";
             this.txtATP.ShortcutsEnabled = false;
-            this.txtATP.Size = new System.Drawing.Size(85, 22);
-            this.txtATP.TabIndex = 3;
+            this.txtATP.Size = new System.Drawing.Size(85, 19);
+            this.txtATP.TabIndex = 4;
             this.txtATP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtATP.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtATP_KeyDown);
             this.txtATP.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtATP_KeyPress);
             this.txtATP.Leave += new System.EventHandler(this.txtATP_Leave);
             // 
+            // cmbColors
+            // 
+            this.cmbColors.FormattingEnabled = true;
+            this.cmbColors.Location = new System.Drawing.Point(618, 54);
+            this.cmbColors.Name = "cmbColors";
+            this.cmbColors.Size = new System.Drawing.Size(124, 20);
+            this.cmbColors.TabIndex = 1;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Courier New", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(527, 56);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(84, 14);
+            this.label7.TabIndex = 26;
+            this.label7.Text = "Color line:";
+            // 
             // frmLoadFile
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(764, 230);
             this.ControlBox = false;
+            this.Controls.Add(this.cmbColors);
             this.Controls.Add(this.txtATP);
             this.Controls.Add(this.txtTMP);
             this.Controls.Add(this.btnFile2);
@@ -286,6 +308,7 @@
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
+            this.Controls.Add(this.label7);
             this.Font = new System.Drawing.Font("Courier New", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -320,5 +343,7 @@
         private System.Windows.Forms.OpenFileDialog ofdFiles;
         private System.Windows.Forms.TextBox txtTMP;
         private System.Windows.Forms.TextBox txtATP;
+        private System.Windows.Forms.ComboBox cmbColors;
+        private System.Windows.Forms.Label label7;
     }
 }
