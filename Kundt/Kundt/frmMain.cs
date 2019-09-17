@@ -1,28 +1,21 @@
 ﻿namespace Kundt
 {
 
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Data;
-    using System.Drawing;
-    using System.IO;
-    using System.Linq;
-    using System.Reflection;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows.Forms;
-    using System.Xml;
-    using System.Xml.Linq;
-    using System.Collections.Generic;
-
-
     using DTO;
     using KundtExceptions;
     using KundtManager;
     using Solver;
 
-
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Windows.Forms;
+    using System.Xml;
+    using System.Xml.Linq;
 
     public partial class frmMain : Form
     {
@@ -30,22 +23,18 @@
 
         public string StructName { get; set; }
 
-        public List<Dictionary<string, string>> ListAnalizer { get; set; }
-
         public Dictionary<string, string> ListFormulas { get; set; }
-
-        public Dictionary<string, IList<string>> DataFile { get; set; }
 
         public Dictionary<string, Color> ListColors { get; set; }
 
-        private List<Measurement> LoadMeasurements;
+        private List<Measurement> Measurements;
 
         #region ctor
         public frmMain()
         {
             InitializeComponent();
             LoadFormulas();
-            ListAnalizer = new List<Dictionary<string, string>>();
+            Measurements = new List<Measurement>();
             ListColors = GetAllColors();
 
         }
@@ -106,7 +95,7 @@
             btnAnalyze.BackColor = Color.Transparent;
 
             trvFilesLoad.Nodes.Clear();
-            ListAnalizer = new List<Dictionary<string, string>>();
+            Measurements = new List<Measurement>();
             ListColors = GetAllColors();
 
             btnRemoveNode.Enabled = false;
@@ -142,42 +131,39 @@
         {
             if (trvFilesLoad.Nodes.ContainsKey(measurement.CaseName))
             {
-                RemoveCase(measurement.CaseName);
+                trvFilesLoad.Nodes.RemoveByKey(measurement.CaseName);
             }
-            ListAnalizer.Add(itemAnalizer);
 
-            trvFilesLoad.Nodes.Add(itemAnalizer["CASE"], itemAnalizer["CASE"]);
+            trvFilesLoad.Nodes.Add(measurement.CaseName, measurement.CaseName);
 
-            int rootIndex = trvFilesLoad.Nodes.IndexOfKey(itemAnalizer["CASE"]);
+            int rootIndex = trvFilesLoad.Nodes.IndexOfKey(measurement.CaseName);
             if (rootIndex >= 0)
             {
-                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Data: {itemAnalizer["DATA"]}");
-                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Temperature: {itemAnalizer["TEMP"]} ºC");
-                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Atmospheric Pressure: {itemAnalizer["ATP"]} KPa");
-                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Line Color: {itemAnalizer["COLOR"]}");
+                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Data: {measurement.Date}");
+                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Temperature: {measurement.Temperature} ºC");
+                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Atmospheric Pressure: {measurement.AtmosphericPressure} KPa");
+                trvFilesLoad.Nodes[rootIndex].Nodes.Add($"Line Color: {measurement.LineColor}");
                 trvFilesLoad.Nodes[rootIndex].Nodes[3].Nodes.Add("      ");
-                trvFilesLoad.Nodes[rootIndex].Nodes[3].Nodes[0].BackColor = Color.FromName(itemAnalizer["COLOR"]);
+                trvFilesLoad.Nodes[rootIndex].Nodes[3].Nodes[0].BackColor = Color.FromName(measurement.LineColor);
                 trvFilesLoad.Nodes[rootIndex].Nodes.Add("Files");
-                trvFilesLoad.Nodes[rootIndex].Nodes[4].Nodes.Add($"File (1): {itemAnalizer["FILE1"]}");
-                trvFilesLoad.Nodes[rootIndex].Nodes[4].Nodes.Add($"File (2): {itemAnalizer["FILE2"]}");
+                trvFilesLoad.Nodes[rootIndex].Nodes[4].Nodes.Add($"File (1): {measurement.FileName1}");
+                trvFilesLoad.Nodes[rootIndex].Nodes[4].Nodes.Add($"File (2): {measurement.FileName2}");
             }
 
-
-
             //Remove used color
-            ListColors.Remove(itemAnalizer["COLOR"]);
+            ListColors.Remove(measurement.LineColor);
         }
 
-        private void RemoveCase(string CaseName)
+
+        private void AddNewMeasures(Measurement measurement)
         {
-            trvFilesLoad.Nodes.RemoveByKey(CaseName);
-            LoadMeasurements.RemoveAll(x => x.CaseName.Equals(CaseName));
+            Measurements.RemoveAll(x => x.CaseName.Equals(measurement.CaseName)); ;
+            Measurements.Add(measurement);
         }
-
 
         private void LoadFormulas()
         {
-            ListFormulas = new Dictionary<string, string>();           
+            ListFormulas = new Dictionary<string, string>();
             Type tSolver = typeof(KundtFunctions);
 
             MethodInfo[] methods = tSolver.GetMethods();
@@ -191,7 +177,157 @@
             cmbFormulas.DataSource = new BindingSource(ListFormulas, null);
             cmbFormulas.DisplayMember = "Value";
             cmbFormulas.ValueMember = "Key";
+        }
 
+        private void RemoveCase(string CaseName)
+        {
+            trvFilesLoad.Nodes.RemoveByKey(CaseName);
+            Measurements.RemoveAll(x => x.CaseName.Equals(CaseName));
+        }
+
+        private void LoadMeasureFiles()
+        {
+            foreach (var item in Measurements)
+            {
+                //FILE 1
+                if (item.MeasurementsFile1.Count == 0) item.MeasurementsFile1.AddRange(LoadDataFile(item.FileName1, item.Struct));
+                //File 2
+                if (item.MeasurementsFile2.Count == 0) item.MeasurementsFile2.AddRange(LoadDataFile(item.FileName2, item.Struct));
+            }
+        }
+
+        private IList<DataMeasurement> LoadDataFile(string fileName, string structName)
+        {
+            List<DataMeasurement> rt = new List<DataMeasurement>();
+            var lS = new LoadStructs();
+            var structs = lS.GetStructs(SelectStruct);
+
+            int startLine = -1;
+            int structLine = -1;
+            string structValues = string.Empty;
+            int C1t = 0, C1p = 0, C2t = 0, C2p = 0, M1f = 0, M1a = 0, M2f = 0, M2a = 0, M3f = 0, M3a = 0, M4f = 0, M4a = 0;
+
+            //; C1: Time[s]; C1:  [Pa]; C2: Time[s]; C2:  [Pa]; M1: FRF(C1, C2) Frequency[Hz]; M1: FRF(C1, C2)[](A); ; M2: FRF(C2, C1) Frequency[Hz]; M2: FRF(C2, C1)[](A); ; M3: FFT(C1) Frequency[Hz]; M3: FFT(C1)[Pa](A); ; M4: FFT(C2) Frequency[Hz]; M4: FFT(C2)[Pa](A);
+
+            int.TryParse(structs.FirstOrDefault(x => x.Type == StructType.DataStart).Value, out startLine);
+
+            int.TryParse(structs.FirstOrDefault(x => x.Type == StructType.DataIndex).Value, out structLine);
+
+            if (startLine==-1 || structLine ==-1)
+            {
+                MessageBox.Show("Error on load struct file, see Start Line and Struct Line *numbers* values!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MensagenStatus("Cann't load struct file!", LevelMensage.error);
+                return null;
+            }
+
+            if (!File.Exists(fileName))
+            {
+                MessageBox.Show($"File {fileName} doesn't exist!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MensagenStatus("File doesn't exist!", LevelMensage.error);
+                return null;
+            }
+
+            var lines = File.ReadAllLines(fileName);
+            if (lines.Length< structLine-1 || lines.Length < startLine - 1)
+            {
+                MessageBox.Show($"The file {fileName} doesn't has information!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MensagenStatus("File doesn't has information!", LevelMensage.error);
+                return null;
+            }
+
+
+
+            structValues = lines[structLine-1];
+            var arrayIndex = structValues.Split(';');
+            for (var i = 0; i < arrayIndex.Length; i ++)
+            {
+                switch (arrayIndex[i].Trim().ToUpper())
+                {      
+                    case "C1:  TIME[S]":
+                        C1t = i;
+                        break;
+                    case "C1:  [PA]":
+                        C1p = i;
+                        break;
+                    case "C2:  TIME[S]":
+                        C2t = i;
+                        break;
+                    case "C2:  [PA]":
+                        C2p = i;
+                        break;
+                    case "M1: FRF(C1,C2) FREQUENCY[HZ]":
+                        M1f = i;
+                        break;
+                    case "M1: FRF(C1,C2) [](A)":
+                        M1a = i;
+                        break;
+                    case "M2: FRF(C2,C1) FREQUENCY[HZ]":
+                        M2f = i;
+                        break;
+                    case "M2: FRF(C2,C1) [](A)":
+                        M2a = i;
+                        break;
+                    case "M3: FFT(C1) FREQUENCY[HZ]":
+                        M3f = i;
+                        break;
+                    case "M3: FFT(C1) [PA](A)":
+                        M3a = i;
+                        break;
+                    case "M4: FFT(C2) FREQUENCY[HZ]":
+                        M4f = i;
+                        break;
+                    case "M4: FFT(C2) [PA](A)":
+                        M4a = i;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
+            for (var i = startLine - 1; i < lines.Length; i ++)
+            {
+                var dM = new DataMeasurement();
+             
+                double oV = 0;
+                var dataLine = lines[i];
+                var dataArray = dataLine.Split(';');
+                //C1
+                double.TryParse(dataArray[C1t], out oV);
+                dM.C1.Time = oV;
+                double.TryParse(dataArray[C1p], out oV);
+                dM.C1.Pressure = oV;
+                //C2
+                double.TryParse(dataArray[C2t], out oV);
+                dM.C2.Time = oV;
+                double.TryParse(dataArray[C2p], out oV);
+                dM.C2.Pressure = oV;
+                //M1
+                double.TryParse(dataArray[M1f], out oV);
+                dM.M1.Frequency = oV;
+                double.TryParse(dataArray[M1a], out oV);
+                dM.M1.Amplification = oV;
+                //M2
+                double.TryParse(dataArray[M2f], out oV);
+                dM.M2.Frequency = oV;
+                double.TryParse(dataArray[M2a], out oV);
+                dM.M2.Amplification = oV;
+                //M3
+                double.TryParse(dataArray[M3f], out oV);
+                dM.M3.Frequency = oV;
+                double.TryParse(dataArray[M3a], out oV);
+                dM.M3.Amplitude  = oV;
+                //M4
+                double.TryParse(dataArray[M4f], out oV);
+                dM.M4.Frequency = oV;
+                double.TryParse(dataArray[M4a], out oV);
+                dM.M4.Amplitude = oV;
+
+                dM.Id = rt.Count + 1;
+
+                rt.Add(dM);
+            }
+            return rt;
         }
 
         #endregion
@@ -230,29 +366,30 @@
         {
             if (ListColors.Count == 0)
             {
-                MessageBox.Show("This version has a limited amount of five files for analysis.","Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("This version has a limited amount of five files for analysis.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 MensagenStatus("No more slots for files!", LevelMensage.warning);
                 return;
             }
 
             frmLoadFile frm = new frmLoadFile
             {
-                StructName = new Dictionary<string, string>(),
+                ScreenMeasurement = new Measurement(),
                 Colors = ListColors
             };
-            frm.StructName.Add("NAME", StructName);
+            frm.ScreenMeasurement.Struct = StructName;
             frm.ShowDialog();
 
-            if (frm.StructName == null)
+            if (frm.ScreenMeasurement == null)
             {
                 MensagenStatus("No Information!", LevelMensage.warning);
             }
             else
             {
-                LoadTreeView(frm.StructName);
+                AddNewMeasures(frm.ScreenMeasurement);
+                LoadTreeView(frm.ScreenMeasurement);
                 btnAnalyze.Enabled = true;
                 btnAnalyze.BackColor = Color.YellowGreen;
-                if (ListAnalizer.Count > 0 && !btnRemoveNode.Enabled)
+                if (Measurements.Count > 0 && !btnRemoveNode.Enabled)
                 {
                     btnRemoveNode.Enabled = true;
                     btnRemoveNode.BackColor = Color.YellowGreen;
@@ -264,9 +401,6 @@
 
             }
             frm.Dispose();
-
-            
-            
         }
 
         private void btnClearStruct_Click(object sender, EventArgs e)
@@ -287,7 +421,7 @@
                 }
                 RemoveCase(node.Name);
                 MensagenStatus("Group removed!", LevelMensage.info);
-                if (ListAnalizer.Count == 0)
+                if (Measurements.Count == 0)
                 {
                     btnRemoveNode.Enabled = false;
                     btnRemoveNode.BackColor = Color.Transparent;
@@ -306,7 +440,7 @@
         private void btnRemoveAllNodes_Click(object sender, EventArgs e)
         {
             trvFilesLoad.Nodes.Clear();
-            ListAnalizer = new List<Dictionary<string, string>>();
+            Measurements = new List<Measurement>();
 
             btnRemoveNode.Enabled = false;
             btnRemoveNode.BackColor = Color.Transparent;
@@ -322,6 +456,110 @@
             tabMain.SelectedIndex = 1;
         }
 
+        private void btnSaveAnalyze_Click(object sender, EventArgs e)
+        {
+            if (Measurements.Count == 0)
+            {
+                MessageBox.Show("It`s need at least one file group to save!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (Measurements.Any(x => x.MeasurementsFile1.Count == 0))
+            {
+                DialogResult dialogResult = MessageBox.Show("It`s need to process the files. Proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dialogResult == DialogResult.No)
+                {
+                    return;
+                }
+                else
+                {
+                    LoadMeasureFiles();
+                }
+
+            }
+
+            sfdSaveStruct.ShowDialog();
+            string FileName = sfdSaveStruct.FileName;
+
+
+
+            try
+            {
+                if (!string.IsNullOrEmpty(FileName))
+                {
+                    if (!FileName.EndsWith(".xml"))
+                    {
+                        FileName = FileName + ".xml";
+                    }
+                    using (XmlWriter writer = XmlWriter.Create(FileName))
+                    {
+                        //writer.WriteStartElement("Struct");
+                        //writer.WriteAttributeString("name", StructName);
+                        //writer.WriteAttributeString("version", "1.0");
+                        //writer.WriteAttributeString("target", "Kundt Tube Analyzer");
+                        //writer.WriteEndAttribute();
+
+                        //writer.WriteStartElement("Analyzer Data");
+
+                        //foreach (var item in ListAnalizer)
+                        //{
+                        //    writer.WriteStartElement("Group");
+                        //    writer.WriteAttributeString("name", item["CASE"]);
+
+                        //    writer.WriteStartElement("Data");
+                        //    writer.WriteAttributeString("value", item["DATA"]);
+                        //    writer.WriteEndElement();
+
+                        //    writer.WriteStartElement("Temperature");
+                        //    writer.WriteAttributeString("value", item["TEMP"]);
+                        //    writer.WriteEndElement();
+
+                        //    writer.WriteStartElement("Pressure");
+                        //    writer.WriteAttributeString("value", item["ATP"]);
+                        //    writer.WriteEndElement();
+
+                        //    writer.WriteStartElement("Color");
+                        //    writer.WriteAttributeString("value", item["COLOR"]);
+                        //    writer.WriteEndElement();
+
+                        //    writer.WriteStartElement("File1");
+                        //    writer.WriteAttributeString("value", item["FILE1"]);
+                        //    //Verificar se tem valores
+                        //    //writer.WriteAttributeString("Load", "False"); writer.WriteAttributeString("Load", "True");
+
+                        //    writer.WriteEndElement();
+
+                        //    writer.WriteStartElement("File2");
+                        //    writer.WriteAttributeString("value", item["FILE2"]);
+                        //    //Verificar se tem valores
+                        //    //writer.WriteAttributeString("Load", "False"); writer.WriteAttributeString("Load", "True");
+
+                        //    writer.WriteEndElement();
+
+                        //    writer.WriteEndElement();
+                        //}
+                        //writer.WriteEndElement();
+                        //writer.WriteEndElement();
+                        //writer.Flush();
+                    }
+                }
+            }
+            catch (IOException IOex)
+            {
+                MensagenStatus($"Error on create the file {FileName}. ERROR: {IOex.Message}", LevelMensage.error);
+            }
+            catch (Exception ex)
+            {
+                MensagenStatus($"Unexpected error: {ex.Message}", LevelMensage.error);
+            }
+
+
+        }
+
+        private void btnLoadAnalyze_Click(object sender, EventArgs e)
+        {
+
+        }
         #endregion
 
         #region FORMULA
@@ -422,94 +660,6 @@
 
         #endregion
 
-        private void btnSaveAnalyze_Click(object sender, EventArgs e)
-        {
-            if (ListAnalizer.Count == 0)
-            {
-                MessageBox.Show("It`s need at least one file group to save!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            sfdSaveStruct.ShowDialog();
-            string FileName = sfdSaveStruct.FileName;
 
-            try
-            {
-                if (!string.IsNullOrEmpty(FileName))
-                {
-                    if (!FileName.EndsWith(".xml"))
-                    {
-                        FileName = FileName + ".xml";
-                    }
-                    using (XmlWriter writer = XmlWriter.Create(FileName))
-                    {
-
-
-                        writer.WriteStartElement("Struct");
-                        writer.WriteAttributeString("name", StructName);
-                        writer.WriteAttributeString("version", "1.0");
-                        writer.WriteAttributeString("target", "Kundt Tube Analyzer");
-                        writer.WriteEndAttribute();
-
-                        writer.WriteStartElement("Analyzer Data");
-
-                        foreach (var item in ListAnalizer)
-                        {
-                            writer.WriteStartElement("Group");
-                            writer.WriteAttributeString("name", item["CASE"]);
-
-                            writer.WriteStartElement("Data");
-                            writer.WriteAttributeString("value", item["DATA"]);
-                            writer.WriteEndElement();
-
-                            writer.WriteStartElement("Temperature");
-                            writer.WriteAttributeString("value", item["TEMP"]);
-                            writer.WriteEndElement();
-
-                            writer.WriteStartElement("Pressure");
-                            writer.WriteAttributeString("value", item["ATP"]);
-                            writer.WriteEndElement();
-
-                            writer.WriteStartElement("Color");
-                            writer.WriteAttributeString("value", item["COLOR"]);
-                            writer.WriteEndElement();
-
-                            writer.WriteStartElement("File1");
-                            writer.WriteAttributeString("value", item["FILE1"]);
-                            //Verificar se tem valores
-                            //writer.WriteAttributeString("Load", "False"); writer.WriteAttributeString("Load", "True");
-
-                            writer.WriteEndElement();
-
-                            writer.WriteStartElement("File2");
-                            writer.WriteAttributeString("value", item["FILE2"]);
-                            //Verificar se tem valores
-                            //writer.WriteAttributeString("Load", "False"); writer.WriteAttributeString("Load", "True");
-
-                            writer.WriteEndElement();
-
-                            writer.WriteEndElement();
-                        }
-                        writer.WriteEndElement();
-                        writer.WriteEndElement();
-                        writer.Flush();
-                    }
-                }
-            }
-            catch (IOException IOex)
-            {
-                MensagenStatus($"Error on create the file {FileName}. ERROR: {IOex.Message}", LevelMensage.error);
-            }
-            catch (Exception ex)
-            {
-                MensagenStatus($"Unexpected error: {ex.Message}", LevelMensage.error);
-            }
-            
-
-        }
-
-        private void btnLoadAnalyze_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

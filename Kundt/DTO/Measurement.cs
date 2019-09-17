@@ -17,6 +17,8 @@ namespace DTO
 
         public Guid Id { get; set; }
 
+        public string Struct { get; set; }
+
         public string CaseName { get; set; }
 
         public DateTime Date { get; set; }
@@ -27,7 +29,11 @@ namespace DTO
 
         public string LineColor { get; set; }
 
+        public string FileName1 { get; set; }
+
         public List<DataMeasurement> MeasurementsFile1 { get; set; }
+
+        public string FileName2 { get; set; }
 
         public List<DataMeasurement> MeasurementsFile2 { get; set; }
 

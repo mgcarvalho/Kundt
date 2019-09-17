@@ -1,34 +1,30 @@
-﻿using DTO;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace Kundt
+﻿namespace Kundt
 {
+
+    using DTO;
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Windows.Forms;
+
     public partial class frmLoadFile : Form
     {
-        public Dictionary<string, string> StructName { get; set; }
+        public Measurement ScreenMeasurement { get; set; }
         public Dictionary<string, Color> Colors { get; internal set; }
 
         private string Temperature;
-        private string ATP;
+        private string  ATP;
 
         public frmLoadFile()
         {
-            Temperature = string.Empty;
-            ATP = string.Empty;
+            Temperature = "22";
+            ATP = "101.32";
             InitializeComponent();
         }
 
         private void PrepareInput()
         {
-            lblStructName.Text = StructName["NAME"];
+            lblStructName.Text = ScreenMeasurement.Struct;
             lblStructName.Location = new Point(lblTitle.Size.Width + 17, lblTitle.Location.Y);
             txtCASE.Text = string.Empty;
             dtpDATA.Text = string.Empty;
@@ -52,27 +48,29 @@ namespace Kundt
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            double tp=0;
+            double ap=0;
+            if (!double.TryParse(ATP, out ap)) { ap = 101.32; }
+            if (!double.TryParse(Temperature, out tp)) { tp = 22; }
+
             if (string.IsNullOrEmpty(txtFILE1.Text) || string.IsNullOrEmpty(txtFILE1.Text))
             {
-                MessageBox.Show("File 1 and File 2 are required!", "Warning", MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                MessageBox.Show("File 1 and File 2 are required!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            if (ATP.Length == 0) { ATP = "101.32"; }
-            if (Temperature.Length == 0) { Temperature = "22"; }
-            StructName.Add("CASE", txtCASE.Text);
-            StructName.Add("DATA", dtpDATA.Text);
-            StructName.Add("TEMP", Temperature);
-            StructName.Add("ATP", ATP);
-            StructName.Add("FILE1", txtFILE1.Text);
-            StructName.Add("FILE2", txtFILE2.Text);
-            StructName.Add("COLOR", cmbColors.Text);
+            ScreenMeasurement.CaseName= txtCASE.Text;
+            ScreenMeasurement.Date= dtpDATA.Value;
+            ScreenMeasurement.Temperature = tp;
+            ScreenMeasurement.AtmosphericPressure= ap;
+            ScreenMeasurement.FileName1 = txtFILE1.Text;
+            ScreenMeasurement.FileName2 = txtFILE2.Text;
+            ScreenMeasurement.LineColor = cmbColors.Text;
             this.Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            StructName = null;
+            ScreenMeasurement = null;
             this.Close();
         }
 
@@ -105,12 +103,12 @@ namespace Kundt
             }
             else if (e.KeyChar.ToString().Equals("-"))
             {
-                if (Temperature.Length == 0 || !Temperature.Substring(0,1).Equals("-"))
+                if (Temperature.Length == 0 || !Temperature.Substring(0, 1).Equals("-"))
                 {
                     Temperature = "-" + Temperature;
                 }
             }
-            else if (e.KeyChar.ToString().Equals(".")|| e.KeyChar.ToString().Equals(","))
+            else if (e.KeyChar.ToString().Equals(".") || e.KeyChar.ToString().Equals(","))
             {
                 if (Temperature.IndexOf('.') == -1)
                 {
@@ -142,7 +140,7 @@ namespace Kundt
             }
             else if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
             {
-                if (Temperature.Length == 0 ) { Temperature = "22"; }
+                if (Temperature.Length == 0) { Temperature = "22"; }
                 else if (Temperature.Equals("-")) { Temperature = "-1"; }
                 txtTMP.Text = Temperature + " ºC";
                 txtATP.Focus();

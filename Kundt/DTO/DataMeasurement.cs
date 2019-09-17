@@ -8,9 +8,20 @@ namespace DTO
 {
     public class DataMeasurement
     {
-        public int Id { get; set; }
+        public DataMeasurement()
+        {
+            C1 = new Mic();
+            C2 = new Mic();
+            M1 = new FRF();
+            M2 = new FRF();
+            M3 = new FFT();
+            M4 = new FFT();
+            M1Calculate = new FRF();
+            M2Calculate = new FRF();
 
-        public string Struct { get; set; }
+        }
+
+        public int Id { get; set; }
 
         public Mic C1 { get; set; }
 
