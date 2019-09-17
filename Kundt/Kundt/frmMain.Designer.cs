@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabLoad = new System.Windows.Forms.TabPage();
             this.btnRemoveAllNodes = new System.Windows.Forms.Button();
@@ -45,6 +45,10 @@
             this.gpbFilesLoad = new System.Windows.Forms.GroupBox();
             this.trvFilesLoad = new System.Windows.Forms.TreeView();
             this.dgvStructures = new System.Windows.Forms.DataGridView();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Field = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnLoadStruct = new System.Windows.Forms.Button();
             this.cmbStruct = new System.Windows.Forms.ComboBox();
             this.lblStruct = new System.Windows.Forms.Label();
@@ -71,10 +75,6 @@
             this.btnLoadAnalyze = new System.Windows.Forms.Button();
             this.btnSaveAnalyze = new System.Windows.Forms.Button();
             this.sfdSaveStruct = new System.Windows.Forms.SaveFileDialog();
-            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Field = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabMain.SuspendLayout();
             this.tabLoad.SuspendLayout();
             this.gpbFilesLoad.SuspendLayout();
@@ -110,10 +110,10 @@
             this.tabLoad.Controls.Add(this.btnLoadStruct);
             this.tabLoad.Controls.Add(this.cmbStruct);
             this.tabLoad.Controls.Add(this.lblStruct);
-            this.tabLoad.Location = new System.Drawing.Point(4, 26);
+            this.tabLoad.Location = new System.Drawing.Point(4, 29);
             this.tabLoad.Margin = new System.Windows.Forms.Padding(0);
             this.tabLoad.Name = "tabLoad";
-            this.tabLoad.Size = new System.Drawing.Size(1078, 513);
+            this.tabLoad.Size = new System.Drawing.Size(1078, 510);
             this.tabLoad.TabIndex = 0;
             this.tabLoad.Text = "Create Analyze";
             this.tabLoad.UseVisualStyleBackColor = true;
@@ -201,6 +201,47 @@
             this.dgvStructures.Size = new System.Drawing.Size(746, 419);
             this.dgvStructures.TabIndex = 3;
             // 
+            // Type
+            // 
+            this.Type.DataPropertyName = "Type";
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.Type.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Type.HeaderText = "Type";
+            this.Type.Name = "Type";
+            this.Type.Width = 180;
+            // 
+            // Field
+            // 
+            this.Field.DataPropertyName = "Field";
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.Field.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Field.HeaderText = "Field";
+            this.Field.Name = "Field";
+            this.Field.Width = 220;
+            // 
+            // Value
+            // 
+            this.Value.DataPropertyName = "Value";
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.Value.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Value.HeaderText = "Value";
+            this.Value.Name = "Value";
+            this.Value.Width = 220;
+            // 
+            // Unit
+            // 
+            this.Unit.DataPropertyName = "Unit";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.Unit.DefaultCellStyle = dataGridViewCellStyle5;
+            this.Unit.HeaderText = "Unit";
+            this.Unit.Name = "Unit";
+            this.Unit.Width = 65;
+            // 
             // btnLoadStruct
             // 
             this.btnLoadStruct.Location = new System.Drawing.Point(602, 14);
@@ -216,7 +257,7 @@
             this.cmbStruct.FormattingEnabled = true;
             this.cmbStruct.Location = new System.Drawing.Point(164, 14);
             this.cmbStruct.Name = "cmbStruct";
-            this.cmbStruct.Size = new System.Drawing.Size(414, 25);
+            this.cmbStruct.Size = new System.Drawing.Size(414, 28);
             this.cmbStruct.TabIndex = 1;
             // 
             // lblStruct
@@ -224,18 +265,18 @@
             this.lblStruct.AutoSize = true;
             this.lblStruct.Location = new System.Drawing.Point(12, 17);
             this.lblStruct.Name = "lblStruct";
-            this.lblStruct.Size = new System.Drawing.Size(144, 17);
+            this.lblStruct.Size = new System.Drawing.Size(179, 20);
             this.lblStruct.TabIndex = 0;
             this.lblStruct.Text = "Select structure:";
             // 
             // tabAnalyze
             // 
             this.tabAnalyze.Controls.Add(this.chtAnalyze);
-            this.tabAnalyze.Location = new System.Drawing.Point(4, 26);
+            this.tabAnalyze.Location = new System.Drawing.Point(4, 29);
             this.tabAnalyze.Margin = new System.Windows.Forms.Padding(4);
             this.tabAnalyze.Name = "tabAnalyze";
             this.tabAnalyze.Padding = new System.Windows.Forms.Padding(4);
-            this.tabAnalyze.Size = new System.Drawing.Size(1078, 513);
+            this.tabAnalyze.Size = new System.Drawing.Size(1078, 510);
             this.tabAnalyze.TabIndex = 1;
             this.tabAnalyze.Text = "Graphics";
             this.tabAnalyze.UseVisualStyleBackColor = true;
@@ -262,9 +303,9 @@
             // 
             this.tabMath.Controls.Add(this.groupBox1);
             this.tabMath.Controls.Add(this.grpParameters);
-            this.tabMath.Location = new System.Drawing.Point(4, 26);
+            this.tabMath.Location = new System.Drawing.Point(4, 29);
             this.tabMath.Name = "tabMath";
-            this.tabMath.Size = new System.Drawing.Size(1078, 513);
+            this.tabMath.Size = new System.Drawing.Size(1078, 510);
             this.tabMath.TabIndex = 2;
             this.tabMath.Text = "Mathematical Formulas Test";
             this.tabMath.UseVisualStyleBackColor = true;
@@ -288,7 +329,7 @@
             this.label2.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(746, 41);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 16);
+            this.label2.Size = new System.Drawing.Size(79, 20);
             this.label2.TabIndex = 4;
             this.label2.Text = "Result:";
             // 
@@ -300,7 +341,7 @@
             this.txtResult.Location = new System.Drawing.Point(817, 37);
             this.txtResult.Margin = new System.Windows.Forms.Padding(4);
             this.txtResult.Name = "txtResult";
-            this.txtResult.Size = new System.Drawing.Size(233, 22);
+            this.txtResult.Size = new System.Drawing.Size(233, 26);
             this.txtResult.TabIndex = 1;
             this.txtResult.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -310,7 +351,7 @@
             this.cmbFormulas.FormattingEnabled = true;
             this.cmbFormulas.Location = new System.Drawing.Point(127, 37);
             this.cmbFormulas.Name = "cmbFormulas";
-            this.cmbFormulas.Size = new System.Drawing.Size(564, 24);
+            this.cmbFormulas.Size = new System.Drawing.Size(564, 26);
             this.cmbFormulas.TabIndex = 3;
             this.cmbFormulas.SelectedIndexChanged += new System.EventHandler(this.cmbFormulas_SelectedIndexChanged);
             // 
@@ -320,7 +361,7 @@
             this.label1.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(25, 41);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 16);
+            this.label1.Size = new System.Drawing.Size(89, 20);
             this.label1.TabIndex = 2;
             this.label1.Text = "Formula:";
             // 
@@ -356,7 +397,7 @@
             this.lblPar3.AutoSize = true;
             this.lblPar3.Location = new System.Drawing.Point(756, 43);
             this.lblPar3.Name = "lblPar3";
-            this.lblPar3.Size = new System.Drawing.Size(64, 17);
+            this.lblPar3.Size = new System.Drawing.Size(79, 20);
             this.lblPar3.TabIndex = 10;
             this.lblPar3.Text = "Result:";
             this.lblPar3.Visible = false;
@@ -367,7 +408,7 @@
             this.txtPar3.Location = new System.Drawing.Point(759, 67);
             this.txtPar3.Margin = new System.Windows.Forms.Padding(4);
             this.txtPar3.Name = "txtPar3";
-            this.txtPar3.Size = new System.Drawing.Size(291, 22);
+            this.txtPar3.Size = new System.Drawing.Size(291, 26);
             this.txtPar3.TabIndex = 9;
             this.txtPar3.Visible = false;
             // 
@@ -376,7 +417,7 @@
             this.lblPar2.AutoSize = true;
             this.lblPar2.Location = new System.Drawing.Point(387, 43);
             this.lblPar2.Name = "lblPar2";
-            this.lblPar2.Size = new System.Drawing.Size(64, 17);
+            this.lblPar2.Size = new System.Drawing.Size(79, 20);
             this.lblPar2.TabIndex = 8;
             this.lblPar2.Text = "Result:";
             this.lblPar2.Visible = false;
@@ -387,7 +428,7 @@
             this.txtPar2.Location = new System.Drawing.Point(391, 67);
             this.txtPar2.Margin = new System.Windows.Forms.Padding(4);
             this.txtPar2.Name = "txtPar2";
-            this.txtPar2.Size = new System.Drawing.Size(291, 22);
+            this.txtPar2.Size = new System.Drawing.Size(291, 26);
             this.txtPar2.TabIndex = 7;
             this.txtPar2.Visible = false;
             // 
@@ -396,7 +437,7 @@
             this.lblPar1.AutoSize = true;
             this.lblPar1.Location = new System.Drawing.Point(11, 43);
             this.lblPar1.Name = "lblPar1";
-            this.lblPar1.Size = new System.Drawing.Size(64, 17);
+            this.lblPar1.Size = new System.Drawing.Size(79, 20);
             this.lblPar1.TabIndex = 6;
             this.lblPar1.Text = "Result:";
             this.lblPar1.Visible = false;
@@ -407,7 +448,7 @@
             this.txtPar1.Location = new System.Drawing.Point(15, 67);
             this.txtPar1.Margin = new System.Windows.Forms.Padding(4);
             this.txtPar1.Name = "txtPar1";
-            this.txtPar1.Size = new System.Drawing.Size(291, 22);
+            this.txtPar1.Size = new System.Drawing.Size(291, 26);
             this.txtPar1.TabIndex = 5;
             this.txtPar1.Visible = false;
             // 
@@ -458,6 +499,7 @@
             this.btnLoadAnalyze.TabIndex = 6;
             this.btnLoadAnalyze.Text = "Load Analyze";
             this.btnLoadAnalyze.UseVisualStyleBackColor = true;
+            this.btnLoadAnalyze.Click += new System.EventHandler(this.btnLoadAnalyze_Click);
             // 
             // btnSaveAnalyze
             // 
@@ -470,50 +512,9 @@
             this.btnSaveAnalyze.UseVisualStyleBackColor = true;
             this.btnSaveAnalyze.Click += new System.EventHandler(this.btnSaveAnalyze_Click);
             // 
-            // Type
-            // 
-            this.Type.DataPropertyName = "Type";
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.Type.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Type.HeaderText = "Type";
-            this.Type.Name = "Type";
-            this.Type.Width = 180;
-            // 
-            // Field
-            // 
-            this.Field.DataPropertyName = "Field";
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.Field.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Field.HeaderText = "Field";
-            this.Field.Name = "Field";
-            this.Field.Width = 220;
-            // 
-            // Value
-            // 
-            this.Value.DataPropertyName = "Value";
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.Value.DefaultCellStyle = dataGridViewCellStyle4;
-            this.Value.HeaderText = "Value";
-            this.Value.Name = "Value";
-            this.Value.Width = 220;
-            // 
-            // Unit
-            // 
-            this.Unit.DataPropertyName = "Unit";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.Unit.DefaultCellStyle = dataGridViewCellStyle5;
-            this.Unit.HeaderText = "Unit";
-            this.Unit.Name = "Unit";
-            this.Unit.Width = 65;
-            // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1233, 569);
             this.Controls.Add(this.btnLoadAnalyze);

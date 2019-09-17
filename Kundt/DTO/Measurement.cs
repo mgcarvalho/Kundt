@@ -10,10 +10,14 @@ namespace DTO
     {
         public Measurement()
         {
-            Measurements = new List<DataMeasurement>();
+            Id = new Guid();
+            MeasurementsFile1 = new List<DataMeasurement>();
+            MeasurementsFile2 = new List<DataMeasurement>();
         }
 
         public Guid Id { get; set; }
+
+        public string CaseName { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -21,7 +25,11 @@ namespace DTO
 
         public double AtmosphericPressure { get; set; }
 
-        public List<DataMeasurement> Measurements { get; set; }
+        public string LineColor { get; set; }
+
+        public List<DataMeasurement> MeasurementsFile1 { get; set; }
+
+        public List<DataMeasurement> MeasurementsFile2 { get; set; }
 
 
     }

@@ -10,18 +10,24 @@ namespace DTO
     {
         public int Id { get; set; }
 
+        public string Struct { get; set; }
+
         public Mic C1 { get; set; }
+
         public Mic C2 { get; set; }
 
         public FRF M1 { get; set; }
+
         public FRF M2 { get; set; }
 
-        public FRF M1Calculate { get; set; }
-        public FRF M2Calculate { get; set; }
-
-
         public FFT M3 { get; set; }
+
         public FFT M4 { get; set; }
+
+        //CALCULATE
+        public FRF M1Calculate { get; set; }
+
+        public FRF M2Calculate { get; set; }
 
     }
 }

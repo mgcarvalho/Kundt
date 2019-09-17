@@ -14,6 +14,9 @@
     using System.Windows.Forms;
     using System.Xml;
     using System.Xml.Linq;
+    using System.Collections.Generic;
+
+
     using DTO;
     using KundtExceptions;
     using KundtManager;
@@ -31,8 +34,13 @@
 
         public Dictionary<string, string> ListFormulas { get; set; }
 
+        public Dictionary<string, IList<string>> DataFile { get; set; }
+
         public Dictionary<string, Color> ListColors { get; set; }
 
+        private List<Measurement> LoadMeasurements;
+
+        #region ctor
         public frmMain()
         {
             InitializeComponent();
@@ -41,7 +49,8 @@
             ListColors = GetAllColors();
 
         }
-        
+        #endregion
+
         #region Privates
 
         private enum LevelMensage
@@ -129,11 +138,11 @@
             }
         }
 
-        private void LoadTreeView(Dictionary<string, string> itemAnalizer)
+        private void LoadTreeView(Measurement measurement)
         {
-            if (trvFilesLoad.Nodes.ContainsKey(itemAnalizer["CASE"]))
+            if (trvFilesLoad.Nodes.ContainsKey(measurement.CaseName))
             {
-                RemoveCase(itemAnalizer["CASE"]);
+                RemoveCase(measurement.CaseName);
             }
             ListAnalizer.Add(itemAnalizer);
 
@@ -152,22 +161,17 @@
                 trvFilesLoad.Nodes[rootIndex].Nodes[4].Nodes.Add($"File (1): {itemAnalizer["FILE1"]}");
                 trvFilesLoad.Nodes[rootIndex].Nodes[4].Nodes.Add($"File (2): {itemAnalizer["FILE2"]}");
             }
-            //Remove color used
+
+
+
+            //Remove used color
             ListColors.Remove(itemAnalizer["COLOR"]);
         }
 
         private void RemoveCase(string CaseName)
         {
             trvFilesLoad.Nodes.RemoveByKey(CaseName);
-            foreach (var item in ListAnalizer)
-            {
-                if (item["CASE"].Equals(CaseName))
-                {
-                    ListColors.Add(item["COLOR"], Color.FromName(item["COLOR"]));
-                    ListAnalizer.Remove(item);
-                    return;
-                }
-            }
+            LoadMeasurements.RemoveAll(x => x.CaseName.Equals(CaseName));
         }
 
 
@@ -189,8 +193,9 @@
             cmbFormulas.ValueMember = "Key";
 
         }
+
         #endregion
-        
+
         #region MAIN_FORM
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -240,7 +245,7 @@
 
             if (frm.StructName == null)
             {
-                MensagenStatus("Files not informated!", LevelMensage.warning);
+                MensagenStatus("No Information!", LevelMensage.warning);
             }
             else
             {
@@ -256,8 +261,12 @@
                     btnRemoveAllNodes.BackColor = Color.YellowGreen;
                 }
                 MensagenStatus("Group insered!", LevelMensage.info);
+
             }
             frm.Dispose();
+
+            
+            
         }
 
         private void btnClearStruct_Click(object sender, EventArgs e)
@@ -439,8 +448,9 @@
                         writer.WriteAttributeString("name", StructName);
                         writer.WriteAttributeString("version", "1.0");
                         writer.WriteAttributeString("target", "Kundt Tube Analyzer");
-                        
-                        writer.WriteStartElement("Files");
+                        writer.WriteEndAttribute();
+
+                        writer.WriteStartElement("Analyzer Data");
 
                         foreach (var item in ListAnalizer)
                         {
@@ -465,10 +475,16 @@
 
                             writer.WriteStartElement("File1");
                             writer.WriteAttributeString("value", item["FILE1"]);
+                            //Verificar se tem valores
+                            //writer.WriteAttributeString("Load", "False"); writer.WriteAttributeString("Load", "True");
+
                             writer.WriteEndElement();
 
                             writer.WriteStartElement("File2");
                             writer.WriteAttributeString("value", item["FILE2"]);
+                            //Verificar se tem valores
+                            //writer.WriteAttributeString("Load", "False"); writer.WriteAttributeString("Load", "True");
+
                             writer.WriteEndElement();
 
                             writer.WriteEndElement();
@@ -491,5 +507,9 @@
 
         }
 
+        private void btnLoadAnalyze_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
