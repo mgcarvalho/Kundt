@@ -54,6 +54,17 @@
             this.cmbStruct = new System.Windows.Forms.ComboBox();
             this.lblStruct = new System.Windows.Forms.Label();
             this.tabAnalyze = new System.Windows.Forms.TabPage();
+            this.lblHi = new System.Windows.Forms.Label();
+            this.lblLow = new System.Windows.Forms.Label();
+            this.lblH = new System.Windows.Forms.Label();
+            this.lblL = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.rbGraphType = new System.Windows.Forms.RadioButton();
+            this.tbHi = new System.Windows.Forms.TrackBar();
+            this.tbLow = new System.Windows.Forms.TrackBar();
             this.chtAnalyze = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabMath = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -77,6 +88,8 @@
             this.gpbFilesLoad.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStructures)).BeginInit();
             this.tabAnalyze.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbHi)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbLow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chtAnalyze)).BeginInit();
             this.tabMath.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -281,6 +294,17 @@
             // 
             // tabAnalyze
             // 
+            this.tabAnalyze.Controls.Add(this.lblHi);
+            this.tabAnalyze.Controls.Add(this.lblLow);
+            this.tabAnalyze.Controls.Add(this.lblH);
+            this.tabAnalyze.Controls.Add(this.lblL);
+            this.tabAnalyze.Controls.Add(this.label4);
+            this.tabAnalyze.Controls.Add(this.label3);
+            this.tabAnalyze.Controls.Add(this.radioButton2);
+            this.tabAnalyze.Controls.Add(this.radioButton1);
+            this.tabAnalyze.Controls.Add(this.rbGraphType);
+            this.tabAnalyze.Controls.Add(this.tbHi);
+            this.tabAnalyze.Controls.Add(this.tbLow);
             this.tabAnalyze.Controls.Add(this.chtAnalyze);
             this.tabAnalyze.Location = new System.Drawing.Point(4, 26);
             this.tabAnalyze.Margin = new System.Windows.Forms.Padding(4);
@@ -290,6 +314,119 @@
             this.tabAnalyze.TabIndex = 1;
             this.tabAnalyze.Text = "Graphics";
             this.tabAnalyze.UseVisualStyleBackColor = true;
+            // 
+            // lblHi
+            // 
+            this.lblHi.AutoSize = true;
+            this.lblHi.Font = new System.Drawing.Font("Courier New", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHi.ForeColor = System.Drawing.Color.Green;
+            this.lblHi.Location = new System.Drawing.Point(1155, 485);
+            this.lblHi.Name = "lblHi";
+            this.lblHi.Size = new System.Drawing.Size(64, 16);
+            this.lblHi.TabIndex = 11;
+            this.lblHi.Text = "2000 Hz";
+            // 
+            // lblLow
+            // 
+            this.lblLow.AutoSize = true;
+            this.lblLow.Font = new System.Drawing.Font("Courier New", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLow.ForeColor = System.Drawing.Color.Green;
+            this.lblLow.Location = new System.Drawing.Point(1155, 466);
+            this.lblLow.Name = "lblLow";
+            this.lblLow.Size = new System.Drawing.Size(40, 16);
+            this.lblLow.TabIndex = 10;
+            this.lblLow.Text = "0 Hz";
+            // 
+            // lblH
+            // 
+            this.lblH.AutoSize = true;
+            this.lblH.Location = new System.Drawing.Point(1117, 485);
+            this.lblH.Name = "lblH";
+            this.lblH.Size = new System.Drawing.Size(24, 17);
+            this.lblH.TabIndex = 9;
+            this.lblH.Text = "Hi";
+            // 
+            // lblL
+            // 
+            this.lblL.AutoSize = true;
+            this.lblL.Location = new System.Drawing.Point(1117, 466);
+            this.lblL.Name = "lblL";
+            this.lblL.Size = new System.Drawing.Size(32, 17);
+            this.lblL.TabIndex = 8;
+            this.lblL.Text = "Low";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(1185, 14);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(24, 17);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Hi";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(1121, 12);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(32, 17);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Low";
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(1124, 435);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(34, 21);
+            this.radioButton2.TabIndex = 5;
+            this.radioButton2.Text = "I";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(1124, 408);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(34, 21);
+            this.radioButton1.TabIndex = 4;
+            this.radioButton1.Text = "R";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // rbGraphType
+            // 
+            this.rbGraphType.AutoSize = true;
+            this.rbGraphType.Checked = true;
+            this.rbGraphType.Location = new System.Drawing.Point(1124, 381);
+            this.rbGraphType.Name = "rbGraphType";
+            this.rbGraphType.Size = new System.Drawing.Size(66, 21);
+            this.rbGraphType.TabIndex = 3;
+            this.rbGraphType.TabStop = true;
+            this.rbGraphType.Text = "Alpha";
+            this.rbGraphType.UseVisualStyleBackColor = true;
+            // 
+            // tbHi
+            // 
+            this.tbHi.Location = new System.Drawing.Point(1173, 32);
+            this.tbHi.Maximum = 2000;
+            this.tbHi.Name = "tbHi";
+            this.tbHi.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.tbHi.Size = new System.Drawing.Size(45, 343);
+            this.tbHi.TabIndex = 2;
+            this.tbHi.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.tbHi.Value = 2000;
+            this.tbHi.ValueChanged += new System.EventHandler(this.tbHi_ValueChanged);
+            // 
+            // tbLow
+            // 
+            this.tbLow.Location = new System.Drawing.Point(1120, 32);
+            this.tbLow.Maximum = 2000;
+            this.tbLow.Name = "tbLow";
+            this.tbLow.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.tbLow.Size = new System.Drawing.Size(45, 343);
+            this.tbLow.TabIndex = 1;
+            this.tbLow.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.tbLow.ValueChanged += new System.EventHandler(this.tbLow_ValueChanged);
             // 
             // chtAnalyze
             // 
@@ -306,7 +443,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chtAnalyze.Series.Add(series1);
-            this.chtAnalyze.Size = new System.Drawing.Size(1031, 492);
+            this.chtAnalyze.Size = new System.Drawing.Size(1092, 481);
             this.chtAnalyze.TabIndex = 0;
             // 
             // tabMath
@@ -501,6 +638,9 @@
             this.gpbFilesLoad.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvStructures)).EndInit();
             this.tabAnalyze.ResumeLayout(false);
+            this.tabAnalyze.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbHi)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbLow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chtAnalyze)).EndInit();
             this.tabMath.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -552,5 +692,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Field;
         private System.Windows.Forms.DataGridViewTextBoxColumn Value;
         private System.Windows.Forms.DataGridViewTextBoxColumn Unit;
+        private System.Windows.Forms.TrackBar tbHi;
+        private System.Windows.Forms.TrackBar tbLow;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton rbGraphType;
+        private System.Windows.Forms.Label lblHi;
+        private System.Windows.Forms.Label lblLow;
+        private System.Windows.Forms.Label lblH;
+        private System.Windows.Forms.Label lblL;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
     }
 }

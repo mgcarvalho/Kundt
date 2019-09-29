@@ -13,6 +13,7 @@ namespace DTO
             Id = new Guid();
             MeasurementsFile1 = new List<DataMeasurement>();
             MeasurementsFile2 = new List<DataMeasurement>();
+            FRFFixed = new List<FRF>();
         }
 
         public Guid Id { get; set; }
@@ -37,6 +38,7 @@ namespace DTO
 
         public List<DataMeasurement> MeasurementsFile2 { get; set; }
 
-
+        //Calculate
+        public List<FRF> FRFFixed { get; set; }
     }
 }

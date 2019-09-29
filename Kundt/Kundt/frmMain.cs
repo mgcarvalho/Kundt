@@ -196,9 +196,30 @@
                 var file2 = LoadDataFile(item.FileName2, item.Struct);
                 if (item.MeasurementsFile2.Count == 0) item.MeasurementsFile2.AddRange(file2);
 
+                //Calculate FRF
+                item.FRFFixed = CalculateFRF(item); 
+
                 count++;
             }
             toolStripStatusLabelInfo.Text = "Processing file finish!";
+        }
+
+        private List<FRF> CalculateFRF(Measurement measurement)
+        {
+            List<FRF> frf = new List<FRF>();
+            foreach (var item in measurement.MeasurementsFile1)
+            {
+                double ortherMicValue = 0;
+                FRF f = new FRF();
+                f.Frequency = item.M1.Frequency;
+                if (measurement.MeasurementsFile2.Any(x => x.M2.Frequency == f.Frequency))
+                {
+                    ortherMicValue = measurement.MeasurementsFile2.First(x => x.M2.Frequency == f.Frequency).M2.Amplification;
+                    f.Amplification = KundtFunctions.TFFixed(item.M1.Amplification, ortherMicValue);
+                    frf.Add(f);                    
+                }
+            }
+            return frf;
         }
 
         private IList<DataMeasurement> LoadDataFile(string fileName, string structName)
@@ -328,6 +349,13 @@
                 double.TryParse(dataArray[M4a], out oV);
                 dM.M4.Amplitude = oV;
                 dM.Id = rt.Count + 1;
+
+                //Calculate
+                //dM.M1Calculate.Amplification = ;
+                //dM.M1Calculate.Frequency;
+                //dM.M2Calculate.Amplification;
+                //dM.M2Calculate.Frequency;
+
                 rt.Add(dM);
             }
             return rt;
@@ -448,14 +476,11 @@
                 return;
             }
 
-
-
             LoadMeasureFiles();
             //LoadGraphic(Measurements);
 
-
             tabMain.SelectedIndex = 1;
-        }       
+        }
         #endregion
 
         #region FORMULA
@@ -555,8 +580,35 @@
 
 
 
+
         #endregion
 
+        private void tbLow_ValueChanged(object sender, EventArgs e)
+        {
+            lblLow.Text = $"{tbLow.Value} Hz";
+            CheckFrenquancy();
+        }
+
+        private void tbHi_ValueChanged(object sender, EventArgs e)
+        {
+            lblHi.Text = $"{tbHi.Value} Hz";
+            CheckFrenquancy();
+
+        }
+
+        private void CheckFrenquancy()
+        {
+            if (tbHi.Value < tbLow.Value)
+            {
+                lblHi.ForeColor = Color.Red;
+                lblLow.ForeColor = Color.Red;
+            }
+            else
+            {
+                lblHi.ForeColor = Color.Green;
+                lblLow.ForeColor = Color.Green;
+            }
+        }
 
     }
 }
