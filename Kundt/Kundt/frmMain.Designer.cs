@@ -41,6 +41,7 @@
             this.btnRemoveAllNodes = new System.Windows.Forms.Button();
             this.btnRemoveNode = new System.Windows.Forms.Button();
             this.btnAnalyze = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.btnAddFile = new System.Windows.Forms.Button();
             this.gpbFilesLoad = new System.Windows.Forms.GroupBox();
             this.trvFilesLoad = new System.Windows.Forms.TreeView();
@@ -68,12 +69,8 @@
             this.txtPar2 = new System.Windows.Forms.TextBox();
             this.lblPar1 = new System.Windows.Forms.Label();
             this.txtPar1 = new System.Windows.Forms.TextBox();
-            this.btnClearStruct = new System.Windows.Forms.Button();
             this.stsInfo = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelInfo = new System.Windows.Forms.ToolStripStatusLabel();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.btnLoadAnalyze = new System.Windows.Forms.Button();
-            this.btnSaveAnalyze = new System.Windows.Forms.Button();
             this.sfdSaveStruct = new System.Windows.Forms.SaveFileDialog();
             this.tabMain.SuspendLayout();
             this.tabLoad.SuspendLayout();
@@ -96,7 +93,7 @@
             this.tabMain.Margin = new System.Windows.Forms.Padding(4);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
-            this.tabMain.Size = new System.Drawing.Size(1086, 543);
+            this.tabMain.Size = new System.Drawing.Size(1233, 543);
             this.tabMain.TabIndex = 0;
             // 
             // tabLoad
@@ -104,16 +101,17 @@
             this.tabLoad.Controls.Add(this.btnRemoveAllNodes);
             this.tabLoad.Controls.Add(this.btnRemoveNode);
             this.tabLoad.Controls.Add(this.btnAnalyze);
+            this.tabLoad.Controls.Add(this.btnClose);
             this.tabLoad.Controls.Add(this.btnAddFile);
             this.tabLoad.Controls.Add(this.gpbFilesLoad);
             this.tabLoad.Controls.Add(this.dgvStructures);
             this.tabLoad.Controls.Add(this.btnLoadStruct);
             this.tabLoad.Controls.Add(this.cmbStruct);
             this.tabLoad.Controls.Add(this.lblStruct);
-            this.tabLoad.Location = new System.Drawing.Point(4, 29);
+            this.tabLoad.Location = new System.Drawing.Point(4, 26);
             this.tabLoad.Margin = new System.Windows.Forms.Padding(0);
             this.tabLoad.Name = "tabLoad";
-            this.tabLoad.Size = new System.Drawing.Size(1078, 510);
+            this.tabLoad.Size = new System.Drawing.Size(1225, 513);
             this.tabLoad.TabIndex = 0;
             this.tabLoad.Text = "Create Analyze";
             this.tabLoad.UseVisualStyleBackColor = true;
@@ -122,11 +120,11 @@
             // 
             this.btnRemoveAllNodes.BackColor = System.Drawing.Color.Transparent;
             this.btnRemoveAllNodes.Enabled = false;
-            this.btnRemoveAllNodes.Location = new System.Drawing.Point(921, 480);
+            this.btnRemoveAllNodes.Location = new System.Drawing.Point(909, 480);
             this.btnRemoveAllNodes.Name = "btnRemoveAllNodes";
             this.btnRemoveAllNodes.Size = new System.Drawing.Size(150, 26);
             this.btnRemoveAllNodes.TabIndex = 9;
-            this.btnRemoveAllNodes.Text = "Remove All";
+            this.btnRemoveAllNodes.Text = "Clear All";
             this.btnRemoveAllNodes.UseVisualStyleBackColor = false;
             this.btnRemoveAllNodes.Click += new System.EventHandler(this.btnRemoveAllNodes_Click);
             // 
@@ -134,7 +132,7 @@
             // 
             this.btnRemoveNode.BackColor = System.Drawing.Color.Transparent;
             this.btnRemoveNode.Enabled = false;
-            this.btnRemoveNode.Location = new System.Drawing.Point(765, 480);
+            this.btnRemoveNode.Location = new System.Drawing.Point(753, 480);
             this.btnRemoveNode.Name = "btnRemoveNode";
             this.btnRemoveNode.Size = new System.Drawing.Size(150, 26);
             this.btnRemoveNode.TabIndex = 8;
@@ -146,18 +144,30 @@
             // 
             this.btnAnalyze.BackColor = System.Drawing.Color.Transparent;
             this.btnAnalyze.Enabled = false;
-            this.btnAnalyze.Location = new System.Drawing.Point(609, 480);
+            this.btnAnalyze.Location = new System.Drawing.Point(597, 480);
             this.btnAnalyze.Name = "btnAnalyze";
             this.btnAnalyze.Size = new System.Drawing.Size(150, 26);
             this.btnAnalyze.TabIndex = 7;
-            this.btnAnalyze.Text = "Analyze Files";
+            this.btnAnalyze.Text = "Load Data";
             this.btnAnalyze.UseVisualStyleBackColor = false;
             this.btnAnalyze.Click += new System.EventHandler(this.btnAnalyze_Click);
+            // 
+            // btnClose
+            // 
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.Location = new System.Drawing.Point(1064, 480);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(0);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(150, 26);
+            this.btnClose.TabIndex = 2;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnAddFile
             // 
             this.btnAddFile.Enabled = false;
-            this.btnAddFile.Location = new System.Drawing.Point(453, 480);
+            this.btnAddFile.Location = new System.Drawing.Point(441, 480);
             this.btnAddFile.Name = "btnAddFile";
             this.btnAddFile.Size = new System.Drawing.Size(150, 26);
             this.btnAddFile.TabIndex = 6;
@@ -170,7 +180,7 @@
             this.gpbFilesLoad.Controls.Add(this.trvFilesLoad);
             this.gpbFilesLoad.Location = new System.Drawing.Point(760, 3);
             this.gpbFilesLoad.Name = "gpbFilesLoad";
-            this.gpbFilesLoad.Size = new System.Drawing.Size(315, 471);
+            this.gpbFilesLoad.Size = new System.Drawing.Size(457, 471);
             this.gpbFilesLoad.TabIndex = 4;
             this.gpbFilesLoad.TabStop = false;
             this.gpbFilesLoad.Text = "Groups";
@@ -179,7 +189,7 @@
             // 
             this.trvFilesLoad.Location = new System.Drawing.Point(6, 22);
             this.trvFilesLoad.Name = "trvFilesLoad";
-            this.trvFilesLoad.Size = new System.Drawing.Size(303, 443);
+            this.trvFilesLoad.Size = new System.Drawing.Size(445, 443);
             this.trvFilesLoad.TabIndex = 0;
             // 
             // dgvStructures
@@ -257,7 +267,7 @@
             this.cmbStruct.FormattingEnabled = true;
             this.cmbStruct.Location = new System.Drawing.Point(164, 14);
             this.cmbStruct.Name = "cmbStruct";
-            this.cmbStruct.Size = new System.Drawing.Size(414, 28);
+            this.cmbStruct.Size = new System.Drawing.Size(414, 25);
             this.cmbStruct.TabIndex = 1;
             // 
             // lblStruct
@@ -265,18 +275,18 @@
             this.lblStruct.AutoSize = true;
             this.lblStruct.Location = new System.Drawing.Point(12, 17);
             this.lblStruct.Name = "lblStruct";
-            this.lblStruct.Size = new System.Drawing.Size(179, 20);
+            this.lblStruct.Size = new System.Drawing.Size(144, 17);
             this.lblStruct.TabIndex = 0;
             this.lblStruct.Text = "Select structure:";
             // 
             // tabAnalyze
             // 
             this.tabAnalyze.Controls.Add(this.chtAnalyze);
-            this.tabAnalyze.Location = new System.Drawing.Point(4, 29);
+            this.tabAnalyze.Location = new System.Drawing.Point(4, 26);
             this.tabAnalyze.Margin = new System.Windows.Forms.Padding(4);
             this.tabAnalyze.Name = "tabAnalyze";
             this.tabAnalyze.Padding = new System.Windows.Forms.Padding(4);
-            this.tabAnalyze.Size = new System.Drawing.Size(1078, 510);
+            this.tabAnalyze.Size = new System.Drawing.Size(1225, 513);
             this.tabAnalyze.TabIndex = 1;
             this.tabAnalyze.Text = "Graphics";
             this.tabAnalyze.UseVisualStyleBackColor = true;
@@ -303,9 +313,9 @@
             // 
             this.tabMath.Controls.Add(this.groupBox1);
             this.tabMath.Controls.Add(this.grpParameters);
-            this.tabMath.Location = new System.Drawing.Point(4, 29);
+            this.tabMath.Location = new System.Drawing.Point(4, 26);
             this.tabMath.Name = "tabMath";
-            this.tabMath.Size = new System.Drawing.Size(1078, 510);
+            this.tabMath.Size = new System.Drawing.Size(1225, 513);
             this.tabMath.TabIndex = 2;
             this.tabMath.Text = "Mathematical Formulas Test";
             this.tabMath.UseVisualStyleBackColor = true;
@@ -329,7 +339,7 @@
             this.label2.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(746, 41);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(79, 20);
+            this.label2.Size = new System.Drawing.Size(64, 16);
             this.label2.TabIndex = 4;
             this.label2.Text = "Result:";
             // 
@@ -341,7 +351,7 @@
             this.txtResult.Location = new System.Drawing.Point(817, 37);
             this.txtResult.Margin = new System.Windows.Forms.Padding(4);
             this.txtResult.Name = "txtResult";
-            this.txtResult.Size = new System.Drawing.Size(233, 26);
+            this.txtResult.Size = new System.Drawing.Size(233, 22);
             this.txtResult.TabIndex = 1;
             this.txtResult.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -351,7 +361,7 @@
             this.cmbFormulas.FormattingEnabled = true;
             this.cmbFormulas.Location = new System.Drawing.Point(127, 37);
             this.cmbFormulas.Name = "cmbFormulas";
-            this.cmbFormulas.Size = new System.Drawing.Size(564, 26);
+            this.cmbFormulas.Size = new System.Drawing.Size(564, 24);
             this.cmbFormulas.TabIndex = 3;
             this.cmbFormulas.SelectedIndexChanged += new System.EventHandler(this.cmbFormulas_SelectedIndexChanged);
             // 
@@ -361,7 +371,7 @@
             this.label1.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(25, 41);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 20);
+            this.label1.Size = new System.Drawing.Size(72, 16);
             this.label1.TabIndex = 2;
             this.label1.Text = "Formula:";
             // 
@@ -397,7 +407,7 @@
             this.lblPar3.AutoSize = true;
             this.lblPar3.Location = new System.Drawing.Point(756, 43);
             this.lblPar3.Name = "lblPar3";
-            this.lblPar3.Size = new System.Drawing.Size(79, 20);
+            this.lblPar3.Size = new System.Drawing.Size(64, 17);
             this.lblPar3.TabIndex = 10;
             this.lblPar3.Text = "Result:";
             this.lblPar3.Visible = false;
@@ -408,7 +418,7 @@
             this.txtPar3.Location = new System.Drawing.Point(759, 67);
             this.txtPar3.Margin = new System.Windows.Forms.Padding(4);
             this.txtPar3.Name = "txtPar3";
-            this.txtPar3.Size = new System.Drawing.Size(291, 26);
+            this.txtPar3.Size = new System.Drawing.Size(291, 22);
             this.txtPar3.TabIndex = 9;
             this.txtPar3.Visible = false;
             // 
@@ -417,7 +427,7 @@
             this.lblPar2.AutoSize = true;
             this.lblPar2.Location = new System.Drawing.Point(387, 43);
             this.lblPar2.Name = "lblPar2";
-            this.lblPar2.Size = new System.Drawing.Size(79, 20);
+            this.lblPar2.Size = new System.Drawing.Size(64, 17);
             this.lblPar2.TabIndex = 8;
             this.lblPar2.Text = "Result:";
             this.lblPar2.Visible = false;
@@ -428,7 +438,7 @@
             this.txtPar2.Location = new System.Drawing.Point(391, 67);
             this.txtPar2.Margin = new System.Windows.Forms.Padding(4);
             this.txtPar2.Name = "txtPar2";
-            this.txtPar2.Size = new System.Drawing.Size(291, 26);
+            this.txtPar2.Size = new System.Drawing.Size(291, 22);
             this.txtPar2.TabIndex = 7;
             this.txtPar2.Visible = false;
             // 
@@ -437,7 +447,7 @@
             this.lblPar1.AutoSize = true;
             this.lblPar1.Location = new System.Drawing.Point(11, 43);
             this.lblPar1.Name = "lblPar1";
-            this.lblPar1.Size = new System.Drawing.Size(79, 20);
+            this.lblPar1.Size = new System.Drawing.Size(64, 17);
             this.lblPar1.TabIndex = 6;
             this.lblPar1.Text = "Result:";
             this.lblPar1.Visible = false;
@@ -448,19 +458,9 @@
             this.txtPar1.Location = new System.Drawing.Point(15, 67);
             this.txtPar1.Margin = new System.Windows.Forms.Padding(4);
             this.txtPar1.Name = "txtPar1";
-            this.txtPar1.Size = new System.Drawing.Size(291, 26);
+            this.txtPar1.Size = new System.Drawing.Size(291, 22);
             this.txtPar1.TabIndex = 5;
             this.txtPar1.Visible = false;
-            // 
-            // btnClearStruct
-            // 
-            this.btnClearStruct.Location = new System.Drawing.Point(1093, 27);
-            this.btnClearStruct.Name = "btnClearStruct";
-            this.btnClearStruct.Size = new System.Drawing.Size(136, 40);
-            this.btnClearStruct.TabIndex = 5;
-            this.btnClearStruct.Text = "New";
-            this.btnClearStruct.UseVisualStyleBackColor = true;
-            this.btnClearStruct.Click += new System.EventHandler(this.btnClearStruct_Click);
             // 
             // stsInfo
             // 
@@ -478,49 +478,11 @@
             this.toolStripStatusLabelInfo.Name = "toolStripStatusLabelInfo";
             this.toolStripStatusLabelInfo.Size = new System.Drawing.Size(0, 17);
             // 
-            // btnClose
-            // 
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(1093, 500);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(0);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(136, 40);
-            this.btnClose.TabIndex = 2;
-            this.btnClose.Text = "Close";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // btnLoadAnalyze
-            // 
-            this.btnLoadAnalyze.Location = new System.Drawing.Point(1093, 82);
-            this.btnLoadAnalyze.Margin = new System.Windows.Forms.Padding(0);
-            this.btnLoadAnalyze.Name = "btnLoadAnalyze";
-            this.btnLoadAnalyze.Size = new System.Drawing.Size(136, 40);
-            this.btnLoadAnalyze.TabIndex = 6;
-            this.btnLoadAnalyze.Text = "Load Analyze";
-            this.btnLoadAnalyze.UseVisualStyleBackColor = true;
-            this.btnLoadAnalyze.Click += new System.EventHandler(this.btnLoadAnalyze_Click);
-            // 
-            // btnSaveAnalyze
-            // 
-            this.btnSaveAnalyze.Location = new System.Drawing.Point(1093, 136);
-            this.btnSaveAnalyze.Margin = new System.Windows.Forms.Padding(0);
-            this.btnSaveAnalyze.Name = "btnSaveAnalyze";
-            this.btnSaveAnalyze.Size = new System.Drawing.Size(136, 40);
-            this.btnSaveAnalyze.TabIndex = 5;
-            this.btnSaveAnalyze.Text = "Save Analyze";
-            this.btnSaveAnalyze.UseVisualStyleBackColor = true;
-            this.btnSaveAnalyze.Click += new System.EventHandler(this.btnSaveAnalyze_Click);
-            // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1233, 569);
-            this.Controls.Add(this.btnLoadAnalyze);
-            this.Controls.Add(this.btnSaveAnalyze);
-            this.Controls.Add(this.btnClearStruct);
-            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.stsInfo);
             this.Controls.Add(this.tabMain);
             this.Font = new System.Drawing.Font("Courier New", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -564,7 +526,6 @@
         private System.Windows.Forms.DataGridView dgvStructures;
         private System.Windows.Forms.Button btnAnalyze;
         private System.Windows.Forms.Button btnAddFile;
-        private System.Windows.Forms.Button btnClearStruct;
         private System.Windows.Forms.GroupBox gpbFilesLoad;
         private System.Windows.Forms.TreeView trvFilesLoad;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelInfo;
@@ -586,8 +547,6 @@
         private System.Windows.Forms.Button btnDoFormula;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.DataVisualization.Charting.Chart chtAnalyze;
-        private System.Windows.Forms.Button btnLoadAnalyze;
-        private System.Windows.Forms.Button btnSaveAnalyze;
         private System.Windows.Forms.SaveFileDialog sfdSaveStruct;
         private System.Windows.Forms.DataGridViewTextBoxColumn Type;
         private System.Windows.Forms.DataGridViewTextBoxColumn Field;

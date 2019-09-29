@@ -53,11 +53,18 @@
             if (!double.TryParse(ATP, out ap)) { ap = 101.32; }
             if (!double.TryParse(Temperature, out tp)) { tp = 22; }
 
-            if (string.IsNullOrEmpty(txtFILE1.Text) || string.IsNullOrEmpty(txtFILE1.Text))
+            if (string.IsNullOrEmpty(txtFILE1.Text) || string.IsNullOrEmpty(txtFILE2.Text))
             {
                 MessageBox.Show("File 1 and File 2 are required!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            if (txtFILE1.Text.Equals(txtFILE2.Text, StringComparison.InvariantCultureIgnoreCase))
+            {
+                MessageBox.Show("File 1 and File 2 are the same!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             ScreenMeasurement.CaseName= txtCASE.Text;
             ScreenMeasurement.Date= dtpDATA.Value;
             ScreenMeasurement.Temperature = tp;

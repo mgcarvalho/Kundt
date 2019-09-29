@@ -14,8 +14,6 @@
     using System.Linq;
     using System.Reflection;
     using System.Windows.Forms;
-    using System.Xml;
-    using System.Xml.Linq;
 
     public partial class frmMain : Form
     {
@@ -149,11 +147,9 @@
                 trvFilesLoad.Nodes[rootIndex].Nodes[4].Nodes.Add($"File (1): {measurement.FileName1}");
                 trvFilesLoad.Nodes[rootIndex].Nodes[4].Nodes.Add($"File (2): {measurement.FileName2}");
             }
-
             //Remove used color
             ListColors.Remove(measurement.LineColor);
         }
-
 
         private void AddNewMeasures(Measurement measurement)
         {
@@ -187,13 +183,22 @@
 
         private void LoadMeasureFiles()
         {
+            int count = 1;
             foreach (var item in Measurements)
             {
                 //FILE 1
-                if (item.MeasurementsFile1.Count == 0) item.MeasurementsFile1.AddRange(LoadDataFile(item.FileName1, item.Struct));
+                toolStripStatusLabelInfo.Text = $"Processing file A {count} of {Measurements.Count}! Wait...";
+                var file1 = LoadDataFile(item.FileName1, item.Struct);
+                if (item.MeasurementsFile1.Count == 0) item.MeasurementsFile1.AddRange(file1);
+
                 //File 2
-                if (item.MeasurementsFile2.Count == 0) item.MeasurementsFile2.AddRange(LoadDataFile(item.FileName2, item.Struct));
+                toolStripStatusLabelInfo.Text = $"Processing file B {count} of {Measurements.Count}! Wait...";
+                var file2 = LoadDataFile(item.FileName2, item.Struct);
+                if (item.MeasurementsFile2.Count == 0) item.MeasurementsFile2.AddRange(file2);
+
+                count++;
             }
+            toolStripStatusLabelInfo.Text = "Processing file finish!";
         }
 
         private IList<DataMeasurement> LoadDataFile(string fileName, string structName)
@@ -213,7 +218,7 @@
 
             int.TryParse(structs.FirstOrDefault(x => x.Type == StructType.DataIndex).Value, out structLine);
 
-            if (startLine==-1 || structLine ==-1)
+            if (startLine == -1 || structLine == -1)
             {
                 MessageBox.Show("Error on load struct file, see Start Line and Struct Line *numbers* values!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 MensagenStatus("Cann't load struct file!", LevelMensage.error);
@@ -228,7 +233,7 @@
             }
 
             var lines = File.ReadAllLines(fileName);
-            if (lines.Length< structLine-1 || lines.Length < startLine - 1)
+            if (lines.Length < structLine - 1 || lines.Length < startLine - 1)
             {
                 MessageBox.Show($"The file {fileName} doesn't has information!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 MensagenStatus("File doesn't has information!", LevelMensage.error);
@@ -237,12 +242,12 @@
 
 
 
-            structValues = lines[structLine-1];
+            structValues = lines[structLine - 1];
             var arrayIndex = structValues.Split(';');
-            for (var i = 0; i < arrayIndex.Length; i ++)
+            for (var i = 0; i < arrayIndex.Length; i++)
             {
                 switch (arrayIndex[i].Trim().ToUpper())
-                {      
+                {
                     case "C1:  TIME[S]":
                         C1t = i;
                         break;
@@ -285,10 +290,10 @@
             }
 
 
-            for (var i = startLine - 1; i < lines.Length; i ++)
+            for (var i = startLine - 1; i < lines.Length; i++)
             {
                 var dM = new DataMeasurement();
-             
+
                 double oV = 0;
                 var dataLine = lines[i];
                 var dataArray = dataLine.Split(';');
@@ -316,15 +321,13 @@
                 double.TryParse(dataArray[M3f], out oV);
                 dM.M3.Frequency = oV;
                 double.TryParse(dataArray[M3a], out oV);
-                dM.M3.Amplitude  = oV;
+                dM.M3.Amplitude = oV;
                 //M4
                 double.TryParse(dataArray[M4f], out oV);
                 dM.M4.Frequency = oV;
                 double.TryParse(dataArray[M4a], out oV);
                 dM.M4.Amplitude = oV;
-
                 dM.Id = rt.Count + 1;
-
                 rt.Add(dM);
             }
             return rt;
@@ -403,12 +406,6 @@
             frm.Dispose();
         }
 
-        private void btnClearStruct_Click(object sender, EventArgs e)
-        {
-            Clear();
-            MensagenStatus("Clear!", LevelMensage.info);
-        }
-
         private void btnRemoveNode_Click(object sender, EventArgs e)
         {
             //Verificar se está selecionado e achar
@@ -439,127 +436,26 @@
 
         private void btnRemoveAllNodes_Click(object sender, EventArgs e)
         {
-            trvFilesLoad.Nodes.Clear();
-            Measurements = new List<Measurement>();
-
-            btnRemoveNode.Enabled = false;
-            btnRemoveNode.BackColor = Color.Transparent;
-
-            btnRemoveAllNodes.Enabled = false;
-            btnRemoveAllNodes.BackColor = Color.Transparent;
-
-            ListColors = GetAllColors();
+            Clear();
+            MensagenStatus("Clear!", LevelMensage.info);
         }
 
         private void btnAnalyze_Click(object sender, EventArgs e)
         {
-            tabMain.SelectedIndex = 1;
-        }
-
-        private void btnSaveAnalyze_Click(object sender, EventArgs e)
-        {
             if (Measurements.Count == 0)
             {
-                MessageBox.Show("It`s need at least one file group to save!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("It`s need at least one file group to continue!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (Measurements.Any(x => x.MeasurementsFile1.Count == 0))
-            {
-                DialogResult dialogResult = MessageBox.Show("It`s need to process the files. Proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (dialogResult == DialogResult.No)
-                {
-                    return;
-                }
-                else
-                {
-                    LoadMeasureFiles();
-                }
-
-            }
-
-            sfdSaveStruct.ShowDialog();
-            string FileName = sfdSaveStruct.FileName;
 
 
-
-            try
-            {
-                if (!string.IsNullOrEmpty(FileName))
-                {
-                    if (!FileName.EndsWith(".xml"))
-                    {
-                        FileName = FileName + ".xml";
-                    }
-                    using (XmlWriter writer = XmlWriter.Create(FileName))
-                    {
-                        //writer.WriteStartElement("Struct");
-                        //writer.WriteAttributeString("name", StructName);
-                        //writer.WriteAttributeString("version", "1.0");
-                        //writer.WriteAttributeString("target", "Kundt Tube Analyzer");
-                        //writer.WriteEndAttribute();
-
-                        //writer.WriteStartElement("Analyzer Data");
-
-                        //foreach (var item in ListAnalizer)
-                        //{
-                        //    writer.WriteStartElement("Group");
-                        //    writer.WriteAttributeString("name", item["CASE"]);
-
-                        //    writer.WriteStartElement("Data");
-                        //    writer.WriteAttributeString("value", item["DATA"]);
-                        //    writer.WriteEndElement();
-
-                        //    writer.WriteStartElement("Temperature");
-                        //    writer.WriteAttributeString("value", item["TEMP"]);
-                        //    writer.WriteEndElement();
-
-                        //    writer.WriteStartElement("Pressure");
-                        //    writer.WriteAttributeString("value", item["ATP"]);
-                        //    writer.WriteEndElement();
-
-                        //    writer.WriteStartElement("Color");
-                        //    writer.WriteAttributeString("value", item["COLOR"]);
-                        //    writer.WriteEndElement();
-
-                        //    writer.WriteStartElement("File1");
-                        //    writer.WriteAttributeString("value", item["FILE1"]);
-                        //    //Verificar se tem valores
-                        //    //writer.WriteAttributeString("Load", "False"); writer.WriteAttributeString("Load", "True");
-
-                        //    writer.WriteEndElement();
-
-                        //    writer.WriteStartElement("File2");
-                        //    writer.WriteAttributeString("value", item["FILE2"]);
-                        //    //Verificar se tem valores
-                        //    //writer.WriteAttributeString("Load", "False"); writer.WriteAttributeString("Load", "True");
-
-                        //    writer.WriteEndElement();
-
-                        //    writer.WriteEndElement();
-                        //}
-                        //writer.WriteEndElement();
-                        //writer.WriteEndElement();
-                        //writer.Flush();
-                    }
-                }
-            }
-            catch (IOException IOex)
-            {
-                MensagenStatus($"Error on create the file {FileName}. ERROR: {IOex.Message}", LevelMensage.error);
-            }
-            catch (Exception ex)
-            {
-                MensagenStatus($"Unexpected error: {ex.Message}", LevelMensage.error);
-            }
+            LoadMeasureFiles();
+            //LoadGraphic(Measurements);
 
 
-        }
-
-        private void btnLoadAnalyze_Click(object sender, EventArgs e)
-        {
-
-        }
+            tabMain.SelectedIndex = 1;
+        }       
         #endregion
 
         #region FORMULA
@@ -656,6 +552,7 @@
                 }
             }
         }
+
 
 
         #endregion
