@@ -10,6 +10,7 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Drawing;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Reflection;
@@ -197,26 +198,36 @@
                 if (item.MeasurementsFile2.Count == 0) item.MeasurementsFile2.AddRange(file2);
 
                 //Calculate FRF
-                item.FRFFixed = CalculateFRF(item); 
+                item.Results = CalculateFRF(item);
 
                 count++;
             }
             toolStripStatusLabelInfo.Text = "Processing file finish!";
         }
 
-        private List<FRF> CalculateFRF(Measurement measurement)
+        private List<ResultSet> CalculateFRF(Measurement measurement)
         {
-            List<FRF> frf = new List<FRF>();
+            List<ResultSet> frf = new List<ResultSet>();
             foreach (var item in measurement.MeasurementsFile1)
             {
-                double ortherMicValue = 0;
-                FRF f = new FRF();
+                //double ortherMicValue = 0;
+                ResultSet f = new ResultSet();
                 f.Frequency = item.M1.Frequency;
                 if (measurement.MeasurementsFile2.Any(x => x.M2.Frequency == f.Frequency))
                 {
-                    ortherMicValue = measurement.MeasurementsFile2.First(x => x.M2.Frequency == f.Frequency).M2.Amplification;
-                    f.Amplification = KundtFunctions.TFFixed(item.M1.Amplification, ortherMicValue);
-                    frf.Add(f);                    
+                    var ortherMicValue = measurement.MeasurementsFile2.First(x => x.M2.Frequency == f.Frequency);
+                    if (ortherMicValue != null)
+                    {
+                        f.Amplification = KundtFunctions.TransferFunction(item.M1.Amplification, ortherMicValue.M2.Amplification);
+                        f.Reflection = KundtFunctions.Reflection(f.Amplification, f.Frequency, measurement.Temperature, measurement.MicDistance, measurement.furtherMicDistance);
+                        f.Absorption = KundtFunctions.Absorption(f.Reflection);
+                        f.Impedance = KundtFunctions.Impedance(f.Reflection);
+
+
+                        if (!Double.IsNaN(f.Amplification))
+                        { frf.Add(f); }
+
+                    }
                 }
             }
             return frf;
@@ -224,6 +235,7 @@
 
         private IList<DataMeasurement> LoadDataFile(string fileName, string structName)
         {
+            int frenquencyLimit = 2000;
             List<DataMeasurement> rt = new List<DataMeasurement>();
             var lS = new LoadStructs();
             var structs = lS.GetStructs(SelectStruct);
@@ -350,17 +362,29 @@
                 dM.M4.Amplitude = oV;
                 dM.Id = rt.Count + 1;
 
-                //Calculate
-                //dM.M1Calculate.Amplification = ;
-                //dM.M1Calculate.Frequency;
-                //dM.M2Calculate.Amplification;
-                //dM.M2Calculate.Frequency;
+                if (dM.M1.Frequency > frenquencyLimit)
+                {
+                    break;
+                }
 
                 rt.Add(dM);
             }
             return rt;
         }
 
+        private void CheckFrenquancy()
+        {
+            if (tbHi.Value < tbLow.Value)
+            {
+                lblHi.ForeColor = Color.Red;
+                lblLow.ForeColor = Color.Red;
+            }
+            else
+            {
+                lblHi.ForeColor = Color.Green;
+                lblLow.ForeColor = Color.Green;
+            }
+        }
         #endregion
 
         #region MAIN_FORM
@@ -481,13 +505,25 @@
 
             tabMain.SelectedIndex = 1;
         }
+
+        private void tbLow_ValueChanged(object sender, EventArgs e)
+        {
+            lblLow.Text = $"{tbLow.Value} Hz";
+            CheckFrenquancy();
+        }
+
+        private void tbHi_ValueChanged(object sender, EventArgs e)
+        {
+            lblHi.Text = $"{tbHi.Value} Hz";
+            CheckFrenquancy();
+
+        }
+
         #endregion
 
         #region FORMULA
         private void cmbFormulas_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            //TODO: Gerar automaticamente
             lblPar1.Text = string.Empty;
             lblPar1.Visible = false;
             txtPar1.Text = string.Empty;
@@ -500,6 +536,19 @@
             lblPar3.Visible = false;
             txtPar3.Text = string.Empty;
             txtPar3.Visible = false;
+
+            lblPar4.Text = string.Empty;
+            lblPar4.Visible = false;
+            txtPar4.Text = string.Empty;
+            txtPar4.Visible = false;
+            lblPar5.Text = string.Empty;
+            lblPar5.Visible = false;
+            txtPar5.Text = string.Empty;
+            txtPar5.Visible = false;
+            lblPar6.Text = string.Empty;
+            lblPar6.Visible = false;
+            txtPar6.Text = string.Empty;
+            txtPar6.Visible = false;
 
             string MethodName = ((KeyValuePair<string, string>)cmbFormulas.SelectedItem).Value;
 
@@ -530,6 +579,24 @@
                             txtPar3.Text = string.Empty;
                             txtPar3.Visible = true;
                             break;
+                        case 4:
+                            lblPar4.Text = item.Name;
+                            lblPar4.Visible = true;
+                            txtPar4.Text = string.Empty;
+                            txtPar4.Visible = true;
+                            break;
+                        case 5:
+                            lblPar5.Text = item.Name;
+                            lblPar5.Visible = true;
+                            txtPar5.Text = string.Empty;
+                            txtPar5.Visible = true;
+                            break;
+                        case 6:
+                            lblPar6.Text = item.Name;
+                            lblPar6.Visible = true;
+                            txtPar6.Text = string.Empty;
+                            txtPar6.Visible = true;
+                            break;
                         default:
                             break;
                     }
@@ -551,22 +618,34 @@
                 try
                 {
                     object[] parametersArray = new object[parameters.Count()];
+                    double outValue;
                     for (int i = 0; i < parameters.Count(); i++)
                     {
+                        outValue = double.MinValue;
                         switch (i)
                         {
                             case 0:
-                                parametersArray[i] = Convert.ToDouble(txtPar1.Text);
+                                double.TryParse(txtPar1.Text.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out outValue);
                                 break;
                             case 1:
-                                parametersArray[i] = Convert.ToDouble(txtPar2.Text);
+                                double.TryParse(txtPar2.Text.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out outValue);
                                 break;
                             case 2:
-                                parametersArray[i] = Convert.ToDouble(txtPar3.Text);
+                                double.TryParse(txtPar3.Text.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out outValue);
+                                break;
+                            case 3:
+                                double.TryParse(txtPar4.Text.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out outValue);
+                                break;
+                            case 4:
+                                double.TryParse(txtPar5.Text.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out outValue);
+                                break;
+                            case 5:
+                                double.TryParse(txtPar6.Text.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out outValue);
                                 break;
                             default:
                                 break;
                         }
+                        parametersArray[i] = outValue;
                     }
                     txtResult.Text = tSolver.GetMethod(MethodName).Invoke(null, parametersArray).ToString();
                     MensagenStatus($"Success on invoke {MethodName} with result {txtResult.Text}.", LevelMensage.info);
@@ -577,38 +656,6 @@
                 }
             }
         }
-
-
-
-
         #endregion
-
-        private void tbLow_ValueChanged(object sender, EventArgs e)
-        {
-            lblLow.Text = $"{tbLow.Value} Hz";
-            CheckFrenquancy();
-        }
-
-        private void tbHi_ValueChanged(object sender, EventArgs e)
-        {
-            lblHi.Text = $"{tbHi.Value} Hz";
-            CheckFrenquancy();
-
-        }
-
-        private void CheckFrenquancy()
-        {
-            if (tbHi.Value < tbLow.Value)
-            {
-                lblHi.ForeColor = Color.Red;
-                lblLow.ForeColor = Color.Red;
-            }
-            else
-            {
-                lblHi.ForeColor = Color.Green;
-                lblLow.ForeColor = Color.Green;
-            }
-        }
-
     }
 }

@@ -14,11 +14,15 @@
 
         private string Temperature;
         private string  ATP;
+        private string s;
+        private string x1;
 
         public frmLoadFile()
         {
             Temperature = "22";
             ATP = "101.32";
+            s = "0.069";
+            x1 = "0.1182";
             InitializeComponent();
         }
 
@@ -30,6 +34,8 @@
             dtpDATA.Text = string.Empty;
             txtTMP.Text = Temperature + " ºC";
             txtATP.Text = ATP + " KPa";
+            txtMicDistance.Text = s + " m";
+            txtFurtherMicDistance.Text = x1 + " m";
             txtFILE1.Text = string.Empty;
             txtFILE2.Text = string.Empty;
             cmbColors.DataSource = new BindingSource(Colors, null);
@@ -50,8 +56,13 @@
         {
             double tp=0;
             double ap=0;
-            if (!double.TryParse(ATP, out ap)) { ap = 101.32; }
+            double ts = 0;
+            double tx = 0;
+
+            if (!double.TryParse(ATP,         out ap)) { ap = 101.32; }
             if (!double.TryParse(Temperature, out tp)) { tp = 22; }
+            if (!double.TryParse(s,           out ts)) { ts = 0.069; }
+            if (!double.TryParse(x1,          out tx)) { tx = 0.1182; }
 
             if (string.IsNullOrEmpty(txtFILE1.Text) || string.IsNullOrEmpty(txtFILE2.Text))
             {
@@ -69,6 +80,8 @@
             ScreenMeasurement.Date= dtpDATA.Value;
             ScreenMeasurement.Temperature = tp;
             ScreenMeasurement.AtmosphericPressure= ap;
+            ScreenMeasurement.MicDistance = ts;
+            ScreenMeasurement.furtherMicDistance = tx; 
             ScreenMeasurement.FileName1 = txtFILE1.Text;
             ScreenMeasurement.FileName2 = txtFILE2.Text;
             ScreenMeasurement.LineColor = cmbColors.Text;
@@ -195,7 +208,7 @@
             {
                 if (ATP.Length == 0 || ATP.Equals(".")) { ATP = "101.32"; }
                 txtATP.Text = ATP + " KPa";
-                btnFile1.Focus();
+                txtMicDistance.Focus();
             }
         }
 
@@ -210,6 +223,108 @@
             if (Temperature.Length == 0) { Temperature = "22"; }
             else if (Temperature.Equals("-")) { Temperature = "-1"; }
             txtTMP.Text = Temperature + " ºC";
+        }
+
+        private void txtMicDistance_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+            if (e.KeyCode == Keys.Delete)
+            {
+                s = string.Empty;
+                txtMicDistance.Text = s + " m";
+                txtMicDistance.SelectionStart = 0;
+                txtMicDistance.SelectionLength = 0;
+            }
+            else if (e.KeyCode == Keys.Back)
+            {
+                if (s.Length > 0) { s = s.Substring(0, s.Length - 1); }
+            }
+            else if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                if (s.Length == 0) { s = "0.069"; }
+                txtMicDistance.Text = s + " m";
+                txtFurtherMicDistance.Focus();
+            }
+        }
+
+        private void txtMicDistance_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+            if (char.IsDigit(e.KeyChar))
+            {
+                s += e.KeyChar;
+            }
+            else if (e.KeyChar.ToString().Equals(".") || e.KeyChar.ToString().Equals(","))
+            {
+                if (s.IndexOf('.') == -1)
+                {
+                    if (ATP.Length == 0)
+                    {
+                        s = "0";
+                    }
+                    s += '.';
+                }
+            }
+            txtMicDistance.Text = s + " m";
+            txtMicDistance.SelectionStart = txtMicDistance.Text.Length - 2;
+            txtMicDistance.SelectionLength = 0;
+        }
+
+        private void txtMicDistance_Leave(object sender, EventArgs e)
+        {
+            if (s.Length == 0 || s.Equals(".")) { s = "0.069"; }
+            txtMicDistance.Text = s + " m";
+        }
+
+        private void txtFurtherMicDistance_Leave(object sender, EventArgs e)
+        {
+            if (x1.Length == 0 || x1.Equals(".")) { x1 = "0.1182"; }
+            txtFurtherMicDistance.Text = x1 + " m";
+        }
+
+        private void txtFurtherMicDistance_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+            if (e.KeyCode == Keys.Delete)
+            {
+                x1 = string.Empty;
+                txtFurtherMicDistance.Text = s + " m";
+                txtFurtherMicDistance.SelectionStart = 0;
+                txtFurtherMicDistance.SelectionLength = 0;
+            }
+            else if (e.KeyCode == Keys.Back)
+            {
+                if (x1.Length > 0) { x1 = x1.Substring(0, x1.Length - 1); }
+            }
+            else if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                if (x1.Length == 0) { x1 = "0.1182"; }
+                txtFurtherMicDistance.Text = x1 + " m";
+                btnFile1.Focus();
+            }
+        }
+
+        private void txtFurtherMicDistance_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+            if (char.IsDigit(e.KeyChar))
+            {
+                x1 += e.KeyChar;
+            }
+            else if (e.KeyChar.ToString().Equals(".") || e.KeyChar.ToString().Equals(","))
+            {
+                if (x1.IndexOf('.') == -1)
+                {
+                    if (x1.Length == 0)
+                    {
+                        x1 = "0";
+                    }
+                    x1 += '.';
+                }
+            }
+            txtFurtherMicDistance.Text = x1 + " m";
+            txtFurtherMicDistance.SelectionStart = txtMicDistance.Text.Length - 2;
+            txtFurtherMicDistance.SelectionLength = 0;
         }
     }
 }

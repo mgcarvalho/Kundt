@@ -13,7 +13,7 @@ namespace DTO
             Id = new Guid();
             MeasurementsFile1 = new List<DataMeasurement>();
             MeasurementsFile2 = new List<DataMeasurement>();
-            FRFFixed = new List<FRF>();
+            Results = new List<ResultSet>();
         }
 
         public Guid Id { get; set; }
@@ -28,6 +28,10 @@ namespace DTO
 
         public double AtmosphericPressure { get; set; }
 
+        public double MicDistance { get; set; }
+
+        public double furtherMicDistance { get; set; }
+
         public string LineColor { get; set; }
 
         public string FileName1 { get; set; }
@@ -39,6 +43,6 @@ namespace DTO
         public List<DataMeasurement> MeasurementsFile2 { get; set; }
 
         //Calculate
-        public List<FRF> FRFFixed { get; set; }
+        public List<ResultSet> Results { get; set; }
     }
 }

@@ -2,6 +2,8 @@
 namespace Solver
 {
     using System;
+    using System.Numerics;
+
 
     public static class KundtFunctions
     {
@@ -42,15 +44,77 @@ namespace Solver
             return rCalculate;
         }
 
-        //ok
-        public static double TFFixed(double mic1, double mic2)
+
+        public static double TransferFunction(double mic1, double mic2)
         {
-            double rCalculate = 0;
-            double m1 = 0, m2=0;
-            m1 = Math.Sqrt(Math.Pow(mic1, 2) );
-            m2 = Math.Sqrt(Math.Pow(mic2, 2));
-            rCalculate = Math.Sqrt( ( m1 * m2 ) );
-            return rCalculate;
+            return Math.Sqrt((mic1 * mic2)); ;
         }
+
+        public static double Ks(double frequency, double temperature, double micDistance)
+        {
+            double k = WaveNumber(frequency, temperature);
+            return k * micDistance;
+        }
+
+        public static double Kx(double frequency, double temperature, double furtherMicrophone)
+        {
+            double k = WaveNumber(frequency, temperature);
+            return 2 * k * furtherMicrophone;
+        }
+
+        public static Complex Hi(double frequency, double temperature, double micDistance)
+        {
+            double ks = Ks(frequency, temperature, micDistance);
+            double real = Math.Cos(ks);
+            double imaginary = -1 * Math.Sin(ks);
+            return new Complex(real, imaginary);
+        }
+
+        public static Complex Hr(double frequency, double temperature, double micDistance)
+        {
+            double ks = Ks(frequency, temperature, micDistance);
+            double real = Math.Cos(ks);
+            double imaginary = Math.Sin(ks);
+            return new Complex(real, imaginary);
+        }
+
+        public static Complex E2(double frequency, double temperature, double furtherMicrophone)
+        {
+            double kx = Kx(frequency, temperature, furtherMicrophone);
+            double real = Math.Cos(2 * kx);
+            double imaginary = Math.Sin(2 * kx);
+            return new Complex(real, imaginary);
+        }
+
+        public static double Reflection(double transferFunction, double frequency, double temperature, double micDistance, double furtherMicrophone)
+        {
+            Complex hi = Hi(frequency, temperature, micDistance);
+            Complex hr = Hr(frequency, temperature, micDistance);
+            Complex e2 = E2(frequency, temperature, furtherMicrophone);
+
+            double topReal = transferFunction - hi.Real;
+            double bottonReal = hr.Real - transferFunction;
+            double topImaginary = transferFunction - hi.Imaginary;
+            double bottonImaginary = hr.Imaginary - transferFunction;
+
+            Complex top = Complex.Multiply(new Complex(topReal, topImaginary), e2);
+            Complex botton = new Complex(bottonReal, bottonImaginary);
+
+            Complex r = Complex.Divide(top, botton);
+            return Complex.Abs(r);
+        }
+
+        public static double Absorption(double reflection)
+        {
+            return 1 - (Math.Pow(reflection, 2));
+        }
+
+        public static double Impedance(double reflection)
+        {
+            double top = 1 + reflection;
+            double botton = 1 - reflection;
+            return top / botton;
+        }
+
     }
 }

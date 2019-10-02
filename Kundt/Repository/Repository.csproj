@@ -50,10 +50,6 @@
       <Project>{f1a86b54-01a2-433a-be9f-028e33a81277}</Project>
       <Name>DTO</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Entity\Entity.csproj">
-      <Project>{5bb45aca-a963-401b-b89e-e8006903e0bd}</Project>
-      <Name>Entity</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KundtExceptions\KundtExceptions.csproj">
       <Project>{f73fc297-f1aa-48dd-a461-69a0b7b090f7}</Project>
       <Name>KundtExceptions</Name>

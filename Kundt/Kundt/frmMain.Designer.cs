@@ -83,6 +83,12 @@
             this.stsInfo = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.sfdSaveStruct = new System.Windows.Forms.SaveFileDialog();
+            this.lblPar6 = new System.Windows.Forms.Label();
+            this.txtPar6 = new System.Windows.Forms.TextBox();
+            this.lblPar5 = new System.Windows.Forms.Label();
+            this.txtPar5 = new System.Windows.Forms.TextBox();
+            this.lblPar4 = new System.Windows.Forms.Label();
+            this.txtPar4 = new System.Windows.Forms.TextBox();
             this.tabMain.SuspendLayout();
             this.tabLoad.SuspendLayout();
             this.gpbFilesLoad.SuspendLayout();
@@ -465,7 +471,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(8, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1056, 93);
+            this.groupBox1.Size = new System.Drawing.Size(1209, 93);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Formula";
@@ -514,6 +520,12 @@
             // 
             // grpParameters
             // 
+            this.grpParameters.Controls.Add(this.lblPar6);
+            this.grpParameters.Controls.Add(this.txtPar6);
+            this.grpParameters.Controls.Add(this.lblPar5);
+            this.grpParameters.Controls.Add(this.txtPar5);
+            this.grpParameters.Controls.Add(this.lblPar4);
+            this.grpParameters.Controls.Add(this.txtPar4);
             this.grpParameters.Controls.Add(this.btnDoFormula);
             this.grpParameters.Controls.Add(this.lblPar3);
             this.grpParameters.Controls.Add(this.txtPar3);
@@ -523,7 +535,7 @@
             this.grpParameters.Controls.Add(this.txtPar1);
             this.grpParameters.Location = new System.Drawing.Point(7, 112);
             this.grpParameters.Name = "grpParameters";
-            this.grpParameters.Size = new System.Drawing.Size(1057, 198);
+            this.grpParameters.Size = new System.Drawing.Size(1210, 378);
             this.grpParameters.TabIndex = 4;
             this.grpParameters.TabStop = false;
             this.grpParameters.Text = "Parameters";
@@ -531,7 +543,7 @@
             // btnDoFormula
             // 
             this.btnDoFormula.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDoFormula.Location = new System.Drawing.Point(949, 166);
+            this.btnDoFormula.Location = new System.Drawing.Point(1102, 346);
             this.btnDoFormula.Name = "btnDoFormula";
             this.btnDoFormula.Size = new System.Drawing.Size(102, 26);
             this.btnDoFormula.TabIndex = 11;
@@ -614,6 +626,66 @@
             // 
             this.toolStripStatusLabelInfo.Name = "toolStripStatusLabelInfo";
             this.toolStripStatusLabelInfo.Size = new System.Drawing.Size(0, 17);
+            // 
+            // lblPar6
+            // 
+            this.lblPar6.AutoSize = true;
+            this.lblPar6.Location = new System.Drawing.Point(755, 111);
+            this.lblPar6.Name = "lblPar6";
+            this.lblPar6.Size = new System.Drawing.Size(64, 17);
+            this.lblPar6.TabIndex = 17;
+            this.lblPar6.Text = "Result:";
+            this.lblPar6.Visible = false;
+            // 
+            // txtPar6
+            // 
+            this.txtPar6.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPar6.Location = new System.Drawing.Point(758, 135);
+            this.txtPar6.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPar6.Name = "txtPar6";
+            this.txtPar6.Size = new System.Drawing.Size(291, 22);
+            this.txtPar6.TabIndex = 16;
+            this.txtPar6.Visible = false;
+            // 
+            // lblPar5
+            // 
+            this.lblPar5.AutoSize = true;
+            this.lblPar5.Location = new System.Drawing.Point(386, 111);
+            this.lblPar5.Name = "lblPar5";
+            this.lblPar5.Size = new System.Drawing.Size(64, 17);
+            this.lblPar5.TabIndex = 15;
+            this.lblPar5.Text = "Result:";
+            this.lblPar5.Visible = false;
+            // 
+            // txtPar5
+            // 
+            this.txtPar5.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPar5.Location = new System.Drawing.Point(390, 135);
+            this.txtPar5.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPar5.Name = "txtPar5";
+            this.txtPar5.Size = new System.Drawing.Size(291, 22);
+            this.txtPar5.TabIndex = 14;
+            this.txtPar5.Visible = false;
+            // 
+            // lblPar4
+            // 
+            this.lblPar4.AutoSize = true;
+            this.lblPar4.Location = new System.Drawing.Point(10, 111);
+            this.lblPar4.Name = "lblPar4";
+            this.lblPar4.Size = new System.Drawing.Size(64, 17);
+            this.lblPar4.TabIndex = 13;
+            this.lblPar4.Text = "Result:";
+            this.lblPar4.Visible = false;
+            // 
+            // txtPar4
+            // 
+            this.txtPar4.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPar4.Location = new System.Drawing.Point(14, 135);
+            this.txtPar4.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPar4.Name = "txtPar4";
+            this.txtPar4.Size = new System.Drawing.Size(291, 22);
+            this.txtPar4.TabIndex = 12;
+            this.txtPar4.Visible = false;
             // 
             // frmMain
             // 
@@ -703,5 +775,11 @@
         private System.Windows.Forms.Label lblL;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblPar6;
+        private System.Windows.Forms.TextBox txtPar6;
+        private System.Windows.Forms.Label lblPar5;
+        private System.Windows.Forms.TextBox txtPar5;
+        private System.Windows.Forms.Label lblPar4;
+        private System.Windows.Forms.TextBox txtPar4;
     }
 }
