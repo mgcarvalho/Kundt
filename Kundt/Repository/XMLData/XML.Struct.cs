@@ -69,18 +69,23 @@
                 
                 <AtmosphericPressure value="MANUAL"  describe="Atmospheric Pressure"  field="-" line="-1" IndexPosition="-1"></AtmosphericPressure>
                 <Data structLine="2" startData="12" stopData="-"></Data>
-                <MIC1Time          value="MIC 1 Time"                describe="[A]"  field="C1:  Time[s]"                 unit="s" ></MIC1Time>
-                <MIC1Pressure      value="MIC 1 Pressure"            describe="[A]"  field="C1:  [Pa]"                    unit="Pa"></MIC1Pressure>
-                <MIC2Time          value="MIC 2 Time"                describe="[A]"  field="C2:  Time[s]"                 unit="s"></MIC2Time>
-                <MIC2Pressure      value="MIC 2 Pressure"            describe="[A]"  field="C2:  [Pa]"                    unit="Pa"></MIC2Pressure>
-                <FRF1Frequency     value="FRF(C1, C2) Frequency"     describe="[A]"  field="M1: FRF(C1,C2) Frequency[Hz]" unit="Hz"></FRF1Frequency>
-                <FRF1Amplification value="FRF(C1, C2) Amplification" describe="[A]"  field="M1: FRF(C1,C2) [](A)"         unit="-"></FRF1Amplification>
-                <FRF2Frequency     value="FRF(C2,C1) Frequency"      describe="[A]"  field="M2: FRF(C2,C1) Frequency[Hz]" unit="Hz"></FRF2Frequency>
-                <FRF2Amplification value="FRF(C2,C1) Amplification"  describe="[A]"  field="M2: FRF(C2,C1) [](A)"         unit="-"></FRF2Amplification>
-                <FFT1Frequency     value="FFT(C1) Frequency"         describe="[A]"  field="M3: FFT(C1) Frequency[Hz]"    unit="Hz"></FFT1Frequency>
-                <FFT1Amplitude     value="FFT(C1) (A)"               describe="[A]"  field="M3: FFT(C1) [Pa](A)"          unit="-"></FFT1Amplitude>
-                <FFT2Frequency     value="FFT(C2) Frequency"         describe="[A]"  field="M4: FFT(C2) Frequency[Hz]"    unit="Hz"></FFT2Frequency>
-                <FFT2Amplitude     value="FFT(C2) (A)"               describe="[A]"  field="M4: FFT(C2) [Pa](A)"          unit="-"></FFT2Amplitude>
+                <MIC1Time          value="MIC 1 Time"                   describe="[A]"  field="C1:  Time[s]"                 unit="s" ></MIC1Time>
+                <MIC1Pressure      value="MIC 1 Pressure"               describe="[A]"  field="C1:  [Pa]"                    unit="Pa"></MIC1Pressure>
+                <MIC2Time          value="MIC 2 Time"                   describe="[A]"  field="C2:  Time[s]"                 unit="s"></MIC2Time>
+                <MIC2Pressure      value="MIC 2 Pressure"               describe="[A]"  field="C2:  [Pa]"                    unit="Pa"></MIC2Pressure>
+                <FRF1Frequency     value="FRF(C1, C2) Frequency"        describe="[A]"  field="M1: FRF(C1,C2) Frequency[Hz]" unit="Hz"></FRF1Frequency>
+                <FRF1Amplification value="FRF(C1, C2) Amplification"    describe="[A]"  field="M1: FRF(C1,C2) [](A)"         unit="-"></FRF1Amplification>
+                <FRF2Frequency     value="FRF(C2, C1) Frequency"        describe="[A]"  field="M2: FRF(C2,C1) Frequency[Hz]" unit="Hz"></FRF2Frequency>
+                <FRF2Amplification value="FRF(C2, C1) Amplification"    describe="[A]"  field="M2: FRF(C2,C1) [](A)"         unit="-"></FRF2Amplification>
+                <FFT1Frequency     value="FFT(C1) Frequency"            describe="[A]"  field="M3: FFT(C1) Frequency[Hz]"    unit="Hz"></FFT1Frequency>
+                <FFT1Amplitude     value="FFT(C1) (A)"                  describe="[A]"  field="M3: FFT(C1) [Pa](A)"          unit="-"></FFT1Amplitude>
+                <FFT2Frequency     value="FFT(C2) Frequency"            describe="[A]"  field="M4: FFT(C2) Frequency[Hz]"    unit="Hz"></FFT2Frequency>
+                <FFT2Amplitude     value="FFT(C2) (A)"                  describe="[A]"  field="M4: FFT(C2) [Pa](A)"          unit="-"></FFT2Amplitude>
+                
+                <FRF1PF            value="FRF Phase (C1, C2) Frequency" describe="[A]"  field="M5: PHASE(M1) Frequency[Hz]"  unit="Hz"></FRF1PF>
+                <FRF1Phase         value="FRF Phase (C1, C2) Degrees"   describe="[A]"  field="M5: PHASE(M1) Phase[°](A)"    unit="°"> </FRF1Phase>
+                <FRF2PF            value="FRF Phase (C2, C1) Frequency" describe="[A]"  field="M6: PHASE(M2) Frequency[Hz]"  unit="Hz"></FRF2PF>
+                <FRF2Phase         value="FRF Phase (C2, C1) Degrees"   describe="[A]"  field="M6: PHASE(M2) Phase[°](A)"    unit="°"> </FRF2Phase>
               </Struct>
 
              */

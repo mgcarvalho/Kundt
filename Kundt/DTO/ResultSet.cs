@@ -17,5 +17,7 @@ namespace DTO
         public double Absorption { get; set; }
 
         public double Impedance { get; set; }
+
+        public double Phase { get; set; }
     }
 }

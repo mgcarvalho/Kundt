@@ -45,9 +45,11 @@ namespace Solver
         }
 
 
-        public static double TransferFunction(double mic1, double mic2)
+        public static double TransferFunction(double numberA, double numberB)
         {
-            return Math.Sqrt((mic1 * mic2)); ;
+            double factor = 1;
+            if (numberA <0 && numberB <0) { factor = -1; }
+            return Math.Sqrt((numberA * numberB)) * factor ;
         }
 
         public static double Ks(double frequency, double temperature, double micDistance)
@@ -86,16 +88,19 @@ namespace Solver
             return new Complex(real, imaginary);
         }
 
-        public static double Reflection(double transferFunction, double frequency, double temperature, double micDistance, double furtherMicrophone)
+        public static double Reflection(double frequency, double Amplification, double Phase, double temperature, double micDistance, double furtherMicrophone)
         {
             Complex hi = Hi(frequency, temperature, micDistance);
             Complex hr = Hr(frequency, temperature, micDistance);
             Complex e2 = E2(frequency, temperature, furtherMicrophone);
 
-            double topReal = transferFunction - hi.Real;
-            double bottonReal = hr.Real - transferFunction;
-            double topImaginary = transferFunction - hi.Imaginary;
-            double bottonImaginary = hr.Imaginary - transferFunction;
+            Complex hf = new Complex(Amplification * Math.Cos(Phase), Amplification * Math.Sin(Phase));
+            
+
+            double topReal = hf.Real - hi.Real;
+            double bottonReal = hr.Real - hf.Real;
+            double topImaginary = hf.Imaginary - hi.Imaginary;
+            double bottonImaginary = hr.Imaginary - hf.Imaginary;
 
             Complex top = Complex.Multiply(new Complex(topReal, topImaginary), e2);
             Complex botton = new Complex(bottonReal, bottonImaginary);

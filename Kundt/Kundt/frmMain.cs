@@ -219,12 +219,13 @@
                     if (ortherMicValue != null)
                     {
                         f.Amplification = KundtFunctions.TransferFunction(item.M1.Amplification, ortherMicValue.M2.Amplification);
-                        f.Reflection = KundtFunctions.Reflection(f.Amplification, f.Frequency, measurement.Temperature, measurement.MicDistance, measurement.furtherMicDistance);
+                        f.Phase = KundtFunctions.TransferFunction(item.M1.Phase, ortherMicValue.M2.Phase);
+                        f.Reflection = KundtFunctions.Reflection( f.Frequency, f.Amplification, f.Phase, measurement.Temperature, measurement.MicDistance, measurement.furtherMicDistance);
                         f.Absorption = KundtFunctions.Absorption(f.Reflection);
                         f.Impedance = KundtFunctions.Impedance(f.Reflection);
 
 
-                        if (!Double.IsNaN(f.Amplification))
+                        if (!Double.IsNaN(f.Amplification) && !Double.IsNaN(f.Phase))
                         { frf.Add(f); }
 
                     }
@@ -243,9 +244,9 @@
             int startLine = -1;
             int structLine = -1;
             string structValues = string.Empty;
-            int C1t = 0, C1p = 0, C2t = 0, C2p = 0, M1f = 0, M1a = 0, M2f = 0, M2a = 0, M3f = 0, M3a = 0, M4f = 0, M4a = 0;
+            int C1t = 0, C1p = 0, C2t = 0, C2p = 0, M1f = 0, M1a = 0, M2f = 0, M2a = 0, M3f = 0, M3a = 0, M4f = 0, M4a = 0, M5p = 0, M6p = 0;
 
-            //; C1: Time[s]; C1:  [Pa]; C2: Time[s]; C2:  [Pa]; M1: FRF(C1, C2) Frequency[Hz]; M1: FRF(C1, C2)[](A); ; M2: FRF(C2, C1) Frequency[Hz]; M2: FRF(C2, C1)[](A); ; M3: FFT(C1) Frequency[Hz]; M3: FFT(C1)[Pa](A); ; M4: FFT(C2) Frequency[Hz]; M4: FFT(C2)[Pa](A);
+            //; C1: Time[s]; C1:  [Pa]; C2: Time[s]; C2:  [Pa]; M1: FRF(C1, C2) Frequency[Hz]; M1: FRF(C1, C2)[](A); ; M2: FRF(C2, C1) Frequency[Hz]; M2: FRF(C2, C1)[](A); ; M3: FFT(C1) Frequency[Hz]; M3: FFT(C1)[Pa](A); ; M4: FFT(C2) Frequency[Hz]; M4: FFT(C2)[Pa](A);;M5: PHASE(M1) Frequency[Hz];M5: PHASE(M1) Phase[°](A);M6: PHASE(M2) Frequency[Hz];M6: PHASE(M2) Phase[°](A)
 
             int.TryParse(structs.FirstOrDefault(x => x.Type == StructType.DataStart).Value, out startLine);
 
@@ -265,7 +266,7 @@
                 return null;
             }
 
-            var lines = File.ReadAllLines(fileName);
+            var lines = File.ReadAllLines(fileName,System.Text.Encoding.UTF7);
             if (lines.Length < structLine - 1 || lines.Length < startLine - 1)
             {
                 MessageBox.Show($"The file {fileName} doesn't has information!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -274,7 +275,7 @@
             }
 
 
-
+            //TODO:: Colocar a frequencia para fora dos objectos menores
             structValues = lines[structLine - 1];
             var arrayIndex = structValues.Split(';');
             for (var i = 0; i < arrayIndex.Length; i++)
@@ -317,6 +318,12 @@
                     case "M4: FFT(C2) [PA](A)":
                         M4a = i;
                         break;
+                    case "M5: PHASE(M1) PHASE[°](A)":
+                        M5p = i;
+                        break;
+                    case "M6: PHASE(M2) PHASE[°](A)":
+                        M6p = i;
+                        break;
                     default:
                         break;
                 }
@@ -345,6 +352,7 @@
                 dM.M1.Frequency = oV;
                 double.TryParse(dataArray[M1a], out oV);
                 dM.M1.Amplification = oV;
+
                 //M2
                 double.TryParse(dataArray[M2f], out oV);
                 dM.M2.Frequency = oV;
@@ -360,6 +368,13 @@
                 dM.M4.Frequency = oV;
                 double.TryParse(dataArray[M4a], out oV);
                 dM.M4.Amplitude = oV;
+                //M5
+                double.TryParse(dataArray[M5p], out oV);
+                dM.M1.Phase = oV;
+                //M6
+                double.TryParse(dataArray[M6p], out oV);
+                dM.M2.Phase = oV;
+
                 dM.Id = rt.Count + 1;
 
                 if (dM.M1.Frequency > frenquencyLimit)
