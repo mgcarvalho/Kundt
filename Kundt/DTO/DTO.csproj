@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\AnalyzerType.cs" />
     <Compile Include="FFT.cs" />
     <Compile Include="DataMeasurement.cs" />
     <Compile Include="Measurement.cs" />

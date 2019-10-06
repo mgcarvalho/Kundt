@@ -38,7 +38,11 @@ namespace DTO
         FFT1Frequency,
         FFT1Amplitude,
         FFT2Frequency,
-        FFT2Amplitude
+        FFT2Amplitude,
+        FRF1PF,
+        FRF1Phase,
+        FRF2PF,
+        FRF2Phase
     }
     
 }

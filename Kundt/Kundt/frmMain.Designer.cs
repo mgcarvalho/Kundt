@@ -35,7 +35,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabLoad = new System.Windows.Forms.TabPage();
             this.btnRemoveAllNodes = new System.Windows.Forms.Button();
@@ -60,9 +59,9 @@
             this.lblL = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.rbGraphType = new System.Windows.Forms.RadioButton();
+            this.rbGraphTypeI = new System.Windows.Forms.RadioButton();
+            this.rbGraphTypeR = new System.Windows.Forms.RadioButton();
+            this.rbGraphTypeAlpha = new System.Windows.Forms.RadioButton();
             this.tbHi = new System.Windows.Forms.TrackBar();
             this.tbLow = new System.Windows.Forms.TrackBar();
             this.chtAnalyze = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -73,6 +72,12 @@
             this.cmbFormulas = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.grpParameters = new System.Windows.Forms.GroupBox();
+            this.lblPar6 = new System.Windows.Forms.Label();
+            this.txtPar6 = new System.Windows.Forms.TextBox();
+            this.lblPar5 = new System.Windows.Forms.Label();
+            this.txtPar5 = new System.Windows.Forms.TextBox();
+            this.lblPar4 = new System.Windows.Forms.Label();
+            this.txtPar4 = new System.Windows.Forms.TextBox();
             this.btnDoFormula = new System.Windows.Forms.Button();
             this.lblPar3 = new System.Windows.Forms.Label();
             this.txtPar3 = new System.Windows.Forms.TextBox();
@@ -83,12 +88,7 @@
             this.stsInfo = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.sfdSaveStruct = new System.Windows.Forms.SaveFileDialog();
-            this.lblPar6 = new System.Windows.Forms.Label();
-            this.txtPar6 = new System.Windows.Forms.TextBox();
-            this.lblPar5 = new System.Windows.Forms.Label();
-            this.txtPar5 = new System.Windows.Forms.TextBox();
-            this.lblPar4 = new System.Windows.Forms.Label();
-            this.txtPar4 = new System.Windows.Forms.TextBox();
+            this.chkUseOne = new System.Windows.Forms.CheckBox();
             this.tabMain.SuspendLayout();
             this.tabLoad.SuspendLayout();
             this.gpbFilesLoad.SuspendLayout();
@@ -117,6 +117,7 @@
             // 
             // tabLoad
             // 
+            this.tabLoad.Controls.Add(this.chkUseOne);
             this.tabLoad.Controls.Add(this.btnRemoveAllNodes);
             this.tabLoad.Controls.Add(this.btnRemoveNode);
             this.tabLoad.Controls.Add(this.btnAnalyze);
@@ -306,9 +307,9 @@
             this.tabAnalyze.Controls.Add(this.lblL);
             this.tabAnalyze.Controls.Add(this.label4);
             this.tabAnalyze.Controls.Add(this.label3);
-            this.tabAnalyze.Controls.Add(this.radioButton2);
-            this.tabAnalyze.Controls.Add(this.radioButton1);
-            this.tabAnalyze.Controls.Add(this.rbGraphType);
+            this.tabAnalyze.Controls.Add(this.rbGraphTypeI);
+            this.tabAnalyze.Controls.Add(this.rbGraphTypeR);
+            this.tabAnalyze.Controls.Add(this.rbGraphTypeAlpha);
             this.tabAnalyze.Controls.Add(this.tbHi);
             this.tabAnalyze.Controls.Add(this.tbLow);
             this.tabAnalyze.Controls.Add(this.chtAnalyze);
@@ -379,37 +380,40 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Low";
             // 
-            // radioButton2
+            // rbGraphTypeI
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(1124, 435);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(34, 21);
-            this.radioButton2.TabIndex = 5;
-            this.radioButton2.Text = "I";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.rbGraphTypeI.AutoSize = true;
+            this.rbGraphTypeI.Location = new System.Drawing.Point(1124, 435);
+            this.rbGraphTypeI.Name = "rbGraphTypeI";
+            this.rbGraphTypeI.Size = new System.Drawing.Size(34, 21);
+            this.rbGraphTypeI.TabIndex = 5;
+            this.rbGraphTypeI.Text = "I";
+            this.rbGraphTypeI.UseVisualStyleBackColor = true;
+            this.rbGraphTypeI.CheckedChanged += new System.EventHandler(this.rbGraphTypeI_CheckedChanged);
             // 
-            // radioButton1
+            // rbGraphTypeR
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(1124, 408);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(34, 21);
-            this.radioButton1.TabIndex = 4;
-            this.radioButton1.Text = "R";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.rbGraphTypeR.AutoSize = true;
+            this.rbGraphTypeR.Location = new System.Drawing.Point(1124, 408);
+            this.rbGraphTypeR.Name = "rbGraphTypeR";
+            this.rbGraphTypeR.Size = new System.Drawing.Size(34, 21);
+            this.rbGraphTypeR.TabIndex = 4;
+            this.rbGraphTypeR.Text = "R";
+            this.rbGraphTypeR.UseVisualStyleBackColor = true;
+            this.rbGraphTypeR.CheckedChanged += new System.EventHandler(this.rbGraphTypeR_CheckedChanged);
             // 
-            // rbGraphType
+            // rbGraphTypeAlpha
             // 
-            this.rbGraphType.AutoSize = true;
-            this.rbGraphType.Checked = true;
-            this.rbGraphType.Location = new System.Drawing.Point(1124, 381);
-            this.rbGraphType.Name = "rbGraphType";
-            this.rbGraphType.Size = new System.Drawing.Size(66, 21);
-            this.rbGraphType.TabIndex = 3;
-            this.rbGraphType.TabStop = true;
-            this.rbGraphType.Text = "Alpha";
-            this.rbGraphType.UseVisualStyleBackColor = true;
+            this.rbGraphTypeAlpha.AutoSize = true;
+            this.rbGraphTypeAlpha.Checked = true;
+            this.rbGraphTypeAlpha.Location = new System.Drawing.Point(1124, 381);
+            this.rbGraphTypeAlpha.Name = "rbGraphTypeAlpha";
+            this.rbGraphTypeAlpha.Size = new System.Drawing.Size(66, 21);
+            this.rbGraphTypeAlpha.TabIndex = 3;
+            this.rbGraphTypeAlpha.TabStop = true;
+            this.rbGraphTypeAlpha.Text = "Alpha";
+            this.rbGraphTypeAlpha.UseVisualStyleBackColor = true;
+            this.rbGraphTypeAlpha.CheckedChanged += new System.EventHandler(this.rbGraphTypeAlpha_CheckedChanged);
             // 
             // tbHi
             // 
@@ -444,11 +448,6 @@
             this.chtAnalyze.Legends.Add(legend1);
             this.chtAnalyze.Location = new System.Drawing.Point(15, 14);
             this.chtAnalyze.Name = "chtAnalyze";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chtAnalyze.Series.Add(series1);
             this.chtAnalyze.Size = new System.Drawing.Size(1092, 481);
             this.chtAnalyze.TabIndex = 0;
             // 
@@ -540,6 +539,66 @@
             this.grpParameters.TabStop = false;
             this.grpParameters.Text = "Parameters";
             // 
+            // lblPar6
+            // 
+            this.lblPar6.AutoSize = true;
+            this.lblPar6.Location = new System.Drawing.Point(755, 111);
+            this.lblPar6.Name = "lblPar6";
+            this.lblPar6.Size = new System.Drawing.Size(64, 17);
+            this.lblPar6.TabIndex = 17;
+            this.lblPar6.Text = "Result:";
+            this.lblPar6.Visible = false;
+            // 
+            // txtPar6
+            // 
+            this.txtPar6.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPar6.Location = new System.Drawing.Point(758, 135);
+            this.txtPar6.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPar6.Name = "txtPar6";
+            this.txtPar6.Size = new System.Drawing.Size(291, 22);
+            this.txtPar6.TabIndex = 16;
+            this.txtPar6.Visible = false;
+            // 
+            // lblPar5
+            // 
+            this.lblPar5.AutoSize = true;
+            this.lblPar5.Location = new System.Drawing.Point(386, 111);
+            this.lblPar5.Name = "lblPar5";
+            this.lblPar5.Size = new System.Drawing.Size(64, 17);
+            this.lblPar5.TabIndex = 15;
+            this.lblPar5.Text = "Result:";
+            this.lblPar5.Visible = false;
+            // 
+            // txtPar5
+            // 
+            this.txtPar5.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPar5.Location = new System.Drawing.Point(390, 135);
+            this.txtPar5.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPar5.Name = "txtPar5";
+            this.txtPar5.Size = new System.Drawing.Size(291, 22);
+            this.txtPar5.TabIndex = 14;
+            this.txtPar5.Visible = false;
+            // 
+            // lblPar4
+            // 
+            this.lblPar4.AutoSize = true;
+            this.lblPar4.Location = new System.Drawing.Point(10, 111);
+            this.lblPar4.Name = "lblPar4";
+            this.lblPar4.Size = new System.Drawing.Size(64, 17);
+            this.lblPar4.TabIndex = 13;
+            this.lblPar4.Text = "Result:";
+            this.lblPar4.Visible = false;
+            // 
+            // txtPar4
+            // 
+            this.txtPar4.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPar4.Location = new System.Drawing.Point(14, 135);
+            this.txtPar4.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPar4.Name = "txtPar4";
+            this.txtPar4.Size = new System.Drawing.Size(291, 22);
+            this.txtPar4.TabIndex = 12;
+            this.txtPar4.Visible = false;
+            // 
             // btnDoFormula
             // 
             this.btnDoFormula.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -627,65 +686,15 @@
             this.toolStripStatusLabelInfo.Name = "toolStripStatusLabelInfo";
             this.toolStripStatusLabelInfo.Size = new System.Drawing.Size(0, 17);
             // 
-            // lblPar6
+            // chkUseOne
             // 
-            this.lblPar6.AutoSize = true;
-            this.lblPar6.Location = new System.Drawing.Point(755, 111);
-            this.lblPar6.Name = "lblPar6";
-            this.lblPar6.Size = new System.Drawing.Size(64, 17);
-            this.lblPar6.TabIndex = 17;
-            this.lblPar6.Text = "Result:";
-            this.lblPar6.Visible = false;
-            // 
-            // txtPar6
-            // 
-            this.txtPar6.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPar6.Location = new System.Drawing.Point(758, 135);
-            this.txtPar6.Margin = new System.Windows.Forms.Padding(4);
-            this.txtPar6.Name = "txtPar6";
-            this.txtPar6.Size = new System.Drawing.Size(291, 22);
-            this.txtPar6.TabIndex = 16;
-            this.txtPar6.Visible = false;
-            // 
-            // lblPar5
-            // 
-            this.lblPar5.AutoSize = true;
-            this.lblPar5.Location = new System.Drawing.Point(386, 111);
-            this.lblPar5.Name = "lblPar5";
-            this.lblPar5.Size = new System.Drawing.Size(64, 17);
-            this.lblPar5.TabIndex = 15;
-            this.lblPar5.Text = "Result:";
-            this.lblPar5.Visible = false;
-            // 
-            // txtPar5
-            // 
-            this.txtPar5.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPar5.Location = new System.Drawing.Point(390, 135);
-            this.txtPar5.Margin = new System.Windows.Forms.Padding(4);
-            this.txtPar5.Name = "txtPar5";
-            this.txtPar5.Size = new System.Drawing.Size(291, 22);
-            this.txtPar5.TabIndex = 14;
-            this.txtPar5.Visible = false;
-            // 
-            // lblPar4
-            // 
-            this.lblPar4.AutoSize = true;
-            this.lblPar4.Location = new System.Drawing.Point(10, 111);
-            this.lblPar4.Name = "lblPar4";
-            this.lblPar4.Size = new System.Drawing.Size(64, 17);
-            this.lblPar4.TabIndex = 13;
-            this.lblPar4.Text = "Result:";
-            this.lblPar4.Visible = false;
-            // 
-            // txtPar4
-            // 
-            this.txtPar4.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPar4.Location = new System.Drawing.Point(14, 135);
-            this.txtPar4.Margin = new System.Windows.Forms.Padding(4);
-            this.txtPar4.Name = "txtPar4";
-            this.txtPar4.Size = new System.Drawing.Size(291, 22);
-            this.txtPar4.TabIndex = 12;
-            this.txtPar4.Visible = false;
+            this.chkUseOne.AutoSize = true;
+            this.chkUseOne.Location = new System.Drawing.Point(8, 485);
+            this.chkUseOne.Name = "chkUseOne";
+            this.chkUseOne.Size = new System.Drawing.Size(163, 21);
+            this.chkUseOne.TabIndex = 10;
+            this.chkUseOne.Text = "Use only one file";
+            this.chkUseOne.UseVisualStyleBackColor = true;
             // 
             // frmMain
             // 
@@ -766,9 +775,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Unit;
         private System.Windows.Forms.TrackBar tbHi;
         private System.Windows.Forms.TrackBar tbLow;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton rbGraphType;
+        private System.Windows.Forms.RadioButton rbGraphTypeI;
+        private System.Windows.Forms.RadioButton rbGraphTypeR;
+        private System.Windows.Forms.RadioButton rbGraphTypeAlpha;
         private System.Windows.Forms.Label lblHi;
         private System.Windows.Forms.Label lblLow;
         private System.Windows.Forms.Label lblH;
@@ -781,5 +790,6 @@
         private System.Windows.Forms.TextBox txtPar5;
         private System.Windows.Forms.Label lblPar4;
         private System.Windows.Forms.TextBox txtPar4;
+        private System.Windows.Forms.CheckBox chkUseOne;
     }
 }

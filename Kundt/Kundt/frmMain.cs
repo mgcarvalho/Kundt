@@ -2,6 +2,7 @@
 {
 
     using DTO;
+    using DTO.Enum;
     using KundtExceptions;
     using KundtManager;
     using Solver;
@@ -15,12 +16,15 @@
     using System.Linq;
     using System.Reflection;
     using System.Windows.Forms;
+    using System.Windows.Forms.DataVisualization.Charting;
 
     public partial class frmMain : Form
     {
         public string SelectStruct { get; set; }
 
         public string StructName { get; set; }
+
+        private bool ValuesLoaded = false;
 
         public Dictionary<string, string> ListFormulas { get; set; }
 
@@ -215,23 +219,90 @@
                 f.Frequency = item.M1.Frequency;
                 if (measurement.MeasurementsFile2.Any(x => x.M2.Frequency == f.Frequency))
                 {
-                    var ortherMicValue = measurement.MeasurementsFile2.First(x => x.M2.Frequency == f.Frequency);
-                    if (ortherMicValue != null)
+                    double m2Aplification = 0;
+                    double m2phase = 0;
+                    if (chkUseOne.Checked)
                     {
-                        f.Amplification = KundtFunctions.TransferFunction(item.M1.Amplification, ortherMicValue.M2.Amplification);
-                        f.Phase = KundtFunctions.TransferFunction(item.M1.Phase, ortherMicValue.M2.Phase);
-                        f.Reflection = KundtFunctions.Reflection( f.Frequency, f.Amplification, f.Phase, measurement.Temperature, measurement.MicDistance, measurement.furtherMicDistance);
-                        f.Absorption = KundtFunctions.Absorption(f.Reflection);
-                        f.Impedance = KundtFunctions.Impedance(f.Reflection);
-
-
-                        if (!Double.IsNaN(f.Amplification) && !Double.IsNaN(f.Phase))
-                        { frf.Add(f); }
+                        m2Aplification = item.M1.Amplification;
+                        m2phase = item.M1.Phase;
+                    }
+                    else
+                    {
+                        var ortherMicValue = measurement.MeasurementsFile2.First(x => x.M2.Frequency == f.Frequency);
+                        if (ortherMicValue != null)
+                        {
+                            m2Aplification = KundtFunctions.TransferFunction(item.M1.Amplification, ortherMicValue.M2.Amplification); ;
+                            m2phase = KundtFunctions.TransferFunction(item.M1.Phase, ortherMicValue.M2.Phase); ;
+                        }
 
                     }
+                    f.Amplification = m2Aplification;
+                    f.Phase = m2phase;
+                    f.Reflection = KundtFunctions.Reflection(f.Frequency, f.Amplification, f.Phase, measurement.Temperature, measurement.MicDistance, measurement.furtherMicDistance);
+                    f.Absorption = KundtFunctions.Absorption(f.Reflection);
+                    f.Impedance = KundtFunctions.Impedance(f.Reflection);
+
+
+                    if (CheckValues(f))
+                    { frf.Add(f); }
+
+
                 }
             }
             return frf;
+        }
+
+        private bool CheckValues(ResultSet values)
+        {
+            return !Double.IsNaN(values.Amplification)
+                && !Double.IsNaN(values.Phase)
+                && !Double.IsInfinity(values.Impedance)
+                && !Double.IsInfinity(values.Reflection)
+                && !Double.IsInfinity(values.Absorption);
+        }
+
+        private void LoadGraphic(IList<Measurement> measurements, AnalyzerType type)
+        {
+            this.chtAnalyze.Series.Clear();
+            foreach (var item in measurements)
+            {
+                this.chtAnalyze.Series.Add(CreateSerie(item, type));
+            }
+
+
+
+        }
+
+        private Series CreateSerie(Measurement measurement, AnalyzerType ChartType)
+        {
+            //Filter
+            List<ResultSet> partialData = measurement.Results.Where(x => x.Frequency >= tbLow.Value && x.Frequency <= tbHi.Value).ToList();
+
+            Series sr = new Series();
+            sr.Name = measurement.CaseName;
+            sr.ChartType = SeriesChartType.Spline;
+            sr.Color = Color.FromName(measurement.LineColor);
+            List<double> listX = partialData.Select(x => x.Frequency).ToList();
+            List<double> listY = new List<double>();
+
+            switch (ChartType)
+            {
+                case AnalyzerType.Alpha:
+                    listY = partialData.Select(x => x.Absorption).ToList();
+                    break;
+                case AnalyzerType.R:
+                    listY = partialData.Select(x => x.Reflection).ToList();
+                    break;
+                case AnalyzerType.I:
+                    listY = partialData.Select(x => x.Impedance).ToList();
+                    break;
+                default:
+                    break;
+            }
+
+            sr.Points.DataBindXY(listX, listY);
+            sr.BorderWidth = 1;
+            return sr;
         }
 
         private IList<DataMeasurement> LoadDataFile(string fileName, string structName)
@@ -266,7 +337,7 @@
                 return null;
             }
 
-            var lines = File.ReadAllLines(fileName,System.Text.Encoding.UTF7);
+            var lines = File.ReadAllLines(fileName, System.Text.Encoding.UTF7);
             if (lines.Length < structLine - 1 || lines.Length < startLine - 1)
             {
                 MessageBox.Show($"The file {fileName} doesn't has information!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -398,6 +469,19 @@
             {
                 lblHi.ForeColor = Color.Green;
                 lblLow.ForeColor = Color.Green;
+
+                if (rbGraphTypeR.Checked && ValuesLoaded)
+                {
+                    LoadGraphic(Measurements, AnalyzerType.R);
+                }
+                else if (rbGraphTypeR.Checked && ValuesLoaded)
+                {
+                    LoadGraphic(Measurements, AnalyzerType.R);
+                }
+                else if (rbGraphTypeR.Checked && ValuesLoaded)
+                {
+                    LoadGraphic(Measurements, AnalyzerType.R);
+                }
             }
         }
         #endregion
@@ -415,6 +499,10 @@
             cmbStruct.DataSource = new BindingSource(lS.GetSavedStructs(), null);
             cmbStruct.DisplayMember = "Value";
             cmbStruct.ValueMember = "Key";
+
+            SelectStruct = cmbStruct.SelectedValue.ToString();
+            StructName = cmbStruct.Text;
+            BindingData();
         }
 
         private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -434,6 +522,7 @@
 
         private void btnAddFile_Click(object sender, EventArgs e)
         {
+            ValuesLoaded = false;
             if (ListColors.Count == 0)
             {
                 MessageBox.Show("This version has a limited amount of five files for analysis.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -514,9 +603,9 @@
                 MessageBox.Show("It`s need at least one file group to continue!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
+            ValuesLoaded = true;
             LoadMeasureFiles();
-            //LoadGraphic(Measurements);
+            LoadGraphic(Measurements, AnalyzerType.Alpha);
 
             tabMain.SelectedIndex = 1;
         }
@@ -672,5 +761,29 @@
             }
         }
         #endregion
+
+        private void rbGraphTypeAlpha_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbGraphTypeAlpha.Checked && ValuesLoaded)
+            {
+                LoadGraphic(Measurements, AnalyzerType.Alpha);
+            }
+        }
+
+        private void rbGraphTypeR_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbGraphTypeR.Checked && ValuesLoaded)
+            {
+                LoadGraphic(Measurements, AnalyzerType.R);
+            }
+        }
+
+        private void rbGraphTypeI_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbGraphTypeI.Checked && ValuesLoaded)
+            {
+                LoadGraphic(Measurements, AnalyzerType.I);
+            }
+        }
     }
 }
