@@ -37,6 +37,7 @@
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabLoad = new System.Windows.Forms.TabPage();
+            this.chkUseOne = new System.Windows.Forms.CheckBox();
             this.btnRemoveAllNodes = new System.Windows.Forms.Button();
             this.btnRemoveNode = new System.Windows.Forms.Button();
             this.btnAnalyze = new System.Windows.Forms.Button();
@@ -59,7 +60,6 @@
             this.lblL = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.rbGraphTypeI = new System.Windows.Forms.RadioButton();
             this.rbGraphTypeR = new System.Windows.Forms.RadioButton();
             this.rbGraphTypeAlpha = new System.Windows.Forms.RadioButton();
             this.tbHi = new System.Windows.Forms.TrackBar();
@@ -88,7 +88,7 @@
             this.stsInfo = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.sfdSaveStruct = new System.Windows.Forms.SaveFileDialog();
-            this.chkUseOne = new System.Windows.Forms.CheckBox();
+            this.chkPossible = new System.Windows.Forms.CheckBox();
             this.tabMain.SuspendLayout();
             this.tabLoad.SuspendLayout();
             this.gpbFilesLoad.SuspendLayout();
@@ -117,6 +117,7 @@
             // 
             // tabLoad
             // 
+            this.tabLoad.Controls.Add(this.chkPossible);
             this.tabLoad.Controls.Add(this.chkUseOne);
             this.tabLoad.Controls.Add(this.btnRemoveAllNodes);
             this.tabLoad.Controls.Add(this.btnRemoveNode);
@@ -135,6 +136,16 @@
             this.tabLoad.TabIndex = 0;
             this.tabLoad.Text = "Create Analyze";
             this.tabLoad.UseVisualStyleBackColor = true;
+            // 
+            // chkUseOne
+            // 
+            this.chkUseOne.AutoSize = true;
+            this.chkUseOne.Location = new System.Drawing.Point(8, 485);
+            this.chkUseOne.Name = "chkUseOne";
+            this.chkUseOne.Size = new System.Drawing.Size(163, 21);
+            this.chkUseOne.TabIndex = 10;
+            this.chkUseOne.Text = "Use only one file";
+            this.chkUseOne.UseVisualStyleBackColor = true;
             // 
             // btnRemoveAllNodes
             // 
@@ -307,7 +318,6 @@
             this.tabAnalyze.Controls.Add(this.lblL);
             this.tabAnalyze.Controls.Add(this.label4);
             this.tabAnalyze.Controls.Add(this.label3);
-            this.tabAnalyze.Controls.Add(this.rbGraphTypeI);
             this.tabAnalyze.Controls.Add(this.rbGraphTypeR);
             this.tabAnalyze.Controls.Add(this.rbGraphTypeAlpha);
             this.tabAnalyze.Controls.Add(this.tbHi);
@@ -379,17 +389,6 @@
             this.label3.Size = new System.Drawing.Size(32, 17);
             this.label3.TabIndex = 6;
             this.label3.Text = "Low";
-            // 
-            // rbGraphTypeI
-            // 
-            this.rbGraphTypeI.AutoSize = true;
-            this.rbGraphTypeI.Location = new System.Drawing.Point(1124, 435);
-            this.rbGraphTypeI.Name = "rbGraphTypeI";
-            this.rbGraphTypeI.Size = new System.Drawing.Size(34, 21);
-            this.rbGraphTypeI.TabIndex = 5;
-            this.rbGraphTypeI.Text = "I";
-            this.rbGraphTypeI.UseVisualStyleBackColor = true;
-            this.rbGraphTypeI.CheckedChanged += new System.EventHandler(this.rbGraphTypeI_CheckedChanged);
             // 
             // rbGraphTypeR
             // 
@@ -686,15 +685,15 @@
             this.toolStripStatusLabelInfo.Name = "toolStripStatusLabelInfo";
             this.toolStripStatusLabelInfo.Size = new System.Drawing.Size(0, 17);
             // 
-            // chkUseOne
+            // chkPossible
             // 
-            this.chkUseOne.AutoSize = true;
-            this.chkUseOne.Location = new System.Drawing.Point(8, 485);
-            this.chkUseOne.Name = "chkUseOne";
-            this.chkUseOne.Size = new System.Drawing.Size(163, 21);
-            this.chkUseOne.TabIndex = 10;
-            this.chkUseOne.Text = "Use only one file";
-            this.chkUseOne.UseVisualStyleBackColor = true;
+            this.chkPossible.AutoSize = true;
+            this.chkPossible.Location = new System.Drawing.Point(178, 484);
+            this.chkPossible.Name = "chkPossible";
+            this.chkPossible.Size = new System.Drawing.Size(251, 21);
+            this.chkPossible.TabIndex = 11;
+            this.chkPossible.Text = "Limited with possible values";
+            this.chkPossible.UseVisualStyleBackColor = true;
             // 
             // frmMain
             // 
@@ -775,7 +774,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Unit;
         private System.Windows.Forms.TrackBar tbHi;
         private System.Windows.Forms.TrackBar tbLow;
-        private System.Windows.Forms.RadioButton rbGraphTypeI;
         private System.Windows.Forms.RadioButton rbGraphTypeR;
         private System.Windows.Forms.RadioButton rbGraphTypeAlpha;
         private System.Windows.Forms.Label lblHi;
@@ -791,5 +789,6 @@
         private System.Windows.Forms.Label lblPar4;
         private System.Windows.Forms.TextBox txtPar4;
         private System.Windows.Forms.CheckBox chkUseOne;
+        private System.Windows.Forms.CheckBox chkPossible;
     }
 }

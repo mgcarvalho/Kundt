@@ -15,6 +15,7 @@
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using System.Text;
     using System.Windows.Forms;
     using System.Windows.Forms.DataVisualization.Charting;
 
@@ -206,6 +207,28 @@
 
                 count++;
             }
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"Frequency;{Measurements[0].CaseName};{Measurements[1].CaseName};{Measurements[2].CaseName}");
+            for (int i = 440; i < 1901; i++)
+            {
+                //Results                
+                Double v1=0, v2=0, v3=0;
+
+                if (Measurements[0].Results.Any(x => x.Frequency == i) 
+                    && Measurements[1].Results.Any(x => x.Frequency == i)
+                    && Measurements[2].Results.Any(x => x.Frequency == i))
+                {
+                    v1 = Measurements[0].Results.Where(x => x.Frequency == i).Select(x => x.Absorption).First();
+                    v2 = Measurements[1].Results.Where(x => x.Frequency == i).Select(x => x.Absorption).First();
+                    v3 = Measurements[2].Results.Where(x => x.Frequency == i).Select(x => x.Absorption).First();
+                    sb.AppendLine($"{i};{v1};{v2};{v3}");
+                }
+
+            }
+
+
+
             toolStripStatusLabelInfo.Text = "Processing file finish!";
         }
 
@@ -223,7 +246,7 @@
                     double m2phase = 0;
                     if (chkUseOne.Checked)
                     {
-                        m2Aplification = item.M1.Amplification;
+                        m2Aplification = Math.Abs(item.M1.Amplification);
                         m2phase = item.M1.Phase;
                     }
                     else
@@ -231,10 +254,9 @@
                         var ortherMicValue = measurement.MeasurementsFile2.First(x => x.M2.Frequency == f.Frequency);
                         if (ortherMicValue != null)
                         {
-                            m2Aplification = KundtFunctions.TransferFunction(item.M1.Amplification, ortherMicValue.M2.Amplification); ;
+                            m2Aplification = KundtFunctions.TransferFunction(Math.Abs(item.M1.Amplification), Math.Abs(ortherMicValue.M2.Amplification));
                             m2phase = KundtFunctions.TransferFunction(item.M1.Phase, ortherMicValue.M2.Phase); ;
                         }
-
                     }
                     f.Amplification = m2Aplification;
                     f.Phase = m2phase;
@@ -242,11 +264,16 @@
                     f.Absorption = KundtFunctions.Absorption(f.Reflection);
                     f.Impedance = KundtFunctions.Impedance(f.Reflection);
 
-
                     if (CheckValues(f))
-                    { frf.Add(f); }
-
-
+                    {
+                        if (chkPossible.Checked)
+                        {
+                            if (f.Reflection >= -0.2 && f.Reflection <= 1.2)
+                            { frf.Add(f); }
+                        }
+                        else
+                        { frf.Add(f); }
+                    }
                 }
             }
             return frf;
@@ -254,6 +281,8 @@
 
         private bool CheckValues(ResultSet values)
         {
+            if (values.Absorption < -0.5) return false;
+
             return !Double.IsNaN(values.Amplification)
                 && !Double.IsNaN(values.Phase)
                 && !Double.IsInfinity(values.Impedance)
@@ -264,6 +293,7 @@
         private void LoadGraphic(IList<Measurement> measurements, AnalyzerType type)
         {
             this.chtAnalyze.Series.Clear();
+
             foreach (var item in measurements)
             {
                 this.chtAnalyze.Series.Add(CreateSerie(item, type));
@@ -280,7 +310,7 @@
 
             Series sr = new Series();
             sr.Name = measurement.CaseName;
-            sr.ChartType = SeriesChartType.Spline;
+            sr.ChartType = SeriesChartType.Line;
             sr.Color = Color.FromName(measurement.LineColor);
             List<double> listX = partialData.Select(x => x.Frequency).ToList();
             List<double> listY = new List<double>();
@@ -299,7 +329,6 @@
                 default:
                     break;
             }
-
             sr.Points.DataBindXY(listX, listY);
             sr.BorderWidth = 1;
             return sr;
@@ -474,13 +503,9 @@
                 {
                     LoadGraphic(Measurements, AnalyzerType.R);
                 }
-                else if (rbGraphTypeR.Checked && ValuesLoaded)
+                else if (rbGraphTypeAlpha.Checked && ValuesLoaded)
                 {
-                    LoadGraphic(Measurements, AnalyzerType.R);
-                }
-                else if (rbGraphTypeR.Checked && ValuesLoaded)
-                {
-                    LoadGraphic(Measurements, AnalyzerType.R);
+                    LoadGraphic(Measurements, AnalyzerType.Alpha);
                 }
             }
         }
@@ -760,7 +785,6 @@
                 }
             }
         }
-        #endregion
 
         private void rbGraphTypeAlpha_CheckedChanged(object sender, EventArgs e)
         {
@@ -778,12 +802,7 @@
             }
         }
 
-        private void rbGraphTypeI_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbGraphTypeI.Checked && ValuesLoaded)
-            {
-                LoadGraphic(Measurements, AnalyzerType.I);
-            }
-        }
+        #endregion
+
     }
 }
